@@ -1,0 +1,413 @@
+/* ZT Automotive Collection — Foundations v1.1 (dark canvas #191D21, 23 Nov 2026; v1.0 approved baseline)
+ * Generated from the Figma variable export (file NkR9bvaMl2D0hUMfB6mOLv). Do not hand-edit values here;
+ * change Figma, re-export, regenerate. Primitives are --zt-*; design with the semantic tokens only.
+ * Theme: dark is the default. Light: <html data-theme="light">.
+ * Fonts (Google Fonts): Bodoni Moda 400; Hanken Grotesk 300/400/500.
+ * Lucide icons: stroke-width 1.5, absoluteStrokeWidth, sizes 16/20/24/32, color currentColor. */
+
+:root {
+  /* ---- Primitives: colour ---- */
+  --zt-color-neutral-1000: #08090A; /* Carbon */
+  --zt-color-neutral-950: #101112; /* Obsidian */
+  --zt-color-neutral-900: #191D21; /* Dark canvas (v1.1) */
+  --zt-color-neutral-850: #1F2428; /* Dark surface (v1.1) */
+  --zt-color-neutral-800: #292C30; /* Graphite */
+  --zt-color-neutral-700: #3A3E43;
+  --zt-color-neutral-600: #555A5F;
+  --zt-color-neutral-500: #777A7C; /* Titanium */
+  --zt-color-neutral-400: #9A9C9D;
+  --zt-color-neutral-300: #BDBCB8;
+  --zt-color-neutral-200: #D4D0C7; /* Stone */
+  --zt-color-neutral-100: #E8E6E1;
+  --zt-color-neutral-50: #F5F4F0; /* Ivory */
+  --zt-color-neutral-0: #FAFAF8; /* Paper */
+  --zt-color-neutral-white: #FFFFFF;
+  --zt-color-rosso-300: #E0928A;
+  --zt-color-rosso-400: #C8564A;
+  --zt-color-rosso-500: #A8322A;
+  --zt-color-rosso-600: #8C2620;
+  --zt-color-rosso-700: #6E1E1A;
+  --zt-color-rosso-900: #3A1210;
+  --zt-color-signal-300: #E8774A;
+  --zt-color-signal-600: #A93A12;
+  --zt-color-sage-300: #9DB8A0;
+  --zt-color-sage-600: #4F6B53;
+  --zt-color-brass-300: #D2AE6E;
+  --zt-color-brass-600: #7D5F2A;
+  --zt-color-slate-300: #9FB2C6;
+  --zt-color-slate-600: #4A5F75;
+  --zt-color-alpha-white-4: rgb(245 244 240 / 4%);
+  --zt-color-alpha-white-8: rgb(245 244 240 / 8%);
+  --zt-color-alpha-white-16: rgb(245 244 240 / 16%);
+  --zt-color-alpha-white-24: rgb(245 244 240 / 24%);
+  --zt-color-alpha-white-40: rgb(245 244 240 / 40%);
+  --zt-color-alpha-white-64: rgb(245 244 240 / 64%);
+  --zt-color-alpha-black-4: rgb(8 9 10 / 4%);
+  --zt-color-alpha-black-8: rgb(8 9 10 / 8%);
+  --zt-color-alpha-black-16: rgb(8 9 10 / 16%);
+  --zt-color-alpha-black-24: rgb(8 9 10 / 24%);
+  --zt-color-alpha-black-40: rgb(8 9 10 / 40%);
+  --zt-color-alpha-black-64: rgb(8 9 10 / 64%);
+  --zt-color-alpha-black-80: rgb(8 9 10 / 80%);
+  /* ---- Primitives: space, type, shape ---- */
+  --zt-space-0: 0;
+  --zt-space-2: 0.125rem; /* 2px */
+  --zt-space-4: 0.25rem; /* 4px */
+  --zt-space-8: 0.5rem; /* 8px */
+  --zt-space-12: 0.75rem; /* 12px */
+  --zt-space-16: 1rem; /* 16px */
+  --zt-space-20: 1.25rem; /* 20px */
+  --zt-space-24: 1.5rem; /* 24px */
+  --zt-space-32: 2rem; /* 32px */
+  --zt-space-40: 2.5rem; /* 40px */
+  --zt-space-48: 3rem; /* 48px */
+  --zt-space-56: 3.5rem; /* 56px */
+  --zt-space-64: 4rem; /* 64px */
+  --zt-space-72: 4.5rem; /* 72px */
+  --zt-space-80: 5rem; /* 80px */
+  --zt-space-96: 6rem; /* 96px */
+  --zt-space-112: 7rem; /* 112px */
+  --zt-space-128: 8rem; /* 128px */
+  --zt-space-160: 10rem; /* 160px */
+  --zt-space-200: 12.5rem; /* 200px */
+  --zt-space-240: 15rem; /* 240px */
+  --zt-font-size-14: 0.875rem; /* 14px */
+  --zt-font-size-16: 1rem; /* 16px */
+  --zt-font-size-18: 1.125rem; /* 18px */
+  --zt-font-size-20: 1.25rem; /* 20px */
+  --zt-font-size-24: 1.5rem; /* 24px */
+  --zt-font-size-28: 1.75rem; /* 28px */
+  --zt-font-size-32: 2rem; /* 32px */
+  --zt-font-size-40: 2.5rem; /* 40px */
+  --zt-font-size-48: 3rem; /* 48px */
+  --zt-font-size-56: 3.5rem; /* 56px */
+  --zt-font-size-64: 4rem; /* 64px */
+  --zt-font-size-72: 4.5rem; /* 72px */
+  --zt-font-size-80: 5rem; /* 80px */
+  --zt-font-size-96: 6rem; /* 96px */
+  --zt-font-size-112: 7rem; /* 112px */
+  --zt-font-family-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --zt-font-family-body: "Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --zt-font-weight-light: 300;
+  --zt-font-weight-regular: 400;
+  --zt-font-weight-medium: 500;
+  --zt-font-weight-semibold: 600;
+  --zt-radius-0: 0px;
+  --zt-radius-2: 2px;
+  --zt-radius-4: 4px;
+  --zt-radius-8: 8px;
+  --zt-radius-16: 16px;
+  --zt-radius-999: 999px;
+  --zt-border-width-1: 1px;
+  --zt-border-width-1-5: 1.5px;
+  --zt-border-width-2: 2px;
+  --zt-icon-size-16: 16px;
+  --zt-icon-size-20: 20px;
+  --zt-icon-size-24: 24px;
+  --zt-icon-size-32: 32px;
+  --zt-aspect-ratio-landscape: 3 / 2;
+  --zt-aspect-ratio-cinematic: 16 / 9;
+  --zt-aspect-ratio-square: 1 / 1;
+  --zt-aspect-ratio-portrait: 4 / 5;
+  /* ---- Primitives: motion ---- */
+  --zt-duration-instant: 0ms;
+  --zt-duration-micro: 150ms;
+  --zt-duration-base: 250ms;
+  --zt-duration-slow: 400ms;
+  --zt-duration-stage: 700ms;
+  --zt-duration-cinematic: 1200ms;
+  --zt-easing-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --zt-easing-exit: cubic-bezier(0.55, 0, 1, 0.45);
+  --zt-easing-move: cubic-bezier(0.65, 0, 0.35, 1);
+  --zt-easing-linear: linear;
+
+  /* ---- Semantic: system (mode-independent) ---- */
+  --space-inline-xs: var(--zt-space-4);
+  --space-inline-sm: var(--zt-space-8);
+  --space-inline-md: var(--zt-space-16);
+  --space-inline-lg: var(--zt-space-24);
+  --space-inline-xl: var(--zt-space-40);
+  --space-stack-2xs: var(--zt-space-4);
+  --space-stack-xs: var(--zt-space-8);
+  --space-stack-sm: var(--zt-space-16);
+  --space-stack-md: var(--zt-space-24);
+  --space-stack-lg: var(--zt-space-40);
+  --space-stack-xl: var(--zt-space-64);
+  --space-inset-sm: var(--zt-space-12);
+  --space-inset-md: var(--zt-space-24);
+  --space-inset-lg: var(--zt-space-40);
+  --space-container-gap: var(--zt-space-32);
+  --space-container-inset: var(--zt-space-48);
+  --radius-none: var(--zt-radius-0);
+  --radius-control: var(--zt-radius-2);
+  --radius-tag: var(--zt-radius-2);
+  --radius-card: var(--zt-radius-4);
+  --radius-media: var(--zt-radius-0);
+  --radius-modal: var(--zt-radius-8);
+  --radius-pill: var(--zt-radius-999);
+  --border-width-hairline: var(--zt-border-width-1);
+  --border-width-emphasis: var(--zt-border-width-1-5);
+  --border-width-focus: var(--zt-border-width-2);
+  --border-width-focus-offset: var(--zt-space-2);
+  --icon-size-16: var(--zt-icon-size-16);
+  --icon-size-20: var(--zt-icon-size-20);
+  --icon-size-24: var(--zt-icon-size-24);
+  --icon-size-32: var(--zt-icon-size-32);
+  --icon-stroke-default: var(--zt-border-width-1-5);
+  --icon-stroke-emphasis: var(--zt-border-width-2);
+  --image-ratio-landscape: var(--zt-aspect-ratio-landscape);
+  --image-ratio-cinematic: var(--zt-aspect-ratio-cinematic);
+  --image-ratio-square: var(--zt-aspect-ratio-square);
+  --image-ratio-portrait: var(--zt-aspect-ratio-portrait);
+  --font-display: var(--zt-font-family-display);
+  --font-body: var(--zt-font-family-body);
+
+  /* ---- Semantic: colour — Dark (default) ---- */
+  color-scheme: dark;
+  --color-bg-canvas: var(--zt-color-neutral-900);
+  --color-bg-surface: var(--zt-color-neutral-850);
+  --color-bg-raised: var(--zt-color-neutral-800);
+  --color-bg-sunken: var(--zt-color-neutral-950);
+  --color-bg-inverse: var(--zt-color-neutral-50);
+  --color-bg-accent: var(--zt-color-rosso-500);
+  --color-bg-accent-hover: var(--zt-color-rosso-600);
+  --color-bg-scrim: var(--zt-color-alpha-black-64);
+  --color-bg-image-scrim: var(--zt-color-alpha-black-40);
+  --color-text-primary: var(--zt-color-neutral-50);
+  --color-text-secondary: var(--zt-color-neutral-300);
+  --color-text-tertiary: var(--zt-color-neutral-400);
+  --color-text-disabled: var(--zt-color-neutral-600);
+  --color-text-inverse: var(--zt-color-neutral-950);
+  --color-text-accent: var(--zt-color-rosso-300);
+  --color-text-on-accent: var(--zt-color-neutral-50);
+  --color-text-on-image: var(--zt-color-neutral-50);
+  --color-border-subtle: var(--zt-color-alpha-white-8);
+  --color-border-default: var(--zt-color-alpha-white-16);
+  --color-border-strong: var(--zt-color-neutral-500);
+  --color-border-inverse: var(--zt-color-neutral-950);
+  --color-border-focus: var(--zt-color-rosso-300);
+  --color-border-accent: var(--zt-color-rosso-400);
+  --color-status-success: var(--zt-color-sage-300);
+  --color-status-warning: var(--zt-color-brass-300);
+  --color-status-danger: var(--zt-color-signal-300);
+  --color-status-info: var(--zt-color-slate-300);
+
+  /* ---- Semantic: motion — Default ---- */
+  --motion-duration-instant: var(--zt-duration-instant);
+  --motion-duration-micro: var(--zt-duration-micro);
+  --motion-duration-base: var(--zt-duration-base);
+  --motion-duration-slow: var(--zt-duration-slow);
+  --motion-duration-stage: var(--zt-duration-stage);
+  --motion-duration-cinematic: var(--zt-duration-cinematic);
+  --motion-easing-enter: var(--zt-easing-enter);
+  --motion-easing-exit: var(--zt-easing-exit);
+  --motion-easing-move: var(--zt-easing-move);
+  --motion-easing-progress: var(--zt-easing-linear);
+
+  /* ---- Semantic: layout — Mobile (375 / 390) ---- */
+  --grid-columns: 4;
+  --grid-gutter: 1rem;
+  --grid-margin: 1rem;
+  --grid-offset-3: 0;
+  --breakpoint-min-width: 0;
+  --space-section: var(--zt-space-80);
+  --space-section-tight: var(--zt-space-56);
+  --space-block: var(--zt-space-32);
+  --type-display: var(--zt-font-size-48);
+  --type-h1: var(--zt-font-size-40);
+  --type-h2: var(--zt-font-size-32);
+  --type-h3: var(--zt-font-size-24);
+  --type-title: var(--zt-font-size-20);
+  --type-lead: var(--zt-font-size-18);
+  --type-body: var(--zt-font-size-16);
+  --grid-container-max: 343px;
+  --grid-container: min(100% - 2 * var(--grid-margin), var(--grid-container-max));
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-bg-canvas: var(--zt-color-neutral-0);
+  --color-bg-surface: var(--zt-color-neutral-50);
+  --color-bg-raised: var(--zt-color-neutral-white);
+  --color-bg-sunken: var(--zt-color-neutral-100);
+  --color-bg-inverse: var(--zt-color-neutral-950);
+  --color-bg-accent: var(--zt-color-rosso-600);
+  --color-bg-accent-hover: var(--zt-color-rosso-700);
+  --color-bg-scrim: var(--zt-color-alpha-black-40);
+  --color-text-primary: var(--zt-color-neutral-950);
+  --color-text-secondary: var(--zt-color-neutral-700);
+  --color-text-tertiary: var(--zt-color-neutral-600);
+  --color-text-disabled: var(--zt-color-neutral-400);
+  --color-text-inverse: var(--zt-color-neutral-50);
+  --color-text-accent: var(--zt-color-rosso-600);
+  --color-border-subtle: var(--zt-color-alpha-black-8);
+  --color-border-default: var(--zt-color-alpha-black-16);
+  --color-border-inverse: var(--zt-color-neutral-50);
+  --color-border-focus: var(--zt-color-rosso-600);
+  --color-border-accent: var(--zt-color-rosso-600);
+  --color-status-success: var(--zt-color-sage-600);
+  --color-status-warning: var(--zt-color-brass-600);
+  --color-status-danger: var(--zt-color-signal-600);
+  --color-status-info: var(--zt-color-slate-600);
+}
+
+/* ZT Layout — Tablet 768 (from 768px) */
+@media (min-width: 768px) {
+  :root {
+    --grid-columns: 8;
+    --grid-gutter: 1.5rem;
+    --grid-margin: 2rem;
+    --grid-offset-3: 11.375rem;
+    --breakpoint-min-width: 48rem;
+    --space-section: var(--zt-space-96);
+    --space-section-tight: var(--zt-space-72);
+    --space-block: var(--zt-space-40);
+    --type-display: var(--zt-font-size-72);
+    --type-h1: var(--zt-font-size-48);
+    --type-h2: var(--zt-font-size-40);
+    --type-h3: var(--zt-font-size-28);
+    --type-title: var(--zt-font-size-24);
+    --type-lead: var(--zt-font-size-20);
+    --type-body: var(--zt-font-size-16);
+    --grid-container-max: 704px;
+  }
+}
+
+/* ZT Layout — Small desktop 1024 (from 1024px) */
+@media (min-width: 1024px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 1.5rem;
+    --grid-margin: 3rem;
+    --grid-offset-3: 14.875rem;
+    --breakpoint-min-width: 64rem;
+    --space-section: var(--zt-space-128);
+    --space-section-tight: var(--zt-space-80);
+    --space-block: var(--zt-space-48);
+    --type-display: var(--zt-font-size-80);
+    --type-h1: var(--zt-font-size-56);
+    --type-h2: var(--zt-font-size-40);
+    --type-h3: var(--zt-font-size-28);
+    --type-title: var(--zt-font-size-24);
+    --type-lead: var(--zt-font-size-20);
+    --type-body: var(--zt-font-size-18);
+    --grid-container-max: 928px;
+  }
+}
+
+/* ZT Layout — Desktop 1440 (from 1280px) */
+@media (min-width: 1280px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 1.5rem;
+    --grid-margin: 5rem;
+    --grid-offset-3: 20.375rem;
+    --breakpoint-min-width: 80rem;
+    --space-section: var(--zt-space-160);
+    --space-section-tight: var(--zt-space-96);
+    --space-block: var(--zt-space-56);
+    --type-display: var(--zt-font-size-96);
+    --type-h1: var(--zt-font-size-64);
+    --type-h2: var(--zt-font-size-48);
+    --type-h3: var(--zt-font-size-32);
+    --type-title: var(--zt-font-size-24);
+    --type-lead: var(--zt-font-size-20);
+    --type-body: var(--zt-font-size-18);
+    --grid-container-max: 1280px;
+  }
+}
+
+/* ZT Layout — Wide 1920 (from 1920px) */
+@media (min-width: 1920px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 2rem;
+    --grid-margin: 10rem;
+    --grid-offset-3: 25.5rem;
+    --breakpoint-min-width: 120rem;
+    --space-section: var(--zt-space-160);
+    --space-section-tight: var(--zt-space-112);
+    --space-block: var(--zt-space-64);
+    --type-display: var(--zt-font-size-112);
+    --type-h1: var(--zt-font-size-80);
+    --type-h2: var(--zt-font-size-56);
+    --type-h3: var(--zt-font-size-32);
+    --type-title: var(--zt-font-size-28);
+    --type-lead: var(--zt-font-size-24);
+    --type-body: var(--zt-font-size-18);
+    --grid-container-max: 1600px;
+  }
+}
+
+/* ZT Motion — Reduced. Every duration resolves to instant; crossfades become cuts. Nothing is hidden. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-instant: var(--zt-duration-instant);
+    --motion-duration-micro: var(--zt-duration-instant);
+    --motion-duration-base: var(--zt-duration-instant);
+    --motion-duration-slow: var(--zt-duration-instant);
+    --motion-duration-stage: var(--zt-duration-instant);
+    --motion-duration-cinematic: var(--zt-duration-instant);
+  }
+}
+
+/* ---- Text styles (ZT/…) ---- */
+.zt-display-hero { /* One per page. Hero line only. */
+  font-family: var(--font-display); font-weight: var(--zt-font-weight-regular); font-size: var(--type-display);
+  line-height: 0.96; letter-spacing: -0.02em;
+}
+.zt-heading-h1 { /* Page title / chapter opener. */
+  font-family: var(--font-display); font-weight: var(--zt-font-weight-regular); font-size: var(--type-h1);
+  line-height: 1; letter-spacing: -0.015em;
+}
+.zt-heading-h2 { /* Section headline. Smallest size Bodoni is set at (32px). */
+  font-family: var(--font-display); font-weight: var(--zt-font-weight-regular); font-size: var(--type-h2);
+  line-height: 1.05; letter-spacing: -0.01em;
+}
+.zt-heading-h3 { /* Sub-section headline. Hanken — a high-contrast display face is not set below 32px. */
+  font-family: var(--font-body); font-weight: var(--zt-font-weight-medium); font-size: var(--type-h3);
+  line-height: 1.2; letter-spacing: -0.01em;
+}
+.zt-title { /* Model names, card titles. */
+  font-family: var(--font-body); font-weight: var(--zt-font-weight-medium); font-size: var(--type-title);
+  line-height: 1.25; letter-spacing: -0.005em;
+}
+.zt-body-lead { /* Intro paragraph under a headline. Max 60ch. */
+  font-family: var(--font-body); font-weight: var(--zt-font-weight-light); font-size: var(--type-lead);
+  line-height: 1.45; letter-spacing: 0em;
+}
+.zt-body { /* Running copy. Max 68ch. */
+  font-family: var(--font-body); font-weight: var(--zt-font-weight-regular); font-size: var(--type-body);
+  line-height: 1.6; letter-spacing: 0em;
+}
+.zt-body-small { /* 14px floor — legal, helper text. Never smaller. */
+  font-family: var(--font-body); font-weight: var(--zt-font-weight-regular); font-size: var(--zt-font-size-14);
+  line-height: 1.5; letter-spacing: 0em;
+}
+.zt-label-eyebrow { /* Uppercase label above a headline. ≤5 words, never above every heading. */
+  font-family: var(--font-body); font-weight: var(--zt-font-weight-medium); font-size: var(--zt-font-size-14);
+  line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.zt-label-button { /* Button and link-button text. */
+  font-family: var(--font-body); font-weight: var(--zt-font-weight-medium); font-size: var(--zt-font-size-14);
+  line-height: 1; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.zt-data-spec { /* Specification values. Tabular figures. */
+  font-family: var(--font-body); font-weight: var(--zt-font-weight-regular); font-size: var(--zt-font-size-16);
+  line-height: 1.4; letter-spacing: 0em; font-variant-numeric: tabular-nums;
+}
+.zt-data-price { /* Price. Tabular figures. */
+  font-family: var(--font-body); font-weight: var(--zt-font-weight-medium); font-size: var(--zt-font-size-24);
+  line-height: 1.2; letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
+}
+.zt-data-caption { /* Stock numbers, credits, timestamps. */
+  font-family: var(--font-body); font-weight: var(--zt-font-weight-regular); font-size: var(--zt-font-size-14);
+  line-height: 1.4; letter-spacing: 0.01em;
+}
+
+/* ---- Effects ---- */
+:root { --shadow-overlay: none; } /* dark: overlays separate by bg/raised + border/default */
+:root[data-theme="light"] { --shadow-overlay: 0 12px 32px 0 rgb(8 9 10 / 16%); }
+
+/* ---- Focus (always visible) ---- */
+:focus-visible { outline: var(--border-width-focus) solid var(--color-border-focus); outline-offset: var(--border-width-focus-offset); }
