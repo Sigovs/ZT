@@ -205,3 +205,65 @@ img { display: block; }
   .nav__links { display: none; }
   .note { display: none; }
 }
+
+/* =====================================================================
+   v2 · Screen 3 — "In the collection"
+   Monumental model names as the index; one photo window cut with the
+   ZT shield's 34° chamfer. Scroll scrubs the active row; hover chooses.
+   ===================================================================== */
+.listing { position: relative; height: 100vh; height: 100svh; background: var(--ink); overflow: hidden; }
+.listing__inner { position: absolute; inset: 0; }
+.listing__head { position: absolute; left: var(--pad); top: calc(132 * var(--u)); max-width: calc(760 * var(--u)); }
+.listing__head h2 { font-family: var(--display); font-weight: 500; font-size: max(26px, calc(40 * var(--u))); letter-spacing: -.02em; line-height: 1.1; }
+.listing__head p { margin-top: var(--s2); color: var(--ivory-2); font-size: max(14px, calc(15 * var(--u))); }
+
+.rows { position: absolute; left: var(--pad); top: calc(262 * var(--u)); width: calc(1010 * var(--u)); list-style: none; }
+.row {
+  width: 100%; display: grid; align-items: center;
+  grid-template-columns: calc(120 * var(--u)) 1fr auto; gap: var(--s5);
+  height: calc(104 * var(--u)); min-height: 52px;
+  color: rgba(239, 237, 232, .42);
+  transition: color .5s var(--ease);
+}
+.row__mark { width: max(18px, calc(var(--w) * .82 * var(--u))); }
+.row__mark.mark--ferrari { width: max(14px, calc(24 * var(--u))); }
+.row__model {
+  font-family: var(--display); font-weight: 600; font-size: calc(104 * var(--u)); line-height: .9; letter-spacing: -.05em;
+  white-space: nowrap; display: inline-block; transition: transform .6s var(--ease);
+}
+.row__meta {
+  font-size: max(14px, calc(15 * var(--u))); color: var(--ivory-2); font-variant-numeric: tabular-nums; white-space: nowrap;
+  opacity: 0; transform: translateX(-12px); transition: opacity .45s var(--ease), transform .6s var(--ease);
+}
+.row:hover, .row:focus-visible { color: rgba(239, 237, 232, .7); }
+.row.is-active { color: var(--ivory); }
+.row.is-active .row__model { transform: translateX(var(--s3)); }
+.row.is-active .row__meta { opacity: 1; transform: none; }
+
+/* the window — vertical sides, bottom-left corner cut at 34° (the shield's chamfer) */
+.window {
+  position: absolute; right: var(--pad); top: calc(132 * var(--u));
+  width: calc(700 * var(--u)); height: calc(800 * var(--u));
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 40% 100%, 0% 76.4%);
+  background: var(--ink-2);
+}
+.window__shots { position: absolute; inset: -4%; will-change: transform; }
+.shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 50%); visibility: hidden; --w: 110%; }
+.shot.is-active, .shot.is-entering { visibility: visible; }
+.shot.is-entering {
+  z-index: 2;
+  -webkit-mask-image: linear-gradient(56deg, #000 0 var(--w), transparent calc(var(--w) + 14%));
+          mask-image: linear-gradient(56deg, #000 0 var(--w), transparent calc(var(--w) + 14%));
+}
+.window__credit {
+  position: absolute; right: var(--pad); top: calc(948 * var(--u));
+  font-size: 14px; color: var(--ivory-3); text-align: right;
+}
+.listing__all {
+  position: absolute; left: var(--pad); top: calc(948 * var(--u));
+  display: inline-flex; gap: var(--s2); font-weight: 500; font-size: max(14px, calc(15 * var(--u)));
+}
+.listing__all span { display: inline-block; transition: transform .5s var(--ease); }
+.listing__all:hover span { transform: translateX(6px); }
+
+.rm .listing { height: auto; min-height: 100vh; }

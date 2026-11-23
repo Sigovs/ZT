@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.11/dist/lenis.css">
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 <link rel="preload" as="image" href="assets/img/ferrari-f80.jpg">
 </head>
 <body>
@@ -21,7 +21,7 @@
     <span>ZT Automotive Collection</span>
   </a>
   <nav class="nav__links" aria-label="Primary">
-    <a href="#marques">Collection</a>
+    <a href="#collection">Collection</a>
     <a href="#marques">Marques</a>
     <a href="#top">Ownership</a>
     <a href="#top">Visit</a>
@@ -125,6 +125,39 @@
     </div>
 
   </section>
+
+  <!-- ===== Screen 3 · in the collection ===== -->
+  <section class="listing" id="collection" aria-labelledby="listing-title">
+    <div class="listing__inner">
+      <header class="listing__head">
+        <h2 id="listing-title">In the collection</h2>
+        <p>Year, mileage and price on every listing. Example listings — figures to come.</p>
+      </header>
+
+      <ol class="rows" role="list">
+        <li><button class="row is-active" data-shot="0"><span class="mark mark--ferrari row__mark" aria-hidden="true"></span><span class="row__model">296 GTB</span><span class="row__meta">Ferrari · 0000 · 0,000 km · $000,000</span></button></li>
+        <li><button class="row" data-shot="1"><span class="mark mark--koenigsegg row__mark" aria-hidden="true"></span><span class="row__model">CC850</span><span class="row__meta">Koenigsegg · 0000 · 0,000 km · $000,000</span></button></li>
+        <li><button class="row" data-shot="2"><span class="mark mark--mclaren row__mark" aria-hidden="true"></span><span class="row__model">Artura</span><span class="row__meta">McLaren · 0000 · 0,000 km · $000,000</span></button></li>
+        <li><button class="row" data-shot="3"><span class="mark mark--rolls-royce row__mark" aria-hidden="true"></span><span class="row__model">Spectre</span><span class="row__meta">Rolls-Royce · 0000 · 0,000 km · $000,000</span></button></li>
+        <li><button class="row" data-shot="4"><span class="mark mark--czinger row__mark" aria-hidden="true"></span><span class="row__model">21C</span><span class="row__meta">Czinger · 0000 · 0,000 km · $000,000</span></button></li>
+        <li><button class="row" data-shot="5"><span class="mark mark--ferrari row__mark" aria-hidden="true"></span><span class="row__model">Purosangue</span><span class="row__meta">Ferrari · 0000 · 0,000 km · $000,000</span></button></li>
+      </ol>
+
+      <figure class="window" aria-hidden="true">
+        <div class="window__shots">
+          <img class="shot is-active" src="assets/img/list-ferrari-296gtb.jpg" alt="" loading="lazy" style="--pos:44% 36%">
+          <img class="shot" src="assets/img/list-koenigsegg-cc850.jpg" alt="" loading="lazy" style="--pos:40% 62%">
+          <img class="shot" src="assets/img/list-mclaren-artura.jpg" alt="" loading="lazy" style="--pos:38% 58%">
+          <img class="shot" src="assets/img/list-rollsroyce-spectre.jpg" alt="" loading="lazy" style="--pos:52% 70%">
+          <img class="shot" src="assets/img/list-czinger-21c.jpg" alt="" loading="lazy" style="--pos:44% 62%">
+          <img class="shot" src="assets/img/list-ferrari-purosangue.jpg" alt="" loading="lazy" style="--pos:44% 30%">
+        </div>
+        <span class="window__edge"></span>
+      </figure>
+      <p class="window__credit" data-shot-credit>Ferrari 296 GTB · image: Ferrari S.p.A.</p>
+      <a class="listing__all" href="#collection">All listings <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
 </main>
 
 <p class="note">Prototype · internal exploration · placeholder figures · vehicle images and marks © their manufacturers</p>
@@ -133,5 +166,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
 <script src="main.js?v=7"></script>
+<script src="sections.js?v=2"></script>
 </body>
 </html>
