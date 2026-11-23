@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZT Automotive Collection — Thirty-Four Degrees</title>
+<meta name="description" content="Interactive art-direction prototype for ZT Automotive Collection. Internal exploration; manufacturer imagery and marks belong to their owners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.11/dist/lenis.css">
+<link rel="stylesheet" href="styles.css?v=6">
+<link rel="preload" as="image" href="assets/img/ferrari-f80.jpg">
+</head>
+<body>
+
+<header class="nav" data-intro="fade">
+  <a class="nav__brand" href="#top" aria-label="ZT Automotive Collection, home">
+    <img src="assets/zt-monogram-white.png" alt="" width="34" height="40">
+    <span>ZT Automotive Collection</span>
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#marques">Collection</a>
+    <a href="#marques">Marques</a>
+    <a href="#top">Ownership</a>
+    <a href="#top">Visit</a>
+  </nav>
+  <a class="nav__cta" href="#top"><span>Enquire</span></a>
+</header>
+
+<main id="top">
+  <section class="stage" id="stage" aria-label="ZT Automotive Collection">
+
+    <!-- ===== Screen 1 · the bar ===== -->
+    <div class="hero">
+      <h1 class="display" aria-live="polite"><span class="display__word" data-display>Collection</span></h1>
+
+      <div class="bar" aria-hidden="true">
+        <div class="bar__plates">
+          <figure class="plate is-active" data-plate="collection"><img src="assets/img/ferrari-f80.jpg" alt="" style="--pos:52% 46%"></figure>
+          <figure class="plate" data-plate="czinger"><img src="assets/img/czinger-21c-vmax-night.jpg" alt="" loading="lazy" style="--pos:58% 64%"></figure>
+          <figure class="plate" data-plate="ferrari"><img src="assets/img/ferrari-12cilindri.jpg" alt="" loading="lazy" style="--pos:50% 62%"></figure>
+          <figure class="plate" data-plate="koenigsegg"><img src="assets/img/koenigsegg-jesko-absolut.jpg" alt="" loading="lazy" style="--pos:40% 60%"></figure>
+          <figure class="plate" data-plate="mclaren"><img src="assets/img/mclaren-w1-side.jpg" alt="" loading="lazy" style="--pos:46% 62%"></figure>
+          <figure class="plate" data-plate="rolls-royce"><img src="assets/img/rollsroyce-spectre.jpg" alt="" loading="lazy" style="--pos:66% 70%"></figure>
+        </div>
+        <div class="bar__scrim"></div>
+      </div>
+      <div class="hairline" aria-hidden="true"></div>
+
+      <div class="intro" data-intro="rise">
+        <p class="intro__lede">Czinger, Ferrari, Koenigsegg, McLaren and Rolls-Royce. Every car listed with its year, mileage and price.</p>
+
+        <ul class="index" role="list" aria-label="Choose a marque">
+          <li><button class="index__item" data-key="czinger" data-word="21C" data-model="Czinger 21C V Max" data-credit="Image: Czinger Vehicles"><span class="mark mark--czinger" aria-hidden="true"></span><span class="index__name">Czinger</span><span class="index__count">00</span></button></li>
+          <li><button class="index__item" data-key="ferrari" data-word="12Cilindri" data-model="Ferrari 12Cilindri" data-credit="Image: Ferrari S.p.A."><span class="mark mark--ferrari" aria-hidden="true"></span><span class="index__name">Ferrari</span><span class="index__count">00</span></button></li>
+          <li><button class="index__item" data-key="koenigsegg" data-word="Jesko" data-model="Koenigsegg Jesko Absolut" data-credit="Image: Koenigsegg · photo Keno Zache"><span class="mark mark--koenigsegg" aria-hidden="true"></span><span class="index__name">Koenigsegg</span><span class="index__count">00</span></button></li>
+          <li><button class="index__item" data-key="mclaren" data-word="W1" data-model="McLaren W1" data-credit="Image: McLaren Automotive"><span class="mark mark--mclaren" aria-hidden="true"></span><span class="index__name">McLaren</span><span class="index__count">00</span></button></li>
+          <li><button class="index__item" data-key="rolls-royce" data-word="Spectre" data-model="Rolls-Royce Spectre" data-credit="Image: Rolls-Royce Motor Cars · editorial use"><span class="mark mark--rolls-royce" aria-hidden="true"></span><span class="index__name">Rolls-Royce</span><span class="index__count">00</span></button></li>
+        </ul>
+
+        <div class="readout" aria-live="polite">
+          <p class="readout__model" data-readout-model>Ferrari F80</p>
+          <p class="readout__meta">0000 · 0,000 km · $000,000</p>
+          <p class="readout__credit" data-readout-credit>Image: Ferrari S.p.A.</p>
+        </div>
+      </div>
+
+      <p class="scrollcue" data-intro="fade" aria-hidden="true"><span></span>Scroll</p>
+    </div>
+
+    <!-- ===== Screen 2 · the monolith ===== -->
+    <div class="monolith" id="marques" aria-label="Five marques">
+      <a class="col" href="#marques" data-col="czinger">
+        <img src="assets/img/col-czinger-21c.jpg" alt="Czinger 21C on track" loading="lazy" style="--pos:50% 60%">
+        <span class="col__shade"></span>
+        <span class="col__body">
+          <span class="mark mark--czinger col__mark" aria-hidden="true"></span>
+          <span class="col__name">Czinger</span>
+          <span class="col__models">21C · 21C V Max</span>
+          <span class="col__count">00 cars in the collection</span>
+        </span>
+      </a>
+      <a class="col" href="#marques" data-col="ferrari">
+        <img src="assets/img/col-ferrari-purosangue.jpg" alt="Ferrari Purosangue on a forest road" loading="lazy" style="--pos:62% 58%">
+        <span class="col__shade"></span>
+        <span class="col__body">
+          <span class="mark mark--ferrari col__mark" aria-hidden="true"></span>
+          <span class="col__name">Ferrari</span>
+          <span class="col__models">12Cilindri · Purosangue · F80 · 296 GTB</span>
+          <span class="col__count">00 cars in the collection</span>
+        </span>
+      </a>
+      <a class="col" href="#marques" data-col="koenigsegg">
+        <img src="assets/img/col-koenigsegg-gemera.jpg" alt="Koenigsegg Gemera at Laguna Seca" loading="lazy" style="--pos:56% 62%">
+        <span class="col__shade"></span>
+        <span class="col__body">
+          <span class="mark mark--koenigsegg col__mark" aria-hidden="true"></span>
+          <span class="col__name">Koenigsegg</span>
+          <span class="col__models">Jesko · CC850 · Gemera</span>
+          <span class="col__count">00 cars in the collection</span>
+        </span>
+      </a>
+      <a class="col" href="#marques" data-col="mclaren">
+        <img src="assets/img/col-mclaren-artura-spider.jpg" alt="McLaren Artura Spider in a dark studio" loading="lazy" style="--pos:50% 55%">
+        <span class="col__shade"></span>
+        <span class="col__body">
+          <span class="mark mark--mclaren col__mark" aria-hidden="true"></span>
+          <span class="col__name">McLaren</span>
+          <span class="col__models">W1 · Artura · Artura Spider</span>
+          <span class="col__count">00 cars in the collection</span>
+        </span>
+      </a>
+      <a class="col" href="#marques" data-col="rolls-royce">
+        <img src="assets/img/col-rollsroyce-cullinan.jpg" alt="Rolls-Royce Cullinan by a lake at dawn" loading="lazy" style="--pos:62% 62%">
+        <span class="col__shade"></span>
+        <span class="col__body">
+          <span class="mark mark--rolls-royce col__mark" aria-hidden="true"></span>
+          <span class="col__name">Rolls-Royce</span>
+          <span class="col__models">Spectre · Cullinan</span>
+          <span class="col__count">00 cars in the collection</span>
+        </span>
+      </a>
+    </div>
+
+  </section>
+</main>
+
+<p class="note">Prototype · internal exploration · placeholder figures · vehicle images and marks © their manufacturers</p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
+<script src="main.js?v=6"></script>
+</body>
+</html>

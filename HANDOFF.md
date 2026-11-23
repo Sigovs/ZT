@@ -35,4 +35,4 @@ Figma file: https://www.figma.com/design/NkR9bvaMl2D0hUMfB6mOLv/ZT-AUTO-GROUP
 - Put a light section's content in a child frame with its own explicit variable mode.
 
 ## Next
-Alex chooses among studies 07–10. Then a full homepage is built in the chosen direction. HTML only after approval.
+Interactive prototype "Thirty-Four Degrees" (hero + second screen, GSAP + ScrollTrigger + Lenis): `prototype/thirty-four/index.html`. Earlier Figma studies are preserved.
