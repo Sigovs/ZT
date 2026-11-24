@@ -51,3 +51,13 @@ Homepage v2 (`prototype/thirty-four-home-v2/`, 24 Nov 2026): a separate revision
 - Mega menu: five marques first; below a rule, all group dealerships by brand, each linking to its own site (source: ztautogroup.com Locations by make, 24 Nov 2026).
 - Facts added from ZT's own sites: Czinger Charlotte is at 1316 South Tryon St (czingerclt.com); showroom telephone numbers; service, consignment, trade and finance pages; press items and dates; the Foundation. Ferrari still has no ZT source.
 - Films are official footage re-cut for the prototype (Czinger, Rolls-Royce newsroom, McLaren Charlotte). None is cleared for public use.
+
+Homepage v3 (`prototype/thirty-four-home-v3/`, 24 Nov 2026): v2 plus six refinements; v2 is untouched. Live: https://sigovs.github.io/ZT/prototype/thirty-four-home-v3/
+- Read the top of `prototype/thirty-four-home-v3/CREATIVE_MEDIA_PLAN.md` for what changed and why.
+- Hero: the marque list is gone. A broken line of five strokes along the bar's edge chooses the film; only the chosen marque's mark is shown. `?hero=strokes|type|none` shows the alternatives that were tried.
+- Marques: columns open in place (no overlay, no Flip). Phones: the band grows taller.
+- The House: one architectural photograph, a two-line headline, the figures as a sentence, history as a seven-year line.
+- New: the three-bar interlude (Driven / by / Excellence) between Buy, sell, trade and Showrooms; "Beyond the showroom" social filmstrip before Enquire (curated stills, not a live feed).
+- Files: `v3.css` holds everything v3 adds; `main.js` and `home.js` are v3's own copies.
+- Still open: no official film for Koenigsegg or Ferrari; no verified Instagram account for Koenigsegg Charlotte, Czinger Charlotte or Ferrari; the designer's overall verdict is positive but the homepage is not approved.
+

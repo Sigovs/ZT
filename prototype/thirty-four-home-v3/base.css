@@ -1,0 +1,207 @@
+/* ZT Automotive Collection — "Thirty-Four Degrees" interactive prototype
+   One bar at the angle of the ZT monogram (34°) carries the photograph;
+   five monolith columns rise beneath it and become the second screen.   */
+
+:root {
+  --u: calc(100vw / 1920);            /* 1px at the 1920 design width, fluid */
+  --ink: #0b0c0d;
+  --ink-2: #131517;
+  --ivory: #efede8;
+  --ivory-2: rgba(239, 237, 232, .74);
+  --ivory-3: rgba(239, 237, 232, .56);
+  --rule: rgba(239, 237, 232, .16);
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --display: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --text: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --pad: max(24px, calc(80 * var(--u)));
+  /* spacing scale (4-based) */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--ink); color: var(--ivory); }
+body {
+  font-family: var(--text);
+  font-size: max(15px, calc(17 * var(--u)));
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background: var(--ink);
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; }
+img { display: block; }
+:focus-visible { outline: 2px solid var(--ivory); outline-offset: 4px; }
+
+/* ---------- official marks, coloured by CSS mask (artwork untouched) ---------- */
+.mark {
+  display: block;
+  background: currentColor;
+  -webkit-mask: var(--logo) no-repeat left center / contain;
+          mask: var(--logo) no-repeat left center / contain;
+}
+/* optical normalisation — widths chosen per mark, proportions preserved */
+.mark--czinger    { --logo: url(assets/logos/czinger.svg);     aspect-ratio: 153 / 59; --w: 86; }
+.mark--ferrari    { --logo: url(assets/logos/ferrari.svg);     aspect-ratio: 53 / 79;  --w: 26; }
+.mark--koenigsegg { --logo: url(assets/logos/koenigsegg.svg);  aspect-ratio: 127 / 32; --w: 112; }
+.mark--mclaren    { --logo: url(assets/logos/mclaren.svg);     aspect-ratio: 158 / 15; --w: 118; }
+.mark--rolls-royce{ --logo: url(assets/logos/rolls-royce.svg); aspect-ratio: 176 / 44; --w: 104; }
+
+/* ---------- navigation ---------- */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  display: flex; align-items: center; gap: var(--s7);
+  padding: calc(40 * var(--u)) var(--pad);
+  pointer-events: none;
+}
+.nav > * { pointer-events: auto; }
+.nav__brand { display: flex; align-items: center; gap: var(--s4); font-weight: 500; font-size: max(14px, calc(15 * var(--u))); letter-spacing: .01em; }
+.nav__brand img { width: max(28px, calc(34 * var(--u))); height: auto; }
+.nav__links { display: flex; gap: calc(36 * var(--u)); margin-left: auto; font-size: max(14px, calc(15 * var(--u))); }
+.nav__links a { color: var(--ivory-2); transition: color .3s var(--ease); }
+.nav__links a:hover { color: var(--ivory); }
+/* CTA: a parallelogram cut from the monogram's geometry */
+.nav__cta { position: relative; padding: 10px 30px; font-weight: 500; font-size: max(14px, calc(15 * var(--u))); isolation: isolate; }
+.nav__cta::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  border: 1px solid var(--ivory); transform: skewX(-34deg);
+  transition: background .35s var(--ease);
+}
+.nav__cta:hover { color: var(--ink); }
+.nav__cta:hover::before { background: var(--ivory); }
+.nav__cta span { position: relative; }
+
+/* ---------- stage (pinned) ---------- */
+.stage { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: var(--ink); }
+.hero { position: absolute; inset: 0; }
+
+/* the monumental word — sits UNDER the bar */
+.display {
+  position: absolute; z-index: 1;
+  left: calc(48 * var(--u)); top: calc(96 * var(--u));
+  font-family: var(--display); font-weight: 700;
+  font-size: calc(318 * var(--u)); line-height: .92; letter-spacing: -.065em;
+  white-space: nowrap; pointer-events: none;
+}
+.display__word { display: inline-block; }
+.ch { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .06em; margin-bottom: -.06em; }
+.ch > span { display: inline-block; will-change: transform; }
+
+/* the bar — clip-path is written by JS every frame */
+.bar { position: absolute; inset: 0; z-index: 2; clip-path: polygon(0 0, 0 0, 0 0, 0 0); will-change: clip-path; }
+.bar__plates { position: absolute; inset: -6%; will-change: transform; }
+.plate { position: absolute; inset: 0; visibility: hidden; --w: 110%; }
+.plate.is-active, .plate.is-entering { visibility: visible; }
+.plate.is-entering {
+  z-index: 2;
+  -webkit-mask-image: linear-gradient(56deg, #000 0 var(--w), transparent calc(var(--w) + 14%));
+          mask-image: linear-gradient(56deg, #000 0 var(--w), transparent calc(var(--w) + 14%));
+}
+.plate img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 50%); }
+.bar__scrim { position: absolute; inset: 0 0 auto 0; height: 22%; background: linear-gradient(rgba(11,12,13,.62), rgba(11,12,13,0)); pointer-events: none; }
+
+.hairline {
+  position: absolute; z-index: 3; left: 0; top: 0; height: 1px; width: 140vmax;
+  background: var(--ivory); transform-origin: 0 50%; opacity: 0; pointer-events: none;
+}
+
+/* intro column (upper-left field, above the bar) */
+.intro {
+  position: absolute; z-index: 4;
+  left: var(--pad); bottom: calc(104 * var(--u) + 24px);
+  width: max(300px, calc(430 * var(--u)));
+}
+@media (max-height: 1000px) {
+  .index { margin-top: var(--s5); }
+  .index__item { padding: 8px 0; }
+  .readout { margin-top: var(--s4); min-height: 0; }
+}
+@media (max-height: 860px) { .intro__lede { display: none; } }
+.intro__lede { color: var(--ivory-2); max-width: 32ch; line-height: 1.55; }
+
+.index { list-style: none; margin-top: calc(40 * var(--u)); border-top: 1px solid var(--rule); }
+.index__item {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: calc(130 * var(--u)) 1fr auto; align-items: center; gap: var(--s4);
+  padding: max(10px, calc(13 * var(--u))) 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ivory-3);
+  transition: color .4s var(--ease);
+}
+.index__item > span:not(.index__count) { transition: transform .5s var(--ease); }
+.index__item .mark { width: max(18px, calc(var(--w) * .78 * var(--u))); }
+.index__item .mark--ferrari { width: max(14px, calc(22 * var(--u))); }
+.index__name { font-size: max(14px, calc(15 * var(--u))); }
+.index__count { font-size: 14px; font-variant-numeric: tabular-nums; color: var(--ivory-3); }
+.index__item::before { /* active tick: a small 34° parallelogram */
+  content: ""; position: absolute; left: -22px; top: 50%; width: 12px; height: 8px; margin-top: -4px;
+  background: var(--ivory); transform: skewX(-34deg) scaleX(0); transform-origin: left; transition: transform .45s var(--ease);
+}
+.index__item:hover, .index__item:focus-visible, .index__item.is-active { color: var(--ivory); }
+.index__item:hover > span:not(.index__count), .index__item:focus-visible > span:not(.index__count), .index__item.is-active > span:not(.index__count) { transform: translateX(var(--s3)); }
+.index__item.is-active::before { transform: skewX(-34deg) scaleX(1); }
+
+.readout { margin-top: calc(28 * var(--u)); min-height: 4.8em; }
+.readout__model { font-family: var(--display); font-weight: 500; font-size: max(18px, calc(24 * var(--u))); letter-spacing: -.01em; }
+.readout__meta { color: var(--ivory-2); font-variant-numeric: tabular-nums; font-size: max(14px, calc(15 * var(--u))); }
+.readout__credit { color: var(--ivory-3); font-size: 14px; margin-top: var(--s1); }
+
+.scrollcue {
+  position: absolute; z-index: 4; left: var(--pad); bottom: calc(40 * var(--u));
+  display: flex; align-items: center; gap: var(--s3); font-size: 14px; color: var(--ivory-2);
+}
+.scrollcue span { width: 40px; height: 1px; background: var(--ivory-2); transform-origin: left; animation: cue 2.4s var(--ease) infinite; }
+@keyframes cue { 0% { transform: scaleX(0); } 50% { transform: scaleX(1); } 100% { transform: scaleX(1); opacity: 0; } }
+
+/* ---------- monolith (screen 2) ---------- */
+.monolith { position: absolute; inset: 0; z-index: 3; display: flex; gap: 2px; pointer-events: none; }
+.monolith.is-live { pointer-events: auto; }
+.col {
+  position: relative; flex: 1 1 0; min-width: 0; overflow: hidden;
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+  transition: flex-grow .9s var(--ease);
+  background: var(--ink-2);
+}
+.col img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 50%);
+  filter: grayscale(1) contrast(1.12) brightness(.62);
+  transform: scale(1.06);
+  transition: filter 1s var(--ease), transform 1.4s var(--ease);
+}
+.col__shade { position: absolute; inset: 40% 0 0 0; background: linear-gradient(rgba(11,12,13,0), rgba(11,12,13,.86)); }
+.col__body {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 0 calc(32 * var(--u)) calc(56 * var(--u));
+  display: flex; flex-direction: column; align-items: flex-start; gap: var(--s2);
+}
+.col__mark { width: max(80px, calc(var(--w) * 1.55 * var(--u))); margin-bottom: var(--s5); color: var(--ivory); }
+.col__mark.mark--ferrari { width: max(30px, calc(46 * var(--u))); }
+.col__name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } /* the mark speaks; name kept for screen readers */
+.col__models, .col__count {
+  font-size: max(14px, calc(15 * var(--u))); color: var(--ivory-2);
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .5s var(--ease), transform .6s var(--ease);
+}
+.col__count { color: var(--ivory-3); font-size: 14px; }
+.monolith.is-live .col:hover, .monolith.is-live .col:focus-visible { flex-grow: 2.1; }
+.monolith.is-live .col:hover img, .monolith.is-live .col:focus-visible img { filter: grayscale(0) contrast(1.04) brightness(.86); transform: scale(1); }
+.monolith.is-live .col:hover .col__models, .monolith.is-live .col:hover .col__count,
+.monolith.is-live .col:focus-visible .col__models, .monolith.is-live .col:focus-visible .col__count { opacity: 1; transform: none; }
+.monolith.is-live .col:hover .col__count { transition-delay: .08s; }
+
+.note { position: fixed; z-index: 60; left: 50%; transform: translateX(-50%); bottom: 10px; font-size: 14px; color: var(--ivory-3); pointer-events: none; white-space: nowrap; text-shadow: 0 1px 8px rgba(0,0,0,.6); }
+
+/* ---------- reduced motion: a designed static page ---------- */
+.rm .stage { height: auto; overflow: visible; }
+.rm .hero { position: relative; height: 100vh; }
+.rm .monolith { position: relative; height: 100vh; pointer-events: auto; }
+.rm .col { clip-path: none; }
+.rm .col img { filter: grayscale(0) brightness(.8); transform: none; }
+.rm .col__models, .rm .col__count { opacity: 1; transform: none; }
+.rm .scrollcue span { animation: none; }
+.rm .monolith .col:hover { flex-grow: 1; }
+
+@media (max-width: 900px) {
+  .nav__links { display: none; }
+  .note { display: none; }
+}

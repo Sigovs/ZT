@@ -1,6 +1,8 @@
 # ZT Automotive Collection — project notes for Claude
 
-Read `HANDOFF.md` for where things stand and `DESIGN_DNA.md` for the rules. The newest homepage is `prototype/thirty-four-home-v2/`; its `CREATIVE_MEDIA_PLAN.md` explains every section and every asset.
+Read `HANDOFF.md` for where things stand and `DESIGN_DNA.md` for the rules. The newest homepage is `prototype/thirty-four-home-v3/`; its `CREATIVE_MEDIA_PLAN.md` explains every section and every asset.
+
+The project is connected to Jarvis (project #7). Use the `jarvis-feedback` skill at milestones; only Alex's exact words go in `designer_feedback`.
 
 ## Feedback log
 
@@ -8,6 +10,9 @@ Approved
 
 - The "Thirty-Four Degrees" hero and its identity, typography and motion language (Alex, 23 Nov 2026). Keep them.
 - Every revision is a separate directory under `prototype/`. Never modify, replace or delete an earlier version; add the new one to the root index.
+- Overall direction of homepage v2 liked (Alex, 24 Nov 2026): "I like the overall direction of the latest homepage." Refining, not redesigning. The homepage is still not finally approved.
+- The three monumental 34° bars with oversized type and photographic reveals (first homepage). Alex asked for them back as a brand interlude, not as navigation.
+- The concept of the diagonal marque panels below the hero.
 
 Rejected, do not repeat
 
@@ -16,6 +21,10 @@ Rejected, do not repeat
 - One generic "ZT Group" link standing in for the secondary network.
 - Generic stock or AI-generated footage. Official OEM, dealership or ZT material only.
 - Film on every section. Hero first, then one or two sections at most.
+- A marque list in the hero, in any form: names, logos in a column, divider rules, model names, addresses, a readout. "Removing the logos while retaining essentially the same list-based composition does not solve the design problem." The hero control only chooses the film.
+- A marque expansion that opens as a separate overlay interface. The expanded state must be a transformation of the panel itself.
+- About ZT as a corporate report: long headline, several unrelated photographs, stat columns, a static timeline, value columns, visible source notes.
+- A generic Instagram widget or a six-square grid.
 
 Standing rules
 
