@@ -16,35 +16,274 @@
   const lenis = () => window.ztLenis;
   const goTo = (y, opts) => (lenis() ? lenis().scrollTo(y, opts) : window.scrollTo({ top: typeof y === 'number' ? y : y.getBoundingClientRect().top + window.scrollY, behavior: motion ? 'smooth' : 'auto' }));
   if (motion) gsap.registerPlugin(ScrollTrigger);
+  let worldOpen = false;
+  const films = {};
 
-  /* =========================== mega menu =========================== */
-  const nav = $('#nav'), mega = $('#mega'), veil = $('.mega-veil'), toggle = $('.nav__toggle');
-  const navLinks = $$('.nav__links a'), megaGroups = $$('.mega [data-group]');
-  let open = false, closeT;
-  function setHot(key) {
-    navLinks.forEach(a => a.classList.toggle('is-hot', !!key && a === key));
-    megaGroups.forEach(c => c.classList.toggle('is-hot', !!key && c.dataset.group === key.dataset.menu));
+  /* =========================== the menu ===========================
+     Fullscreen. Three views on one stage (Collection, Group, Locations); on phones the same three are a drill-down.
+     A 34° line opens it, closes it and turns the scenes. Nothing opens on hover. */
+  const nav = $('#nav'), mega = $('#mega'), toggle = $('.nav__toggle');
+  const phone = window.matchMedia('(max-width: 900px)');
+  const behind = [$('main'), $('.foot')].filter(Boolean);
+  const tabs = $$('.mm__tab', mega), panels = $$('[data-panel]', mega);
+  const mqs = $$('.mq', mega), scenes = $$('.scene', mega);
+  let open = false, opener = null, menuTl, viewTl, scTween, inTl, sceneTl, sceneKey = 'mclaren', sceneNext = null, hoverT;
+  const panelOf = k => panels.find(p => p.dataset.panel === k);
+
+  /* the 34° line as a moving edge: everything above and left of it is shown */
+  const edge = t => `polygon(0px 0px, ${t / M}px 0px, 0px ${t}px)`;
+  const edgeEnd = () => window.innerWidth * M + window.innerHeight;
+  function sweep(el, from, to, vars) {
+    const s = { t: from };
+    return gsap.to(s, { t: to, ease: 'power3.inOut', ...vars, onUpdate: () => { el.style.clipPath = edge(s.t); }, onComplete: () => { el.style.clipPath = ''; vars.done && vars.done(); } });
   }
-  function setOpen(v, link) {
-    clearTimeout(closeT);
-    if (v) setHot(link || null);
-    if (v === open) return;
+
+  /* what can be reached: only the view (and, on phones, the level) that is on screen */
+  function reach() {
+    const v = mega.dataset.view, ph = phone.matches;
+    panels.forEach(p => { p.inert = p.dataset.panel !== v; });
+    $('.mm__tabs', mega).inert = ph && v !== 'root';
+    $('.mm__site', mega).inert = ph && v !== 'root';
+    tabs.forEach(t => { const on = t.dataset.view === v; t.classList.toggle('is-active', on); t.setAttribute('aria-expanded', String(on)); });
+    const back = v !== 'root' && panelOf(v) && $('.mm__back span', panelOf(v));
+    if (back) back.textContent = mega.dataset.deep ? { collection: 'Collection', locations: 'Locations' }[v] : 'Menu';
+  }
+
+  /* ---------- views ---------- */
+  function setDeep(key) {
+    if (key) mega.dataset.deep = key; else delete mega.dataset.deep;
+    mqs.forEach(m => m.classList.toggle('is-deep', !!key && m.dataset.mq === key));
+    reach();
+  }
+  function enterView(v) {
+    const p = panelOf(v);
+    if (!p || !motion || phone.matches) return;
+    const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    if (v === 'collection') {
+      tl.fromTo($$('.mq .mark, .mq__info', p), { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.04, clearProps: 'transform,opacity,visibility' }, 0);
+    } else if (v === 'group') {
+      tl.fromTo($('.dir__find', p), { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1, ease: 'expo.inOut', clearProps: 'clipPath' }, 0)
+        .fromTo($$('.marks li', p), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5, stagger: 0.02, ease: 'power2.out', clearProps: 'opacity,visibility' }, 0.25)
+        .fromTo($$('.dealers li:not([hidden])', p), { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.018, clearProps: 'transform,opacity,visibility' }, 0.3);
+    } else {
+      tl.fromTo($$('.geo__states li', p), { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.05, clearProps: 'transform,opacity,visibility' }, 0)
+        .fromTo($('.geo__map', p), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.9, ease: 'power2.out', clearProps: 'opacity,visibility' }, 0.1)
+        .fromTo($$('.place.is-active li, .place.is-active h4', p), { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.03, clearProps: 'transform,opacity,visibility' }, 0.25);
+    }
+    return tl;
+  }
+  function setView(v, instant) {
+    // a change still under way is finished first, so the last name asked for always wins
+    if (viewTl && viewTl.isActive()) viewTl.progress(1);
+    if (scTween) { scTween.progress(1); scTween = null; }
+    if (inTl) inTl.progress(1);
+    const was = mega.dataset.view;
+    if (was === v) { reach(); return; }
+    if (!motion || instant || phone.matches) { mega.dataset.view = v; reach(); return; }
+    // the view on screen leaves first; the scene closes or opens along the line
+    viewTl = gsap.timeline();
+    viewTl.to(panelOf(was), { autoAlpha: 0, duration: 0.24, ease: 'power2.in' });
+    const sc = $('.mm__scenes', mega);
+    if (was === 'collection') viewTl.add(sweep(sc, edgeEnd(), 0, { duration: 0.7 }), 0.05);
+    viewTl.add(() => {
+      mega.dataset.view = v;
+      gsap.set(panelOf(was), { clearProps: 'opacity,visibility' });
+      sc.style.clipPath = '';
+      reach();
+      if (v === 'collection') scTween = sweep(sc, 0, edgeEnd(), { duration: 0.9 });
+      inTl = enterView(v);
+    });
+    tabs.forEach(t => t.classList.toggle('is-active', t.dataset.view === v));      // the name answers at once
+  }
+
+  /* ---------- collection: the scene follows the marque ---------- */
+  function setScene(key, instant) {
+    mqs.forEach(m => m.classList.toggle('is-active', m.dataset.mq === key));
+    if (key === sceneKey) { sceneNext = null; return; }
+    if (sceneTl && sceneTl.isActive()) { sceneNext = key; return; }
+    const prev = scenes.find(s => s.dataset.scene === sceneKey), next = scenes.find(s => s.dataset.scene === key);
+    const forward = scenes.indexOf(next) > scenes.indexOf(prev);
+    sceneKey = key; sceneNext = null;
+    if (!motion || instant) { prev.classList.remove('is-active'); next.classList.add('is-active'); return; }
+    const end = edgeEnd(), st = { t: forward ? end : 0 };
+    next.classList.add('is-entering');
+    // travelling right, the next scene comes in from the right; travelling left, from the left
+    const W = () => window.innerWidth, H = () => window.innerHeight;
+    const draw = () => { next.style.clipPath = forward ? `polygon(${W()}px ${H()}px, ${W() - (end - st.t) / M}px ${H()}px, ${W()}px ${H() - (end - st.t)}px)` : edge(st.t); };
+    draw();
+    sceneTl = gsap.timeline({ onComplete: () => {
+      prev.classList.remove('is-active'); next.classList.add('is-active'); next.classList.remove('is-entering'); next.style.clipPath = '';
+      if (sceneNext && sceneNext !== sceneKey) setScene(sceneNext);
+    } });
+    sceneTl.to(st, { t: forward ? 0 : end, duration: 0.85, ease: 'power3.inOut', onUpdate: draw }, 0)
+      .fromTo(next, { scale: 1.08 }, { scale: 1, duration: 1.3, ease: 'expo.out' }, 0.05);
+  }
+  mqs.forEach((m, i) => {
+    const key = m.dataset.mq, hit = $('.mq__hit', m);
+    if (fine) m.addEventListener('mouseenter', () => { clearTimeout(hoverT); if (!phone.matches) hoverT = setTimeout(() => setScene(key), 70); });
+    m.addEventListener('focusin', () => { if (!phone.matches) setScene(key); });
+    let wasActive = false;
+    hit.addEventListener('pointerdown', () => { wasActive = m.classList.contains('is-active'); });
+    hit.addEventListener('click', e => {
+      if (phone.matches) { if (mega.dataset.deep) return; setDeep(key); panelOf('collection').scrollTop = 0; $('.mm__back', panelOf('collection')).focus({ preventScroll: true }); if (motion) gsap.from($$('.mq__info', m), { autoAlpha: 0, y: 18, duration: 0.6, ease: 'expo.out', clearProps: 'all' }); return; }
+      if (e.detail && !fine && !wasActive) return;                                 // touch: the first tap shows, the second goes
+      goMarque(key);
+    });
+    hit.addEventListener('keydown', e => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (d) { e.preventDefault(); $('.mq__hit', mqs[(i + d + mqs.length) % mqs.length]).focus(); }
+    });
+  });
+  // the marque's own place on the page: its column, opened
+  function goMarque(key) {
+    setOpen(false);
+    setTimeout(() => goTo(mobile || !motion ? colOf(key) : stageEnd(), { duration: 1.2, offset: mobile ? -60 : 0 }), 60);
+    setTimeout(() => travel(key), motion ? 1500 : 100);
+  }
+
+  /* ---------- group: search, brand, dealership ---------- */
+  {
+    const input = $('[data-search]', mega), clear = $('[data-clear]', mega), rows = $$('[data-dealers] > li', mega), marksUl = $('.marks', mega), marks = $$('[data-brand]', mega);
+    const count = $('[data-count-dealers]', mega), none = $('[data-none]', mega);
+    const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]+/g, ' ').trim();
+    const keys = rows.map(r => ' ' + norm(r.dataset.key));
+    let brand = '';
+    function apply() {
+      const words = norm(input.value).split(/\s+/).filter(Boolean);
+      let n = 0;
+      rows.forEach((r, i) => {
+        const on = words.length ? words.every(w => keys[i].includes(' ' + w)) : brand ? r.dataset.brands.split(' ').includes(brand) : !r.hasAttribute('data-lux');
+        r.hidden = !on; if (on) n++;
+      });
+      marks.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.brand === brand)));
+      marksUl.classList.toggle('has-choice', !!brand);
+      clear.hidden = !brand && !input.value;
+      none.hidden = n > 0;
+      count.textContent = n ? `${n} ${n === 1 ? 'dealership' : 'dealerships'}` : 'No dealerships';
+      if (motion && n) gsap.fromTo(rows.filter(r => !r.hidden), { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.014, ease: 'power2.out', overwrite: true, clearProps: 'transform,opacity,visibility' });
+    }
+    input.addEventListener('input', () => { brand = ''; apply(); });
+    marks.forEach(b => b.addEventListener('click', () => {
+      brand = brand === b.dataset.brand ? '' : b.dataset.brand; input.value = ''; apply();
+      const list = $('.dir__list', mega); list.scrollTop = 0;
+      if (phone.matches && brand) { const p = panelOf('group'); p.scrollTo({ top: p.scrollTop + list.getBoundingClientRect().top - 190, behavior: motion ? 'smooth' : 'auto' }); }
+    }));
+    clear.addEventListener('click', () => { brand = ''; input.value = ''; apply(); input.focus(); });
+    // arrows walk from the field into the results
+    const links = () => rows.filter(r => !r.hidden).map(r => $('a', r));
+    panelOf('group').addEventListener('keydown', e => {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      const ls = links(), at = ls.indexOf(document.activeElement);
+      if (document.activeElement !== input && at < 0) return;
+      e.preventDefault();
+      const to = at + (e.key === 'ArrowDown' ? 1 : -1);
+      if (to < 0) input.focus(); else if (ls[to]) ls[to].focus();
+    });
+  }
+
+  /* ---------- locations: the state, its place on the map, its dealerships ---------- */
+  {
+    const btns = $$('.geo__states [data-state]', mega), shapes = $$('.map__states [data-state]', mega), dots = $$('.map__dots circle', mega), places = $$('[data-place]', mega), label = $('[data-map-label]', mega), map = $('.map', mega);
+    let state = 'NC';
+    function choose(st, focusBack) {
+      state = st;
+      btns.forEach(b => { const on = b.dataset.state === st; b.classList.toggle('is-active', on); b.setAttribute('aria-pressed', String(on)); });
+      shapes.forEach(s => s.classList.toggle('is-active', s.dataset.state === st));
+      dots.forEach(d => d.classList.toggle('is-active', d.dataset.state === st));
+      places.forEach(p => { const on = p.dataset.place === st; p.hidden = !on; p.classList.toggle('is-active', on); });
+      $('[data-places]', mega).scrollTop = 0;
+      const p = places.find(x => x.dataset.place === st);
+      if (motion) gsap.fromTo($$('h4, li', p), { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.025, ease: 'power2.out', overwrite: true, clearProps: 'transform,opacity,visibility' });
+      if (phone.matches && focusBack) { setDeep(st); panelOf('locations').scrollTop = 0; $('.mm__back', panelOf('locations')).focus({ preventScroll: true }); }
+    }
+    btns.forEach(b => b.addEventListener('click', () => { if (state !== b.dataset.state || phone.matches) choose(b.dataset.state, true); }));
+    shapes.forEach(s => s.addEventListener('click', () => { if (state !== s.dataset.state) choose(s.dataset.state, true); else if (phone.matches && !mega.dataset.deep) choose(state, true); }));
+    const hot = city => {
+      dots.forEach(d => d.classList.toggle('is-hot', d.dataset.city === city && !!city));
+      const d = city && dots.find(x => x.dataset.city === city);
+      label.classList.toggle('is-on', !!d);
+      if (!d) return;
+      const r = d.getBoundingClientRect(), b = $('.geo__map', mega).getBoundingClientRect();
+      label.textContent = city;
+      const right = r.left - b.left > b.width * .62;
+      label.style.transform = `translate(${Math.round(right ? r.left - b.left - label.offsetWidth - 10 : r.right - b.left + 10)}px, ${Math.round(r.top - b.top + r.height / 2 - label.offsetHeight / 2)}px)`;
+    };
+    $$('[data-places] a', mega).forEach(a => {
+      a.addEventListener('mouseenter', () => hot(a.dataset.city)); a.addEventListener('mouseleave', () => hot(''));
+      a.addEventListener('focus', () => hot(a.dataset.city)); a.addEventListener('blur', () => hot(''));
+    });
+  }
+
+  /* ---------- open and close ---------- */
+  function setOpen(v, view, from) {
+    if (v === open) { if (v && view) setView(view); return; }
     open = v;
-    mega.classList.toggle('is-open', v); veil.classList.toggle('is-open', v); nav.classList.toggle('is-open', v);
+    if (menuTl) menuTl.kill();
+    if (viewTl && viewTl.isActive()) viewTl.progress(1);
     toggle.setAttribute('aria-expanded', String(v));
     $('.nav__toggle-label').textContent = v ? 'Close' : 'Menu';
+    toggle.setAttribute('aria-label', v ? 'Close menu' : 'Open menu');
+    nav.classList.toggle('is-open', v);
+    behind.forEach(el => { el.inert = v; });
     mega.inert = !v;
-    if (v) { mega.scrollTop = 0; lenis() && lenis().stop(); } else { setHot(null); if (!worldOpen) lenis() && lenis().start(); }
+    worldOpen = v; syncAll();                                                        // films rest while the menu covers them
+    if (v) {
+      opener = from || toggle;
+      nav.classList.remove('is-away');
+      setDeep(null);
+      mega.dataset.view = view || (phone.matches ? 'root' : 'collection');
+      reach();
+      lenis() ? lenis().stop() : root.classList.add('menu-open');
+      mega.classList.add('is-open');
+      mega.style.clipPath = '';
+      if (motion) {
+        menuTl = gsap.timeline();
+        mega.style.clipPath = edge(0);
+        menuTl.add(sweep(mega, 0, edgeEnd(), { duration: 1.0 }), 0);
+        if (!phone.matches) {
+          menuTl.fromTo('.mm__tab-t', { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.9, stagger: 0.06, ease: 'expo.out', clearProps: 'all' }, 0.3)
+            .fromTo('.mm__site a', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5, stagger: 0.04, clearProps: 'opacity,visibility' }, 0.6);
+          if (mega.dataset.view === 'collection') menuTl.fromTo('.scene.is-active', { scale: 1.12 }, { scale: 1, duration: 1.8, ease: 'expo.out', clearProps: 'transform' }, 0);
+          const ev = enterView(mega.dataset.view); if (ev) menuTl.add(ev, 0.35);
+        }
+      }
+      const first = phone.matches && mega.dataset.view === 'root' ? tabs[0] : tabs.find(t => t.dataset.view === mega.dataset.view);
+      (phone.matches && mega.dataset.view !== 'root' ? $('.mm__back', panelOf(mega.dataset.view)) : first).focus({ preventScroll: true });
+    } else {
+      lenis() ? lenis().start() : root.classList.remove('menu-open');
+      const done = () => { mega.classList.remove('is-open'); mega.style.clipPath = ''; };
+      if (motion) menuTl = gsap.timeline().add(sweep(mega, edgeEnd(), 0, { duration: 0.6, done }), 0);
+      else done();
+    }
   }
   mega.inert = true;
-  toggle.addEventListener('click', () => { setOpen(!open); if (open) { const f = $('a', mega); f && f.focus({ preventScroll: true }); } });
-  if (fine) {
-    navLinks.forEach(a => a.addEventListener('mouseenter', () => setOpen(true, a)));
-    const leave = () => { closeT = setTimeout(() => setOpen(false), 240); };
-    [nav, mega].forEach(el => { el.addEventListener('mouseleave', leave); el.addEventListener('mouseenter', () => clearTimeout(closeT)); });
-  }
-  veil.addEventListener('click', () => setOpen(false));
+  toggle.setAttribute('aria-label', 'Open menu');
+  toggle.addEventListener('click', () => { if (open) { setOpen(false); toggle.focus({ preventScroll: true }); } else setOpen(true, null, toggle); });
+  $$('.nav [data-view]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); setOpen(true, a.dataset.view, a); }));
+  $('.nav__brand').addEventListener('click', () => open && setOpen(false));
+  $('.nav__cta').addEventListener('click', () => open && setOpen(false));
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => {
+      setDeep(null); setView(t.dataset.view);
+      if (phone.matches) { const p = panelOf(t.dataset.view); p.scrollTop = 0; $('.mm__back', p).focus({ preventScroll: true }); }
+    });
+    t.addEventListener('keydown', e => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d || phone.matches) return;
+      e.preventDefault(); const n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); n.click();
+    });
+  });
+  $$('[data-back]', mega).forEach(b => b.addEventListener('click', () => {
+    const v = mega.dataset.view, deep = mega.dataset.deep;
+    if (deep) {
+      setDeep(null);
+      const back = v === 'collection' ? $(`[data-mq="${deep}"] .mq__hit`, mega) : $(`.geo__states [data-state="${deep}"]`, mega);
+      back && back.focus({ preventScroll: true });
+    } else { setView('root'); const t = tabs.find(x => x.dataset.view === v); t && t.focus({ preventScroll: true }); }
+  }));
   mega.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  const onPhone = () => { if (!open) return; setDeep(null); mega.dataset.view = phone.matches ? 'root' : (mega.dataset.view === 'root' ? 'collection' : mega.dataset.view); reach(); };
+  phone.addEventListener ? phone.addEventListener('change', onPhone) : phone.addListener(onPhone);
 
   /* in-page links: the page runs on Lenis and one pinned scene, so targets are resolved here */
   const stageEnd = () => {
@@ -66,8 +305,6 @@
      Three films on the page. Only the hero's is fetched up front; the others get a source when they come near
      the viewport. A film plays only while it is on screen. Phones and reduced motion show the poster frame
      until the visitor presses play. */
-  const films = {};
-  let worldOpen = false;
   $$('video[data-film]').forEach(v => { films[v.dataset.film] = { el: v, wanted: motion && !mobile, inView: false }; });
   let syncFilm = function (name) {
     const f = films[name]; if (!f) return;
@@ -96,7 +333,7 @@
     v.addEventListener('playing', () => v.classList.add('is-playing'));
   });
   let heroKey = 'collection';
-  const heroAllowed = () => !root.classList.contains('rm') && (mobile || films.hero.wanted) && films.hero.inView && !document.hidden;
+  const heroAllowed = () => !root.classList.contains('rm') && (mobile || films.hero.wanted) && films.hero.inView && !document.hidden && !worldOpen;
   function syncHero() {
     const mf = marqueFilms[heroKey];
     Object.entries(marqueFilms).forEach(([k, v]) => { if (k !== heroKey) { v.pause(); v.classList.remove('is-playing'); } });
@@ -105,7 +342,7 @@
       const pr = mf.play(); if (pr && pr.catch) pr.catch(() => {});
     } else if (mf) mf.pause();
     const hero = films.hero.el;
-    if (heroKey === 'collection' && films.hero.wanted && films.hero.inView && !document.hidden) { const pr = hero.play(); if (pr && pr.catch) pr.catch(() => {}); }
+    if (heroKey === 'collection' && films.hero.wanted && films.hero.inView && !document.hidden && !worldOpen) { const pr = hero.play(); if (pr && pr.catch) pr.catch(() => {}); }
     else hero.pause();
   }
   document.addEventListener('zt:marque', e => { heroKey = e.detail.key; syncHero(); });
@@ -214,7 +451,7 @@
   }, true);
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
-    if (open) { setOpen(false); toggle.focus(); } else if (openKey) travel(null);
+    if (open) { setOpen(false); (opener && opener.isConnected ? opener : toggle).focus({ preventScroll: true }); } else if (openKey) travel(null);
   });
 
   /* =========================== 4 · inventory ===========================

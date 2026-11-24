@@ -17,6 +17,20 @@
 - **Phone.** One car per line, six cars, then the finder. Portrait tablet: two per line.
 - **Photographs.** McLaren Charlotte and Rolls-Royce Motor Cars Charlotte stock photographs (side profiles from each listing's gallery). The studio background was removed, the camera tilt levelled, the cars' own contact shadow kept and a soft shadow line added. The cars themselves are not retouched. The dealership watermark was in the removed background: ask the showrooms for clean masters before launch.
 
+## Menu (redesigned, 24 Nov 2026)
+
+- **Structure.** One fullscreen stage, three views. Collection: one scene, five marques along its foot; the scene follows the pointer, the focus or the tap. Group: a directory of 18 dealerships with search (brand, dealer, city, state) and the brands' own wordmarks as filters. Locations: five states on a map, with each state's dealerships by city and street.
+- **No repetition.** The header's links step aside while the menu is open. The page's own sections are one line at the foot: Inventory, Showrooms, Ownership, Buy, sell, trade, The house, Journal. Enquire stays in the header. Only the chosen marque shows its links: what is in stock, and its showroom.
+- **Nothing opens on hover.** "Menu" opens the Collection; "Group" in the header opens the directory.
+- **Phones and portrait tablets.** The same three as a drill-down: view, then marque or state, each with a Back.
+- **Motion.** A 34° line opens and closes the menu and turns the scenes. Lists rise a few pixels. Reduced motion: everything changes at once. Films rest while the menu is open.
+- **Keyboard.** Focus goes to the current view, the page behind is inert, Escape closes and returns focus. Arrows walk the views, the marques and the search results.
+- **Data.** ztautogroup.com, Locations and Locations by make, read 24 Nov 2026: 18 group dealerships in AL, FL, GA, NC, TX and three Collection showrooms. Czinger Charlotte is from czingerclt.com. No showroom for Ferrari in any ZT source: the menu says "Pre-owned in Charlotte" (35 listed at McLaren Charlotte).
+- **Map.** State outlines: US Census Bureau via us-atlas 3.0.1 (public domain), Albers projection, simplified.
+- **Scenes.** Manufacturer photographs already in the project: Artura, Spectre, CC850, 21C, 12Cilindri.
+- **Files.** `menu.css`; the menu block in `home.js`.
+- **Source conflicts seen.** The Locations page gives Midwest Automotive Designs ZIP 28203 at the Kenley Lane address (28217 elsewhere), so the menu shows no ZIP codes. "Locations by make" links Maus Nissan of North Tampa's details to Acura; the menu uses the dealership's own site.
+
 ## Hero
 
 - The film credit and the prototype note are gone (Alex, in Figma). The pause control stays for the keyboard and shows itself when it is reached.
