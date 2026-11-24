@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.11/dist/lenis.css">
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=12">
 <link rel="preload" as="image" href="assets/img/ferrari-f80.jpg">
 </head>
 <body>
@@ -158,6 +158,40 @@
       <a class="listing__all" href="#collection">All listings <span aria-hidden="true">→</span></a>
     </div>
   </section>
+
+  <!-- ===== Screen 4 · driven by excellence — the monogram's three bars ===== -->
+  <section class="creed" id="creed" aria-label="Driven by excellence">
+    <h2 class="sr-only">Driven by excellence</h2>
+    <div class="creed__bars" aria-hidden="true">
+      <div class="cbar cbar--1"><div class="cbar__strip"><span>Driven</span></div></div>
+      <div class="cbar cbar--2"><div class="cbar__strip cbar__strip--photo"><img src="assets/img/band-rollsroyce-interior.jpg" alt="" loading="lazy"><span>by</span></div></div>
+      <div class="cbar cbar--3"><div class="cbar__strip"><span>excellence.</span></div></div>
+    </div>
+    <div class="creed__note">
+      <img src="assets/zt-monogram-white.png" alt="" width="30" height="35">
+      <p>The line ZT Automotive works by, carried into the Collection. <span>Draft copy — to be confirmed.</span></p>
+    </div>
+    <p class="creed__credit">Rolls-Royce Spectre interior · image: Rolls-Royce Motor Cars · editorial use</p>
+  </section>
+
+  <!-- ===== Screen 5 · enquire ===== -->
+  <section class="enquire" id="enquire" aria-labelledby="enquire-title">
+    <a class="enquire__cta" href="#enquire" id="enquire-title"><span class="enquire__frame" aria-hidden="true"></span><span class="enquire__word" data-enquire>Enquire</span></a>
+    <dl class="enquire__facts">
+      <div><dt>Visit</dt><dd>Address to be confirmed</dd></div>
+      <div><dt>Hours</dt><dd>To be confirmed</dd></div>
+      <div><dt>Telephone</dt><dd>To be confirmed</dd></div>
+      <div><dt>Email</dt><dd>To be confirmed</dd></div>
+    </dl>
+    <footer class="foot">
+      <a class="foot__brand" href="#top"><img src="assets/zt-monogram-white.png" alt="" width="26" height="30"><span>ZT Automotive Collection</span></a>
+      <nav class="foot__nav" aria-label="Footer">
+        <a href="#collection">Collection</a><a href="#marques">Marques</a><a href="#top">Ownership</a><a href="#enquire">Visit</a>
+      </nav>
+      <p class="foot__legal">Privacy · Terms · Image credits</p>
+      <a class="foot__group" href="#top">ZT Automotive <span aria-hidden="true">↗</span></a>
+    </footer>
+  </section>
 </main>
 
 <p class="note">Prototype · internal exploration · placeholder figures · vehicle images and marks © their manufacturers</p>
@@ -166,6 +200,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
 <script src="main.js?v=7"></script>
-<script src="sections.js?v=2"></script>
+<script src="sections.js?v=6"></script>
 </body>
 </html>

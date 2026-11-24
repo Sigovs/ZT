@@ -80,4 +80,38 @@
       });
     }
   }
+
+  /* ---------- Screen 4 · the three bars slide in along their own axis ---------- */
+  const creed = $('.creed');
+  if (creed && motion) {
+    const strips = $$('.cbar__strip', creed);
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: creed, start: 'top top', end: () => '+=' + Math.round(window.innerHeight * 1.4), pin: true, scrub: 1, anticipatePin: 1 }
+    });
+    // bars arrive from alternating ends, like the monogram being drawn
+    tl.fromTo(strips[0], { xPercent: -170 }, { xPercent: 0, ease: 'power3.out', duration: 1 }, 0)
+      .fromTo(strips[1], { xPercent: 210 },  { xPercent: 0, ease: 'power3.out', duration: 1 }, 0.18)
+      .fromTo(strips[2], { xPercent: -150 }, { xPercent: 0, ease: 'power3.out', duration: 1 }, 0.36)
+      .fromTo('.cbar__strip span', { xPercent: 40 }, { xPercent: 0, ease: 'power2.out', duration: 1, stagger: 0.18 }, 0)
+      .fromTo('.cbar__strip--photo img', { scale: 1.25 }, { scale: 1, ease: 'none', duration: 1.4 }, 0)
+      .from('.creed__note, .creed__credit', { autoAlpha: 0, y: 24, duration: 0.3, stagger: 0.05 }, 1.05)
+      .to({}, { duration: 0.25 });   // a held beat before the page moves on
+  }
+
+  if (creed && motion) {
+    // keep the nav legible for as long as the ivory bars are under it (pin + exit)
+    ScrollTrigger.create({ trigger: creed, start: 'top 90px', end: () => '+=' + Math.round(window.innerHeight * 2.4), invalidateOnRefresh: true, toggleClass: { targets: '.nav', className: 'is-diff' } });
+  }
+
+  /* ---------- Screen 5 · enquire: the parallelogram is drawn, the word rises ---------- */
+  const enquire = $('.enquire');
+  if (enquire && motion) {
+    const word = $('[data-enquire]', enquire);
+    word.innerHTML = [...word.textContent].map(c => `<span class="ch"><span>${c}</span></span>`).join('');
+    gsap.timeline({ scrollTrigger: { trigger: enquire, start: 'top 70%', once: true } })
+      .from('.enquire__frame', { scaleX: 0, duration: 1.3, ease: 'expo.inOut' }, 0)
+      .from('.enquire__word .ch > span', { yPercent: 108, duration: 1.1, stagger: 0.04, ease: 'expo.out' }, 0.45)
+      .from('.enquire__facts > div', { y: 24, autoAlpha: 0, duration: 0.9, stagger: 0.07, ease: 'expo.out' }, 0.7)
+      .from('.foot', { autoAlpha: 0, duration: 0.8 }, 1.0);
+  }
 })();

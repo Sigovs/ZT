@@ -267,3 +267,99 @@ img { display: block; }
 .listing__all:hover span { transform: translateX(6px); }
 
 .rm .listing { height: auto; min-height: 100vh; }
+
+/* =====================================================================
+   v2 · Screen 4 — "Driven by excellence"
+   The monogram's three bars at monumental scale. Each bar runs at 34°,
+   ends cut vertical like the mark; the middle bar carries a photograph.
+   ===================================================================== */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.creed { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: var(--ink); --h: 19vh; }
+.creed__bars { position: absolute; inset: 0; }
+.cbar {
+  position: absolute; left: 50%; top: 46%; width: 260vmax; height: var(--h);
+  transform: translate(-50%, -50%) rotate(-34deg) translateY(var(--off, 0));
+}
+.cbar--1 { --off: calc(var(--h) * -1.16); }
+.cbar--2 { --off: 0px; }
+.cbar--3 { --off: calc(var(--h) * 1.16); }
+.cbar__strip {
+  position: absolute; top: 0; bottom: 0; left: var(--start); width: var(--len);
+  display: flex; align-items: center; overflow: hidden;
+  background: var(--ivory); color: var(--ink);
+  /* vertical screen cut = shear of tan(34°)·h in the bar's own frame */
+  clip-path: polygon(calc(var(--h) * .6745) 0, 100% 0, calc(100% - var(--h) * .6745) 100%, 0 100%);
+  will-change: transform;
+}
+.cbar--1 .cbar__strip { --start: 33%; --len: 30%; }
+.cbar--2 .cbar__strip { --start: 37%; --len: 26%; }
+.cbar--3 .cbar__strip { --start: 41%; --len: 36%; }
+.cbar__strip span {
+  position: relative; z-index: 1; padding-left: calc(var(--h) * 1.05);
+  font-family: var(--display); font-weight: 700; font-size: calc(var(--h) * .74); line-height: 1; letter-spacing: -.055em;
+  white-space: nowrap; transform: translateY(-.04em);
+}
+.cbar__strip--photo { background: #000; color: var(--ivory); }
+.cbar__strip--photo img {
+  position: absolute; left: 50%; top: 50%; width: 140%; height: auto; min-height: 520%;
+  object-fit: cover; transform: translate(-50%, -50%) rotate(34deg); filter: brightness(.6) contrast(1.08);
+}
+.creed__note {
+  position: absolute; left: var(--pad); bottom: calc(56 * var(--u)); display: flex; gap: var(--s4); align-items: flex-start;
+  max-width: max(320px, calc(460 * var(--u))); color: var(--ivory-2); font-size: max(14px, calc(15 * var(--u)));
+}
+.creed__note img { width: 28px; height: auto; flex: none; margin-top: 2px; }
+.creed__note span { display: block; color: var(--ivory-3); font-size: 14px; margin-top: var(--s1); }
+.creed__credit { position: absolute; right: var(--pad); bottom: calc(56 * var(--u)); font-size: 14px; color: var(--ivory-3); }
+
+/* =====================================================================
+   v2 · Screen 5 — "Enquire"
+   The nav's parallelogram, grown to monumental scale.
+   ===================================================================== */
+.enquire {
+  position: relative; min-height: 100vh; min-height: 100svh; background: var(--ink);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: calc(200 * var(--u)) var(--pad) var(--s6);
+}
+.enquire__cta {
+  position: relative; align-self: flex-start; isolation: isolate;
+  padding: 0 .04em 0 .14em; color: var(--ivory);
+  font-family: var(--display); font-weight: 700; font-size: calc(300 * var(--u)); line-height: .96; letter-spacing: -.065em;
+  transition: color .5s var(--ease);
+}
+.enquire__frame {
+  position: absolute; inset: .1em .1em .02em .06em; z-index: -1;
+  border: 1px solid var(--ivory); transform: skewX(-34deg); transform-origin: left bottom;
+  transition: background-color .55s var(--ease);
+}
+.enquire__word { display: inline-block; }
+.enquire__cta:hover, .enquire__cta:focus-visible { color: var(--ink); }
+.enquire__cta:hover .enquire__frame, .enquire__cta:focus-visible .enquire__frame { background: var(--ivory); }
+.enquire__facts {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s6);
+  margin-top: calc(96 * var(--u)); padding-top: var(--s5); border-top: 1px solid var(--rule);
+}
+.enquire__facts dt { font-size: 14px; color: var(--ivory-3); }
+.enquire__facts dd { margin-top: var(--s1); font-family: var(--display); font-weight: 500; font-size: max(18px, calc(24 * var(--u))); letter-spacing: -.01em; }
+.foot {
+  display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: var(--s7);
+  margin-top: calc(120 * var(--u)); padding-top: var(--s5); border-top: 1px solid var(--rule);
+  font-size: 14px; color: var(--ivory-2);
+}
+.foot__brand { display: flex; align-items: center; gap: var(--s3); color: var(--ivory); font-weight: 500; }
+.foot__brand img { width: 24px; height: auto; }
+.foot__nav { display: flex; gap: var(--s5); }
+.foot__nav a:hover, .foot__group:hover { color: var(--ivory); }
+.foot__legal { color: var(--ivory-3); }
+
+/* the prototype note belongs to the hero only in v2 */
+.note { position: absolute; top: calc(100vh - 34px); bottom: auto; }
+
+.rm .creed { height: auto; min-height: 100vh; }
+@media (max-width: 900px) {
+  .enquire__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .foot { grid-template-columns: 1fr; gap: var(--s4); }
+}
+
+/* nav stays legible while the ivory bars pass beneath it */
+.nav.is-diff { mix-blend-mode: difference; }
