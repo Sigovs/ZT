@@ -1,0 +1,32 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-11-24T00:01:32.528Z",
+        "reason": "Alex's brief: 'Helvetica-style contemporary sans-serif typography. Inter is acceptable' (art-direction studies brief, 2026-11-23); Inter is the proposed v1.2 type family"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-24T00:01:48.886Z",
+        "reason": "Claude: ruled list — top hairline above rows that carry their own vertical padding (28px root list / ~13px marque index); rendered text is not flush"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "prototype/thirty-four-v2/index.html"
+        ],
+        "createdAt": "2026-11-24T00:01:48.900Z",
+        "reason": "Claude: ruled list — top hairline above rows that carry their own vertical padding (28px root list / ~13px marque index); rendered text is not flush"
+      }
+    ]
+  }
+}
