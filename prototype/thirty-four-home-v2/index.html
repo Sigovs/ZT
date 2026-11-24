@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZT Automotive Collection — Homepage v2 · Thirty-Four Degrees</title>
+<meta name="description" content="Homepage prototype, second revision, for ZT Automotive Collection. Internal exploration; placeholder listings; manufacturer and dealership imagery, film and marks belong to their owners.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/zt-monogram-white.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.11/dist/lenis.css">
+<link rel="stylesheet" href="base.css?v=2">
+<link rel="stylesheet" href="home.css?v=2">
+<link rel="stylesheet" href="v2.css?v=2">
+<link rel="preload" as="image" href="assets/video/hero-poster.jpg">
+<noscript><style>
+  /* without script the page is still complete: a fixed bar on the poster frame, five marques, every section open */
+  .nav { position: absolute; }
+  .bar { clip-path: polygon(0 128%, 100% 8%, 100% 56%, 0 176%); }
+  .col__models, .col__count { opacity: 1; transform: none; }
+  .vbtn, .hero__ambient { display: none; }
+  @media (min-width: 901px) {
+    .stage { height: auto; overflow: visible; }
+    .hero { position: relative; height: 100vh; overflow: hidden; }
+    .monolith { position: relative; height: 100vh; pointer-events: auto; }
+    .col { clip-path: none; }
+    .col img { filter: brightness(.8); transform: none; }
+  }
+</style></noscript>
+</head>
+<body>
+
+<!-- deslop-ignore 10: the three section labels (The house, Ownership, Buy, sell, trade) are the names used in the navigation; the headings beside them are statements, not names. deslop-ignore 15: the © sign is a legal mark, not an emoji. deslop-ignore 33: Inter and Inter Tight are the faces set by the project brief (Foundations v1.2). -->
+<a class="skip" href="#house">Skip to content</a>
+
+<header class="nav" id="nav" data-intro="fade">
+  <a class="nav__brand" href="#top" aria-label="ZT Automotive Collection, home">
+    <img src="assets/zt-monogram-white.png" alt="" width="34" height="40">
+    <span>ZT Automotive Collection</span>
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#marques" data-menu="marques">Marques</a>
+    <a href="#house" data-menu="site">The house</a>
+    <a href="#collection" data-menu="site">Collection</a>
+    <a href="#ownership" data-menu="site">Ownership</a>
+    <a href="#showrooms" data-menu="site">Showrooms</a>
+    <a href="#network" data-menu="group">Group</a>
+  </nav>
+  <a class="nav__cta" href="#enquire"><span>Enquire</span></a>
+  <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="mega">
+    <span class="nav__toggle-label">Menu</span>
+    <svg class="ico ico--open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg class="ico ico--close" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+</header>
+
+<!-- ===== Mega menu — five marques first; the group's dealerships in their own quieter register ===== -->
+<div class="mega" id="mega" aria-label="Site menu" data-lenis-prevent>
+  <div class="mega__inner">
+    <div class="mega__lead">
+      <ul class="mega__marques" role="list" data-group="marques" aria-label="The five marques">
+        <li>
+          <a class="mega__mark" href="#marques" data-world="czinger"><span class="mega__thumb"><img src="assets/img/col-czinger-21c.jpg" alt="" loading="lazy" style="--pos:50% 60%"></span><span class="mark mark--czinger" aria-hidden="true"></span><span class="sr-only">Czinger</span></a>
+          <p>Czinger Charlotte</p>
+          <ul role="list"><li><a href="#collection" data-filter="czinger">In the collection</a></li><li><a href="https://www.czingerclt.com/" rel="noopener">Showroom site <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li></ul>
+        </li>
+        <li>
+          <a class="mega__mark" href="#marques" data-world="ferrari"><span class="mega__thumb"><img src="assets/img/col-ferrari-purosangue.jpg" alt="" loading="lazy" style="--pos:62% 58%"></span><span class="mark mark--ferrari" aria-hidden="true"></span><span class="sr-only">Ferrari</span></a>
+          <p>Showroom to be confirmed</p>
+          <ul role="list"><li><a href="#collection" data-filter="ferrari">In the collection</a></li></ul>
+        </li>
+        <li>
+          <a class="mega__mark" href="#marques" data-world="koenigsegg"><span class="mega__thumb"><img src="assets/img/col-koenigsegg-gemera.jpg" alt="" loading="lazy" style="--pos:56% 62%"></span><span class="mark mark--koenigsegg" aria-hidden="true"></span><span class="sr-only">Koenigsegg</span></a>
+          <p>Koenigsegg Charlotte</p>
+          <ul role="list"><li><a href="#collection" data-filter="koenigsegg">In the collection</a></li><li><a href="https://www.koenigseggnc.com/" rel="noopener">Showroom site <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li></ul>
+        </li>
+        <li>
+          <a class="mega__mark" href="#marques" data-world="mclaren"><span class="mega__thumb"><img src="assets/img/col-mclaren-artura-spider.jpg" alt="" loading="lazy" style="--pos:50% 55%"></span><span class="mark mark--mclaren" aria-hidden="true"></span><span class="sr-only">McLaren</span></a>
+          <p>McLaren Charlotte</p>
+          <ul role="list"><li><a href="#collection" data-filter="mclaren">In the collection</a></li><li><a href="https://www.charlottemclaren.com/" rel="noopener">Showroom site <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li></ul>
+        </li>
+        <li>
+          <a class="mega__mark" href="#marques" data-world="rolls-royce"><span class="mega__thumb"><img src="assets/img/col-rollsroyce-cullinan.jpg" alt="" loading="lazy" style="--pos:62% 62%"></span><span class="mark mark--rolls-royce" aria-hidden="true"></span><span class="sr-only">Rolls-Royce</span></a>
+          <p>Rolls-Royce Motor Cars Charlotte</p>
+          <ul role="list"><li><a href="#collection" data-filter="rolls-royce">In the collection</a></li><li><a href="https://www.rollsroycemotorcarscharlotte.com/" rel="noopener">Showroom site <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li></ul>
+        </li>
+      </ul>
+
+      <nav class="mega__site" data-group="site" aria-label="Sections">
+        <a href="#house">The house</a>
+        <a href="#collection" data-filter="all">Collection</a>
+        <a href="#ownership">Ownership</a>
+        <a href="#trade">Buy, sell, trade</a>
+        <a href="#showrooms">Showrooms</a>
+        <a href="#journal">Journal</a>
+        <a class="mega__enquire" href="#enquire">Enquire <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </nav>
+    </div>
+
+    <section class="mega__group" data-group="group" aria-labelledby="mg-group">
+      <header>
+        <h2 id="mg-group">ZT Automotive · the group’s dealerships</h2>
+        <p>Each opens the dealership’s own website.</p>
+        <a href="https://www.ztautogroup.com/search-all/" rel="noopener">Search all group inventory <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a>
+      </header>
+      <ul class="brands" role="list">
+        <li><h3><span class="mk" style="--logo:url(assets/network/acura.svg);--r:6.86" aria-hidden="true"></span><span class="sr-only">Acura</span></h3>
+          <ul role="list"><li><a href="https://www.mausacura.com/" rel="noopener">Maus Acura of North Tampa <span>Tampa, FL</span></a></li></ul></li>
+        <li><h3><span class="mk" style="--logo:url(assets/network/bmw.svg);--r:2.8" aria-hidden="true"></span><span class="sr-only">BMW</span></h3>
+          <ul role="list"><li><a href="https://www.bmwfwb.com/" rel="noopener">BMW of Fort Walton Beach <span>Fort Walton Beach, FL</span></a></li></ul></li>
+        <li><h3><span class="mk" style="--logo:url(assets/network/chevrolet.svg);--r:11.04" aria-hidden="true"></span><span class="sr-only">Chevrolet</span></h3>
+          <ul role="list"><li><a href="https://www.roncarter-gm.com/" rel="noopener">Ron Carter Chevrolet <span>Alvin, TX</span></a></li><li><a href="https://www.steverayman.com/" rel="noopener">Steve Rayman Chevrolet <span>Smyrna, GA</span></a></li></ul></li>
+        <li><h3 class="is-multi"><span class="mk" style="--logo:url(assets/network/chrysler.svg);--r:13.88" aria-hidden="true"></span><span class="mk" style="--logo:url(assets/network/dodge.svg);--r:13.87" aria-hidden="true"></span><span class="mk" style="--logo:url(assets/network/jeep.svg);--r:2.48" aria-hidden="true"></span><span class="mk" style="--logo:url(assets/network/ram.svg);--r:6.82" aria-hidden="true"></span><span class="sr-only">Chrysler, Dodge, Jeep and Ram</span></h3>
+          <ul role="list"><li><a href="https://www.roncartercdjr.com/" rel="noopener">Ron Carter CDJR <span>Alvin, TX</span></a></li><li><a href="https://www.singingrivercdjr.com/" rel="noopener">Singing River CDJR <span>Florence, AL</span></a></li></ul></li>
+        <li><h3><span class="mk" style="--logo:url(assets/network/ford.svg);--r:2.54" aria-hidden="true"></span><span class="sr-only">Ford</span></h3>
+          <ul role="list"><li><a href="https://www.roncarterford.com/" rel="noopener">Ron Carter Ford <span>Alvin, TX</span></a></li></ul></li>
+        <li><h3><span class="mk" style="--logo:url(assets/network/gmc.svg);--r:2.64" aria-hidden="true"></span><span class="sr-only">GMC</span></h3>
+          <ul role="list"><li><a href="https://www.roncartergmc.com/" rel="noopener">Ron Carter GMC <span>Alvin, TX</span></a></li></ul></li>
+        <li><h3><span class="mk" style="--logo:url(assets/network/honda.svg);--r:8.26" aria-hidden="true"></span><span class="sr-only">Honda</span></h3>
+          <ul role="list"><li><a href="https://www.singingriverhonda.com/" rel="noopener">Singing River Honda <span>Florence, AL</span></a></li></ul></li>
+        <li><h3><span class="mk" style="--logo:url(assets/network/mazda.svg);--r:5.4" aria-hidden="true"></span><span class="sr-only">Mazda</span></h3>
+          <ul role="list"><li><a href="https://www.mazdafwb.com/" rel="noopener">Mazda of Fort Walton Beach <span>Fort Walton Beach, FL</span></a></li></ul></li>
+        <li><h3><span class="mk" style="--logo:url(assets/network/mercedes-benz.svg);--r:9.2" aria-hidden="true"></span><span class="sr-only">Mercedes-Benz</span></h3>
+          <ul role="list"><li><a href="https://www.mercedesbenzfwb.com/" rel="noopener">Mercedes-Benz of Fort Walton Beach <span>Fort Walton Beach, FL</span></a></li></ul></li>
+        <li><h3><span class="mk" style="--logo:url(assets/network/nissan.svg);--r:8.59" aria-hidden="true"></span><span class="sr-only">Nissan</span></h3>
+          <ul role="list"><li><a href="https://www.mausnissanofbrooksville.com/" rel="noopener">Maus Nissan of Brooksville <span>Brooksville, FL</span></a></li><li><a href="https://www.mausnissan.com/" rel="noopener">Maus Nissan of New Port Richey <span>New Port Richey, FL</span></a></li><li><a href="https://www.mausnissantampa.com/" rel="noopener">Maus Nissan of North Tampa <span>Tampa, FL</span></a></li><li><a href="https://www.singingrivernissan.com/" rel="noopener">Singing River Nissan <span>Florence, AL</span></a></li></ul></li>
+        <li><h3><span class="mk" style="--logo:url(assets/network/toyota.svg);--r:5.66" aria-hidden="true"></span><span class="sr-only">Toyota</span></h3>
+          <ul role="list"><li><a href="https://www.singingrivertoyota.com/" rel="noopener">Singing River Toyota <span>Tuscumbia, AL</span></a></li><li><a href="https://www.toyotafwb.com/" rel="noopener">Toyota of Fort Walton Beach <span>Fort Walton Beach, FL</span></a></li></ul></li>
+        <li><h3><img class="mk-img" src="assets/network/midwest.webp" alt="Midwest Automotive Designs" loading="lazy"></h3>
+          <ul role="list"><li><a href="https://www.luxsprintervanforsale.com/" rel="noopener">Midwest Automotive Designs Sprinter Charlotte <span>Charlotte, NC</span></a></li></ul></li>
+      </ul>
+    </section>
+  </div>
+</div>
+<div class="mega-veil" aria-hidden="true"></div>
+
+<main id="top">
+  <section class="stage" id="stage" aria-label="ZT Automotive Collection">
+
+    <!-- ===== 1 · the bar — now a window onto moving footage ===== -->
+    <div class="hero">
+      <canvas class="hero__ambient" width="64" height="36" aria-hidden="true"></canvas>
+      <h1 class="display" aria-live="polite"><span class="display__word" data-display>Collection</span></h1>
+
+      <div class="bar" aria-hidden="true">
+        <div class="bar__plates">
+          <figure class="plate is-active" data-plate="collection"><video class="film" data-film="hero" muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg" style="--pos:50% 58%"><source src="assets/video/hero.mp4" type="video/mp4"></video></figure>
+          <figure class="plate" data-plate="czinger"><img src="assets/img/czinger-21c-vmax-night.jpg" alt="" loading="lazy" style="--pos:58% 64%"></figure>
+          <figure class="plate" data-plate="ferrari"><img src="assets/img/ferrari-12cilindri.jpg" alt="" loading="lazy" style="--pos:50% 62%"></figure>
+          <figure class="plate" data-plate="koenigsegg"><img src="assets/img/koenigsegg-jesko-absolut.jpg" alt="" loading="lazy" style="--pos:40% 60%"></figure>
+          <figure class="plate" data-plate="mclaren"><img src="assets/img/mclaren-w1-side.jpg" alt="" loading="lazy" style="--pos:46% 62%"></figure>
+          <figure class="plate" data-plate="rolls-royce"><img src="assets/img/rollsroyce-spectre.jpg" alt="" loading="lazy" style="--pos:66% 70%"></figure>
+        </div>
+        <div class="bar__scrim"></div>
+      </div>
+      <div class="hairline" aria-hidden="true"></div>
+
+      <div class="intro" data-intro="rise">
+        <p class="intro__lede">Five marques in Charlotte, North Carolina. The luxury and exotic house of ZT Automotive.</p>
+
+        <ul class="index" role="list" aria-label="Choose a marque">
+          <li><button class="index__item" data-key="czinger" data-word="21C" data-model="Czinger 21C V Max" data-meta="Czinger Charlotte · 1316 South Tryon St" data-credit="Image: Czinger Vehicles"><span class="mark mark--czinger" aria-hidden="true"></span><span class="index__name">Czinger</span></button></li>
+          <li><button class="index__item" data-key="ferrari" data-word="12Cilindri" data-model="Ferrari 12Cilindri" data-meta="Showroom to be confirmed" data-credit="Image: Ferrari S.p.A."><span class="mark mark--ferrari" aria-hidden="true"></span><span class="index__name">Ferrari</span></button></li>
+          <li><button class="index__item" data-key="koenigsegg" data-word="Jesko" data-model="Koenigsegg Jesko Absolut" data-meta="Koenigsegg Charlotte · 6010 Kenley Ln" data-credit="Image: Koenigsegg · photo Keno Zache"><span class="mark mark--koenigsegg" aria-hidden="true"></span><span class="index__name">Koenigsegg</span></button></li>
+          <li><button class="index__item" data-key="mclaren" data-word="W1" data-model="McLaren W1" data-meta="McLaren Charlotte · 6010 Kenley Ln" data-credit="Image: McLaren Automotive"><span class="mark mark--mclaren" aria-hidden="true"></span><span class="index__name">McLaren</span></button></li>
+          <li><button class="index__item" data-key="rolls-royce" data-word="Spectre" data-model="Rolls-Royce Spectre" data-meta="Rolls-Royce Motor Cars Charlotte · 1316 South Tryon St" data-credit="Image: Rolls-Royce Motor Cars · editorial use"><span class="mark mark--rolls-royce" aria-hidden="true"></span><span class="index__name">Rolls-Royce</span></button></li>
+        </ul>
+
+        <div class="readout" aria-live="polite">
+          <p class="readout__model" data-readout-model>ZT Automotive Collection</p>
+          <p class="readout__meta" data-readout-meta>Charlotte, North Carolina</p>
+          <p class="readout__credit" data-readout-credit>Film: Czinger Vehicles</p>
+        </div>
+      </div>
+
+      <button class="vbtn vbtn--hero" type="button" data-film-toggle="hero" aria-pressed="false" data-intro="fade"><svg class="ico ico--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><svg class="ico ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg><span>Pause film</span></button>
+      <p class="scrollcue" data-intro="fade" aria-hidden="true"><span></span>Scroll</p>
+      <p class="note">Prototype · internal exploration · example listings · images, film and marks © their owners</p>
+    </div>
+
+    <!-- ===== 2 · the monolith — five marques; each column opens into its own room ===== -->
+    <div class="monolith" id="marques" aria-label="Five marques">
+      <a class="col" href="#collection" data-col="czinger" data-world="czinger" data-filter="czinger">
+        <img src="assets/img/col-czinger-21c.jpg" alt="Czinger 21C on track" loading="lazy" style="--pos:50% 60%">
+        <span class="col__shade"></span>
+        <span class="col__body">
+          <span class="mark mark--czinger col__mark" aria-hidden="true"></span>
+          <span class="col__name">Czinger</span>
+          <span class="col__models">21C · 21C V Max · Hyper GT</span>
+          <span class="col__count">Czinger Charlotte</span>
+        </span>
+      </a>
+      <a class="col" href="#collection" data-col="ferrari" data-world="ferrari" data-filter="ferrari">
+        <img src="assets/img/col-ferrari-purosangue.jpg" alt="Ferrari Purosangue on a forest road" loading="lazy" style="--pos:62% 58%">
+        <span class="col__shade"></span>
+        <span class="col__body">
+          <span class="mark mark--ferrari col__mark" aria-hidden="true"></span>
+          <span class="col__name">Ferrari</span>
+          <span class="col__models">12Cilindri · Purosangue · F80 · 296 GTB</span>
+          <span class="col__count">Showroom to be confirmed</span>
+        </span>
+      </a>
+      <a class="col" href="#collection" data-col="koenigsegg" data-world="koenigsegg" data-filter="koenigsegg">
+        <img src="assets/img/col-koenigsegg-gemera.jpg" alt="Koenigsegg Gemera at Laguna Seca" loading="lazy" style="--pos:56% 62%">
+        <span class="col__shade"></span>
+        <span class="col__body">
+          <span class="mark mark--koenigsegg col__mark" aria-hidden="true"></span>
+          <span class="col__name">Koenigsegg</span>
+          <span class="col__models">Gemera · Jesko · Regera</span>
+          <span class="col__count">Koenigsegg Charlotte</span>
+        </span>
+      </a>
+      <a class="col" href="#collection" data-col="mclaren" data-world="mclaren" data-filter="mclaren">
+        <img src="assets/img/col-mclaren-artura-spider.jpg" alt="McLaren Artura Spider in a dark studio" loading="lazy" style="--pos:50% 55%">
+        <span class="col__shade"></span>
+        <span class="col__body">
+          <span class="mark mark--mclaren col__mark" aria-hidden="true"></span>
+          <span class="col__name">McLaren</span>
+          <span class="col__models">W1 · 750S · Artura · GTS</span>
+          <span class="col__count">McLaren Charlotte</span>
+        </span>
+      </a>
+      <a class="col" href="#collection" data-col="rolls-royce" data-world="rolls-royce" data-filter="rolls-royce">
+        <img src="assets/img/col-rollsroyce-cullinan.jpg" alt="Rolls-Royce Cullinan by a lake at dawn" loading="lazy" style="--pos:62% 62%">
+        <span class="col__shade"></span>
+        <span class="col__body">
+          <span class="mark mark--rolls-royce col__mark" aria-hidden="true"></span>
+          <span class="col__name">Rolls-Royce</span>
+          <span class="col__models">Spectre · Phantom · Cullinan · Ghost</span>
+          <span class="col__count">Rolls-Royce Motor Cars Charlotte</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== 3 · the house — About ZT. Orthogonal, on paper, with people in it ===== -->
+  <section class="house" id="house" data-ground="light" aria-labelledby="house-title">
+    <div class="house__grid">
+      <p class="eyebrow">The house</p>
+      <div class="house__lead">
+        <h2 id="house-title">A national dealership group with the attentiveness of a family-run business.</h2>
+        <p class="house__cite">In ZT Automotive’s own words, from its About page.</p>
+      </div>
+
+      <figure class="house__fig house__fig--a" data-reveal>
+        <span class="clipbox"><img src="assets/img/people-service-team.jpg" alt="A ZT Automotive service team standing in front of the service drive" loading="lazy" style="--pos:50% 60%"></span>
+        <figcaption>A ZT Automotive service team. Photo: ZT Automotive.</figcaption>
+      </figure>
+
+      <div class="house__text">
+        <p>ZT Automotive was founded in 2014 and is owned by the Badar Family Office. It began as a single dealership and now runs dealerships in Alabama, Florida, Georgia, North Carolina and Texas.</p>
+        <p>In 2026 the family office acquired McLaren Charlotte and Rolls-Royce Motor Cars Charlotte and set up the ZT Automotive Collection, its luxury and exotic house. Koenigsegg, Czinger and Midwest Automotive Designs came with it.</p>
+        <p class="house__links"><a class="more more--ink" href="https://www.ztautogroup.com/about/" rel="noopener">About ZT Automotive <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a><a class="more more--ink" href="https://www.ztautogroup.com/careers/" rel="noopener">Careers <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></p>
+      </div>
+
+      <figure class="house__fig house__fig--b" data-reveal>
+        <span class="clipbox"><img src="assets/img/people-handshake.jpg" alt="Two men shake hands in front of a dealership" loading="lazy" style="--pos:50% 30%"></span>
+        <figcaption>Tampa, 2025: four dealerships join the group. Photo: ZT Automotive.</figcaption>
+      </figure>
+    </div>
+
+    <dl class="figures" aria-label="ZT Automotive in figures, as published by ZT Automotive">
+      <div><dt>Founded</dt><dd>2014</dd></div>
+      <div><dt>Dealerships</dt><dd>18</dd></div>
+      <div><dt>Brands</dt><dd>20</dd></div>
+      <div><dt>States</dt><dd>5</dd></div>
+      <div><dt>Automotive News Top 100, used-vehicle sales, 2026</dt><dd>No. 98</dd></div>
+    </dl>
+    <p class="figures__note">Figures as published on ztautogroup.com, November 2026.</p>
+
+    <div class="years" aria-labelledby="years-title">
+      <h3 id="years-title">Twelve years</h3>
+      <ol role="list">
+        <li><b>2014</b><span>ZT Automotive is founded.</span></li>
+        <li><b>2015</b><span>Fort Walton Beach, Florida: Toyota, Mercedes-Benz, BMW, Mazda.</span></li>
+        <li><b>2018</b><span>Steve Rayman Chevrolet, Georgia.</span></li>
+        <li><b>2020</b><span>Ron Carter in Alvin, Texas: Ford, Chevrolet, CDJR, GMC.</span></li>
+        <li><b>2024</b><span>Tuscumbia and Florence, Alabama: Toyota, Honda, CDJR, Nissan.</span></li>
+        <li><b>2025</b><span>Tampa area, Florida: Acura and Nissan.</span></li>
+        <li class="is-now"><b>2026</b><span>Charlotte: the ZT Automotive Collection.</span></li>
+      </ol>
+    </div>
+
+    <ul class="values" role="list" aria-label="What ZT Automotive says it stands for">
+      <li><b>Integrity</b><span>“Building trust through honesty and transparency.”</span></li>
+      <li><b>Growth</b><span>“Opportunities to evolve and stay ahead.”</span></li>
+      <li><b>Innovation</b><span>“Think beyond the conventional.”</span></li>
+      <li><b>Consistency</b><span>“Key to the trust we build with our customers.”</span></li>
+    </ul>
+  </section>
+
+  <!-- ===== 4 · in the collection — inventory discovery. Static photography, no film ===== -->
+  <section class="listing" id="collection" aria-labelledby="listing-title">
+    <div class="listing__main">
+      <header class="listing__head">
+        <h2 id="listing-title">In the collection</h2>
+        <p>Year, mileage and price on every listing. <span>Example listings — figures to come.</span></p>
+      </header>
+
+      <div class="filter" role="group" aria-label="Filter by marque">
+        <button class="filter__btn is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter__btn" type="button" data-filter="czinger" aria-pressed="false">Czinger</button>
+        <button class="filter__btn" type="button" data-filter="ferrari" aria-pressed="false">Ferrari</button>
+        <button class="filter__btn" type="button" data-filter="koenigsegg" aria-pressed="false">Koenigsegg</button>
+        <button class="filter__btn" type="button" data-filter="mclaren" aria-pressed="false">McLaren</button>
+        <button class="filter__btn" type="button" data-filter="rolls-royce" aria-pressed="false">Rolls-Royce</button>
+        <p class="filter__count" aria-live="polite"><span data-count>8</span> of 8 shown</p>
+      </div>
+
+      <ol class="rows" role="list">
+        <li data-marque="ferrari"><a class="row is-active" href="#enquire" data-shot="0"><span class="mark mark--ferrari row__mark" aria-hidden="true"></span><span class="row__model">296 GTB</span><span class="row__meta"><b>Ferrari</b> 0000 · 0,000 mi · $000,000</span></a></li>
+        <li data-marque="koenigsegg"><a class="row" href="#enquire" data-shot="1"><span class="mark mark--koenigsegg row__mark" aria-hidden="true"></span><span class="row__model">CC850</span><span class="row__meta"><b>Koenigsegg</b> 0000 · 0,000 mi · $000,000</span></a></li>
+        <li data-marque="mclaren"><a class="row" href="#enquire" data-shot="2"><span class="mark mark--mclaren row__mark" aria-hidden="true"></span><span class="row__model">Artura</span><span class="row__meta"><b>McLaren</b> 0000 · 0,000 mi · $000,000</span></a></li>
+        <li data-marque="rolls-royce"><a class="row" href="#enquire" data-shot="3"><span class="mark mark--rolls-royce row__mark" aria-hidden="true"></span><span class="row__model">Spectre</span><span class="row__meta"><b>Rolls-Royce</b> 0000 · 0,000 mi · $000,000</span></a></li>
+        <li data-marque="czinger"><a class="row" href="#enquire" data-shot="4"><span class="mark mark--czinger row__mark" aria-hidden="true"></span><span class="row__model">21C</span><span class="row__meta"><b>Czinger</b> 0000 · 0,000 mi · $000,000</span></a></li>
+        <li data-marque="ferrari"><a class="row" href="#enquire" data-shot="5"><span class="mark mark--ferrari row__mark" aria-hidden="true"></span><span class="row__model">Purosangue</span><span class="row__meta"><b>Ferrari</b> 0000 · 0,000 mi · $000,000</span></a></li>
+        <li data-marque="rolls-royce"><a class="row" href="#enquire" data-shot="6"><span class="mark mark--rolls-royce row__mark" aria-hidden="true"></span><span class="row__model">Cullinan</span><span class="row__meta"><b>Rolls-Royce</b> 0000 · 0,000 mi · $000,000</span></a></li>
+        <li data-marque="koenigsegg"><a class="row" href="#enquire" data-shot="7"><span class="mark mark--koenigsegg row__mark" aria-hidden="true"></span><span class="row__model">Jesko</span><span class="row__meta"><b>Koenigsegg</b> 0000 · 0,000 mi · $000,000</span></a></li>
+      </ol>
+
+      <div class="live">
+        <p>Live inventory today, at each showroom</p>
+        <a href="https://www.charlottemclaren.com/all-inventory/" rel="noopener">McLaren Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a>
+        <a href="https://www.rollsroycemotorcarscharlotte.com/inventory/" rel="noopener">Rolls-Royce Motor Cars Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a>
+        <a href="https://www.koenigseggnc.com/inventory/" rel="noopener">Koenigsegg Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a>
+      </div>
+    </div>
+
+    <div class="listing__media">
+      <figure class="window" aria-hidden="true">
+        <div class="window__shots">
+          <img class="shot is-active" src="assets/img/list-ferrari-296gtb.jpg" alt="" loading="lazy" style="--pos:44% 36%">
+          <img class="shot" src="assets/img/list-koenigsegg-cc850.jpg" alt="" loading="lazy" style="--pos:40% 62%">
+          <img class="shot" src="assets/img/list-mclaren-artura.jpg" alt="" loading="lazy" style="--pos:38% 58%">
+          <img class="shot" src="assets/img/list-rollsroyce-spectre.jpg" alt="" loading="lazy" style="--pos:52% 70%">
+          <img class="shot" src="assets/img/list-czinger-21c.jpg" alt="" loading="lazy" style="--pos:44% 62%">
+          <img class="shot" src="assets/img/list-ferrari-purosangue.jpg" alt="" loading="lazy" style="--pos:44% 30%">
+          <img class="shot" src="assets/img/col-rollsroyce-cullinan.jpg" alt="" loading="lazy" style="--pos:60% 60%">
+          <img class="shot" src="assets/img/koenigsegg-jesko-absolut.jpg" alt="" loading="lazy" style="--pos:44% 58%">
+        </div>
+      </figure>
+      <p class="window__credit" data-shot-credit>Image: Ferrari S.p.A.</p>
+    </div>
+  </section>
+
+  <!-- ===== 5 · ownership — a tall film of hands at work, and four real services ===== -->
+  <section class="craft" id="ownership" aria-labelledby="craft-title">
+    <figure class="craft__film">
+      <span class="slit">
+        <video class="film" data-film="craft" muted loop playsinline preload="none" poster="assets/video/craft-poster.jpg" data-src="assets/video/craft.mp4" style="--pos:38% 50%"></video>
+      </span>
+      <figcaption>
+        <button class="vbtn" type="button" data-film-toggle="craft" aria-pressed="false"><svg class="ico ico--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><svg class="ico ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg><span>Pause film</span></button>
+        <span>A coachline painted by hand at Goodwood. Film: Rolls-Royce Motor Cars · editorial use.</span>
+      </figcaption>
+    </figure>
+
+    <div class="craft__body">
+      <p class="eyebrow">Ownership</p>
+      <h2 id="craft-title">Care, after the keys.</h2>
+      <ol class="services" role="list">
+        <li><a href="https://www.charlottemclaren.com/service/" rel="noopener"><b>Service centre</b><span>McLaren Charlotte · 704-248-8682</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+        <li><a href="https://www.koenigseggnc.com/service-parts/" rel="noopener"><b>Factory-authorised service and parts</b><span>Koenigsegg Charlotte</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+        <li><a href="https://www.rollsroycemotorcarscharlotte.com/service-appointment/" rel="noopener"><b>Book a service appointment</b><span>Rolls-Royce Motor Cars Charlotte</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+        <li><a href="https://www.charlottemclaren.com/road-side-assistance/" rel="noopener"><b>Roadside assistance</b><span>McLaren Roadside Assistance · 855-462-5273</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+      </ol>
+      <figure class="craft__hall" data-reveal>
+        <span class="clipbox"><img src="assets/img/kenley-workshop.jpg" alt="Service bays with cars on lifts in a large workshop hall" loading="lazy" style="--pos:50% 60%"></span>
+        <figcaption>The service hall at 6010 Kenley Lane. Frame from McLaren Charlotte’s film.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 6 · buy, sell, trade — three verbs, clear actions, on paper ===== -->
+  <section class="deal" id="trade" data-ground="light" aria-labelledby="deal-title">
+    <header class="deal__head">
+      <p class="eyebrow">Buy, sell, trade</p>
+      <h2 id="deal-title">Three ways to do business.</h2>
+    </header>
+    <div class="deal__cols">
+      <article class="verb">
+        <h3>Buy</h3>
+        <p>Choose from the collection and apply for finance with the showroom.</p>
+        <ul role="list">
+          <li><a class="act act--primary" href="#collection" data-filter="all">Browse the collection</a></li>
+          <li><a class="act" href="https://www.charlottemclaren.com/finance-application" rel="noopener">Finance application · McLaren Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+          <li><a class="act" href="https://www.rollsroycemotorcarscharlotte.com/finance/" rel="noopener">Finance application · Rolls-Royce Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+        </ul>
+      </article>
+      <article class="verb">
+        <h3>Sell</h3>
+        <p>Consign your car with a showroom, or ask the group for a purchase offer.</p>
+        <ul role="list">
+          <li><a class="act" href="https://www.charlottemclaren.com/consignment-authorization/" rel="noopener">Consignment · McLaren Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+          <li><a class="act" href="https://www.rollsroycemotorcarscharlotte.com/consignment/" rel="noopener">Consignment · Rolls-Royce Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+          <li><a class="act" href="https://www.ztautogroup.com/sell-my-car/" rel="noopener">Sell my car · ZT Automotive <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+        </ul>
+      </article>
+      <article class="verb">
+        <h3>Trade</h3>
+        <p>Have your car valued against the next one.</p>
+        <ul role="list">
+          <li><a class="act" href="https://www.charlottemclaren.com/trade-in/" rel="noopener">Value your trade · McLaren Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+          <li><a class="act" href="https://www.rollsroycemotorcarscharlotte.com/value-your-trade/" rel="noopener">Value your trade · Rolls-Royce Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+        </ul>
+      </article>
+    </div>
+    <figure class="deal__fig" data-reveal>
+      <span class="clipbox"><img src="assets/img/people-team.jpg" alt="A ZT Automotive team in front of a dealership" loading="lazy" style="--pos:50% 40%"></span>
+      <figcaption>The people you deal with. A ZT Automotive team, Tampa. Photo: ZT Automotive.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== 7 · showrooms — two addresses in Charlotte, as two doors ===== -->
+  <section class="rooms" id="showrooms" aria-labelledby="rooms-title">
+    <header class="rooms__head">
+      <h2 id="rooms-title">Charlotte</h2>
+      <p>Two addresses in Charlotte, North Carolina. Each showroom keeps its own website, inventory and telephone line.</p>
+    </header>
+
+    <div class="doors">
+      <article class="doorway is-open" data-door>
+        <div class="doorway__media">
+          <video class="film" data-film="showroom" muted loop playsinline preload="none" poster="assets/video/showroom-poster.jpg" data-src="assets/video/showroom.mp4" style="--pos:50% 50%"></video>
+        </div>
+        <div class="doorway__body">
+          <button class="doorway__title" type="button" aria-expanded="true"><span>6010</span> Kenley Lane</button>
+          <ul role="list">
+            <li><span class="mark mark--mclaren" aria-hidden="true"></span><a href="https://www.charlottemclaren.com/" rel="noopener">McLaren Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a><a href="tel:+17042480009">(704) 248-0009</a></li>
+            <li><span class="mark mark--koenigsegg" aria-hidden="true"></span><a href="https://www.koenigseggnc.com/" rel="noopener">Koenigsegg Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a><a href="tel:+17042488699">704-248-8699</a></li>
+            <li><span class="doorway__plain">Midwest Automotive Designs</span><a href="https://www.luxsprintervanforsale.com/" rel="noopener">Sprinter Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a><span></span></li>
+          </ul>
+          <p class="doorway__foot"><a href="https://www.charlottemclaren.com/directions/" rel="noopener">Directions</a><span>Charlotte, NC 28217</span><button class="vbtn" type="button" data-film-toggle="showroom" aria-pressed="false"><svg class="ico ico--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><svg class="ico ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg><span>Pause film</span></button></p>
+          <p class="doorway__credit">Film: McLaren Charlotte</p>
+        </div>
+      </article>
+
+      <article class="doorway" data-door>
+        <div class="doorway__media">
+          <img src="assets/img/tryon-facade.jpg" alt="The Rolls-Royce Motor Cars Charlotte showroom seen from the street" loading="lazy" style="--pos:44% 50%">
+        </div>
+        <div class="doorway__body">
+          <button class="doorway__title" type="button" aria-expanded="false"><span>1316</span> South Tryon Street</button>
+          <ul role="list">
+            <li><span class="mark mark--rolls-royce" aria-hidden="true"></span><a href="https://www.rollsroycemotorcarscharlotte.com/" rel="noopener">Rolls-Royce Motor Cars Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a><a href="tel:+17042487766">(704) 248-7766</a></li>
+            <li><span class="mark mark--czinger" aria-hidden="true"></span><a href="https://www.czingerclt.com/" rel="noopener">Czinger Charlotte <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a><a href="tel:+17042480009">(704) 248-0009</a></li>
+          </ul>
+          <p class="doorway__foot"><a href="https://www.rollsroycemotorcarscharlotte.com/directions/" rel="noopener">Directions</a><span>Charlotte, NC 28203</span></p>
+          <p class="doorway__credit">Photo: ZT Automotive</p>
+        </div>
+      </article>
+    </div>
+
+    <figure class="skyline" data-reveal>
+      <span class="clipbox"><img src="assets/img/charlotte-rooftop.jpg" alt="Seven McLarens lined up on a rooftop with the Charlotte skyline behind them" loading="lazy" style="--pos:50% 60%"></span>
+      <figcaption>Uptown Charlotte from a rooftop. Photo: McLaren Charlotte.</figcaption>
+    </figure>
+
+    <div class="group" id="network" aria-labelledby="group-title">
+      <h3 id="group-title">ZT Automotive across the Southeast</h3>
+      <div class="group__cols">
+        <dl>
+          <dt>Alabama</dt>
+          <dd><a href="https://www.singingrivercdjr.com/" rel="noopener">Singing River CDJR <span>Florence</span></a></dd>
+          <dd><a href="https://www.singingriverhonda.com/" rel="noopener">Singing River Honda <span>Florence</span></a></dd>
+          <dd><a href="https://www.singingrivernissan.com/" rel="noopener">Singing River Nissan <span>Florence</span></a></dd>
+          <dd><a href="https://www.singingrivertoyota.com/" rel="noopener">Singing River Toyota <span>Tuscumbia</span></a></dd>
+        </dl>
+        <dl>
+          <dt>Florida</dt>
+          <dd><a href="https://www.bmwfwb.com/" rel="noopener">BMW of Fort Walton Beach <span>Fort Walton Beach</span></a></dd>
+          <dd><a href="https://www.mazdafwb.com/" rel="noopener">Mazda of Fort Walton Beach <span>Fort Walton Beach</span></a></dd>
+          <dd><a href="https://www.mercedesbenzfwb.com/" rel="noopener">Mercedes-Benz of Fort Walton Beach <span>Fort Walton Beach</span></a></dd>
+          <dd><a href="https://www.toyotafwb.com/" rel="noopener">Toyota of Fort Walton Beach <span>Fort Walton Beach</span></a></dd>
+          <dd><a href="https://www.mausnissanofbrooksville.com/" rel="noopener">Maus Nissan of Brooksville <span>Brooksville</span></a></dd>
+          <dd><a href="https://www.mausnissan.com/" rel="noopener">Maus Nissan of New Port Richey <span>New Port Richey</span></a></dd>
+          <dd><a href="https://www.mausacura.com/" rel="noopener">Maus Acura of North Tampa <span>Tampa</span></a></dd>
+          <dd><a href="https://www.mausnissantampa.com/" rel="noopener">Maus Nissan of North Tampa <span>Tampa</span></a></dd>
+        </dl>
+        <dl>
+          <dt>Georgia</dt>
+          <dd><a href="https://www.steverayman.com/" rel="noopener">Steve Rayman Chevrolet <span>Smyrna</span></a></dd>
+        </dl>
+        <dl>
+          <dt>Texas</dt>
+          <dd><a href="https://www.roncartercdjr.com/" rel="noopener">Ron Carter CDJR <span>Alvin</span></a></dd>
+          <dd><a href="https://www.roncarter-gm.com/" rel="noopener">Ron Carter Chevrolet <span>Alvin</span></a></dd>
+          <dd><a href="https://www.roncarterford.com/" rel="noopener">Ron Carter Ford <span>Alvin</span></a></dd>
+          <dd><a href="https://www.roncartergmc.com/" rel="noopener">Ron Carter GMC <span>Alvin</span></a></dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8 · journal — news, community, social. Typographic ===== -->
+  <section class="journal" id="journal" aria-labelledby="journal-title">
+    <header class="journal__head">
+      <h2 id="journal-title">Journal</h2>
+      <a class="more" href="https://www.ztautogroup.com/in-the-press/" rel="noopener">All press <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a>
+    </header>
+
+    <ol class="press" role="list">
+      <li><a href="https://www.ztautogroup.com/badar-family-office-expands-into-the-worlds-most-exclusive-automotive-brands-with-acquisition-of-mclaren-charlotte-and-rolls-royce-motor-cars-charlotte/" rel="noopener"><time datetime="2026-08-12">12 Aug 2026</time><b>Badar Family Office acquires McLaren Charlotte and Rolls-Royce Motor Cars Charlotte</b><span>The ZT Automotive Collection is established.</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+      <li><a href="https://www.ztautogroup.com/zt-automotive-is-proud-to-debut-at-98-on-automotivenews-2026-list-of-the-top-100-dealership-groups-in-used-vehicle-sales/" rel="noopener"><time datetime="2026-05-22">22 May 2026</time><b>ZT Automotive debuts at No. 98 in the Automotive News Top 100</b><span>Dealership groups ranked by used-vehicle sales.</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+      <li><a href="https://www.ztautogroup.com/zt-automotive-expands-footprint-with-four-new-dealerships-in-florida/" rel="noopener"><time datetime="2025-12-23">23 Dec 2025</time><b>Four new dealerships in Florida</b><span>ZT Automotive enters the Tampa market and adds Acura.</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+      <li><a href="https://www.ztautogroup.com/zt-automotive-sells-south-atlanta-cdjr-carvana/" rel="noopener"><time datetime="2025-12-18">18 Dec 2025</time><b>South Atlanta CDJR sold to Carvana</b><span>Reported by the Atlanta Journal-Constitution.</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
+    </ol>
+
+    <div class="journal__side">
+      <article class="foundation">
+        <figure data-reveal><span class="clipbox"><img src="assets/img/people-cheque.jpg" alt="Dealership staff present a donation cheque to a local teacher" loading="lazy" style="--pos:50% 40%"></span></figure>
+        <div>
+          <h3 class="eyebrow">Community</h3>
+          <blockquote>“We take care of our people. Our people take care of our communities.”</blockquote>
+          <p>The ZT Automotive Foundation supports team members and local causes. In Alvin, Texas, Ron Carter Cares gives $500 each month to a local teacher, a first responder and a charity, chosen by community vote.</p>
+          <a class="more" href="https://www.ztautogroup.com/zt-automotive-foundation/" rel="noopener">ZT Automotive Foundation <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a>
+        </div>
+      </article>
+      <article class="events">
+        <h3 class="eyebrow">Events and drives</h3>
+        <p>No public events are announced yet. <span>Placeholder — launches and drives at the Charlotte showrooms will be listed here.</span></p>
+      </article>
+    </div>
+
+    <ul class="social" role="list" aria-label="Follow">
+      <li><a href="https://www.instagram.com/ztautogroup/" rel="noopener">Instagram <span>@ztautogroup</span></a></li>
+      <li><a href="https://www.instagram.com/rollsroycecharlotte/" rel="noopener">Instagram <span>@rollsroycecharlotte</span></a></li>
+      <li><a href="https://www.facebook.com/ZTAutomotive/" rel="noopener">Facebook <span>ZT Automotive</span></a></li>
+      <li><a href="https://www.linkedin.com/company/ztautomotive/" rel="noopener">LinkedIn <span>ZT Automotive</span></a></li>
+    </ul>
+  </section>
+
+  <!-- ===== 9 · enquire — the ground turns to paper along the 34° line, once ===== -->
+  <div class="door" id="door" data-ground="light">
+    <div class="door__ground" aria-hidden="true"></div>
+    <section class="enquire" id="enquire" aria-labelledby="enquire-title">
+      <h2 class="sr-only" id="enquire-title">Enquire</h2>
+      <div class="enquire__top">
+        <a class="enquire__cta" href="tel:+17042480009" aria-label="Enquire — call the Collection in Charlotte on (704) 248-0009"><span class="enquire__frame" aria-hidden="true"></span><span class="enquire__word" data-enquire>Enquire</span></a>
+        <p class="enquire__tel"><span>The Collection, Charlotte</span><a href="tel:+17042480009">(704) 248-0009</a></p>
+      </div>
+      <dl class="enquire__facts">
+        <div><dt>McLaren · Czinger</dt><dd><a href="tel:+17042480009">(704) 248-0009</a></dd></div>
+        <div><dt>Rolls-Royce Motor Cars</dt><dd><a href="tel:+17042487766">(704) 248-7766</a></dd></div>
+        <div><dt>Koenigsegg</dt><dd><a href="tel:+17042488699">704-248-8699</a></dd></div>
+        <div><dt>ZT Automotive, group line</dt><dd><a href="tel:+18322716197">832-271-6197</a></dd></div>
+      </dl>
+      <p class="enquire__note">Showroom hours and a single enquiry address for the Collection are to be confirmed. <a href="https://www.ztautogroup.com/contact/" rel="noopener">Contact form at ztautogroup.com</a></p>
+    </section>
+  </div>
+</main>
+
+<footer class="foot" id="foot">
+  <div class="foot__top">
+    <a class="foot__brand" href="#top" aria-label="ZT Automotive Collection, back to top"><img src="assets/zt-monogram-white.png" alt="" width="64" height="75" loading="lazy"><span>ZT Automotive<br>Collection</span></a>
+    <nav class="foot__nav" aria-label="Footer">
+      <div><h2>Marques</h2><a href="#collection" data-filter="czinger">Czinger</a><a href="#collection" data-filter="ferrari">Ferrari</a><a href="#collection" data-filter="koenigsegg">Koenigsegg</a><a href="#collection" data-filter="mclaren">McLaren</a><a href="#collection" data-filter="rolls-royce">Rolls-Royce</a></div>
+      <div><h2>The Collection</h2><a href="#house">The house</a><a href="#collection" data-filter="all">Collection</a><a href="#ownership">Ownership</a><a href="#trade">Buy, sell, trade</a><a href="#showrooms">Showrooms</a><a href="#journal">Journal</a></div>
+      <div><h2>ZT Automotive</h2><a href="#network">Group dealerships</a><a href="https://www.ztautogroup.com/" rel="noopener">ztautogroup.com</a><a href="https://www.ztautogroup.com/careers/" rel="noopener">Careers</a><a href="https://www.ztautogroup.com/zt-automotive-foundation/" rel="noopener">Foundation</a><a href="https://investor.ztcorporate.com/" rel="noopener">Investors</a></div>
+      <div><h2>Follow</h2><a href="https://www.instagram.com/ztautogroup/" rel="noopener">Instagram</a><a href="https://www.facebook.com/ZTAutomotive/" rel="noopener">Facebook</a><a href="https://www.linkedin.com/company/ztautomotive/" rel="noopener">LinkedIn</a><a href="#enquire">Enquire</a></div>
+    </nav>
+  </div>
+  <div class="foot__base">
+    <p>© 2026 ZT Automotive</p>
+    <p><a href="https://www.ztautogroup.com/privacy-policy/" rel="noopener">Privacy policy</a></p>
+    <p class="foot__credits">Prototype for internal review. Listings are examples. Photography and film © Czinger Vehicles, Ferrari S.p.A., Koenigsegg (Keno Zache), McLaren Automotive, McLaren Charlotte, Rolls-Royce Motor Cars and ZT Automotive; marks are the property of their owners.</p>
+  </div>
+</footer>
+
+<!-- ===== marque rooms — the column expands to the full screen and the diagonal lets go ===== -->
+<div class="world" id="world" role="dialog" aria-modal="true" aria-labelledby="world-title" hidden data-lenis-prevent>
+  <div class="world__media"></div>
+  <div class="world__shade" aria-hidden="true"></div>
+  <button class="world__close" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg><span>Close</span></button>
+  <div class="world__body">
+    <span class="mark world__mark" data-w-mark aria-hidden="true"></span>
+    <h2 id="world-title" data-w-title></h2>
+    <p class="world__place" data-w-place></p>
+    <blockquote data-w-quote></blockquote>
+    <p class="world__models"><span>Models</span><b data-w-models></b></p>
+    <div class="world__acts" data-w-acts></div>
+  </div>
+  <ul class="world__index" role="list" aria-label="Other marques">
+    <li><button type="button" data-w-go="czinger"><span class="mark mark--czinger" aria-hidden="true"></span><span class="sr-only">Czinger</span></button></li>
+    <li><button type="button" data-w-go="ferrari"><span class="mark mark--ferrari" aria-hidden="true"></span><span class="sr-only">Ferrari</span></button></li>
+    <li><button type="button" data-w-go="koenigsegg"><span class="mark mark--koenigsegg" aria-hidden="true"></span><span class="sr-only">Koenigsegg</span></button></li>
+    <li><button type="button" data-w-go="mclaren"><span class="mark mark--mclaren" aria-hidden="true"></span><span class="sr-only">McLaren</span></button></li>
+    <li><button type="button" data-w-go="rolls-royce"><span class="mark mark--rolls-royce" aria-hidden="true"></span><span class="sr-only">Rolls-Royce</span></button></li>
+  </ul>
+  <p class="world__credit" data-w-credit></p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
+<script src="main.js?v=2"></script>
+<script src="home.js?v=2"></script>
+</body>
+</html>
