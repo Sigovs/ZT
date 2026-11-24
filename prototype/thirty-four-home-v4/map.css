@@ -1,0 +1,59 @@
+/* ZT homepage v4 · the atlas. Until the model is ready (or without WebGL) the list of dealerships stands as before. */
+.atlas { display: none; }
+.has-atlas.group { display: block; }
+.has-atlas .group__cols, .has-atlas > h3 { display: none; }
+.has-atlas .atlas { display: block; position: relative; height: clamp(640px, 58vw, 100svh); margin-inline: calc(var(--pad) * -1); overflow: hidden; }
+.atlas canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: grab; -webkit-mask-image: linear-gradient(90deg, transparent 4%, rgba(0, 0, 0, .1) 27%, #000 37%, #000 93%, transparent), linear-gradient(transparent 0, #000 12%, #000 86%, transparent); mask-image: linear-gradient(90deg, transparent 4%, rgba(0, 0, 0, .1) 27%, #000 37%, #000 93%, transparent), linear-gradient(transparent 0, #000 12%, #000 86%, transparent); -webkit-mask-composite: source-in; mask-composite: intersect; }
+.atlas.is-over canvas { cursor: pointer; }
+.atlas.is-dragging canvas { cursor: grabbing; }
+
+/* ---------- names on the model ---------- */
+.atlas__tags { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.atlas__tag, .atlas__par { position: absolute; left: 0; top: 0; width: 0; height: 0; font-family: var(--text); font-size: 14px; line-height: 1; white-space: nowrap; }
+.atlas__tag, .atlas__par { opacity: 0; transition: opacity .35s var(--ease); }
+.atlas__tag.is-on, .atlas__par.is-on { opacity: 1; }
+.atlas__tag b { position: absolute; left: 0; bottom: 0; padding: 6px 9px 6px 8px; font-weight: 500; background: var(--ivory); color: var(--ink); transition: background .3s var(--ease), color .3s var(--ease); }
+.atlas__tag.is-left b { left: auto; right: 0; }
+.atlas__tag.is-home b, .atlas__tag.is-hot b { background: #ff2d55; color: #0b0c0d; }
+.atlas__par b { position: absolute; left: 0; bottom: 7px; font-weight: 400; color: var(--ivory-2); }
+
+/* ---------- the panel ---------- */
+.atlas__side { position: absolute; z-index: 2; left: var(--pad); top: 0; bottom: 0; width: max(290px, calc(430 * var(--u))); display: flex; flex-direction: column; justify-content: center; pointer-events: none; }
+.atlas__side > * { pointer-events: auto; }
+.atlas__title { max-width: 11ch; font-family: var(--display); font-weight: 500; font-size: clamp(30px, calc(54 * var(--u)), 64px); line-height: 1.02; letter-spacing: -.035em; text-wrap: balance; }
+.atlas.is-focused .atlas__title { display: none; }
+.atlas__list { margin-top: calc(44 * var(--u)); }
+.atlas.is-focused .atlas__list { margin-top: 0; max-height: 100%; overflow-y: auto; padding: 24px 8px 24px 0; scrollbar-width: thin; scrollbar-color: rgba(239, 237, 232, .3) transparent; }
+.atlas ul { list-style: none; }
+.atlas__states[hidden], .atlas__detail[hidden] { display: none; }
+.atlas__states button { position: relative; width: 100%; display: flex; align-items: center; justify-content: space-between; min-height: 54px; border-bottom: 1px solid var(--rule); color: var(--ivory-2); transition: color .3s var(--ease); }
+.atlas__states li:first-child button { border-top: 1px solid var(--rule); }
+.atlas__states b { font-family: var(--display); font-weight: 500; font-size: clamp(19px, calc(24 * var(--u)), 28px); letter-spacing: -.02em; transition: transform .5s var(--ease); }
+.atlas__states span { font-size: 15px; font-variant-numeric: tabular-nums; color: var(--ivory-3); }
+.atlas__states button::before { content: ""; position: absolute; left: 0; top: 50%; width: 14px; height: 7px; margin-top: -3px; background: #ff2d55; transform: skewX(-34deg) scaleX(0); transform-origin: left; transition: transform .4s var(--ease); }
+.atlas__states button:hover, .atlas__states button:focus-visible { color: var(--ivory); }
+.atlas__states button:hover b, .atlas__states button:focus-visible b { transform: translateX(26px); }
+.atlas__states button:hover::before, .atlas__states button:focus-visible::before { transform: skewX(-34deg) scaleX(1); }
+.atlas__back { display: inline-flex; align-items: center; gap: var(--s2); min-height: 44px; font-size: 15px; color: var(--ivory-2); transition: color .3s var(--ease); }
+.atlas__back:hover, .atlas__back:focus-visible { color: var(--ivory); }
+.atlas__back .ico { width: 18px; height: 18px; transition: transform .45s var(--ease); }
+.atlas__back:hover .ico { transform: translateX(-4px); }
+.atlas__name { margin: var(--s3) 0 var(--s5); font-family: var(--display); font-weight: 600; font-size: clamp(38px, calc(68 * var(--u)), 80px); line-height: .98; letter-spacing: -.045em; }
+.atlas__city { padding: var(--s4) 0 6px; font-size: 14px; color: var(--ivory-3); border-bottom: 1px solid var(--rule); }
+.atlas__detail li a { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); min-height: 46px; font-weight: 500; line-height: 1.25; color: var(--ivory-2); border-bottom: 1px solid rgba(239, 237, 232, .08); transition: color .3s var(--ease), padding .45s var(--ease); }
+.atlas__detail li a .ico { flex: none; width: 17px; height: 17px; opacity: .45; transition: opacity .3s var(--ease), transform .45s var(--ease); }
+.atlas__detail li a:hover, .atlas__detail li a:focus-visible { color: var(--ivory); padding-left: 8px; }
+.atlas__detail li a:hover .ico, .atlas__detail li a:focus-visible .ico { opacity: 1; color: #ff2d55; transform: translate(3px, -3px); }
+
+@media (max-width: 900px) {
+  .atlas canvas { -webkit-mask-image: linear-gradient(transparent 0, #000 12%, #000 86%, transparent); mask-image: linear-gradient(transparent 0, #000 12%, #000 86%, transparent); }
+  .has-atlas .atlas { height: auto; overflow: visible; }
+  .atlas canvas { position: relative; inset: auto; height: 92vw; max-height: 620px; }
+  .atlas__tags { inset: 0 0 auto 0; height: min(92vw, 620px); }
+  .atlas__side { position: relative; left: auto; top: auto; width: auto; padding: 0 var(--pad); display: block; }
+  .atlas__title { font-size: 34px; }
+  .atlas.is-focused .atlas__list { max-height: none; overflow: visible; padding: 0; }
+  .atlas__list { margin-top: var(--s5); }
+  .atlas__states button { min-height: 60px; }
+  .atlas__detail li a { min-height: 52px; }
+}

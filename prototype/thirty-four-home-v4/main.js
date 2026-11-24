@@ -2,7 +2,7 @@
    One geometry drives the hero: a band at 34° (the angle of the ZT monogram's bars).
    1. Entrance: a hairline is drawn along the band's axis, then opens into the bar.
    2. Marque selector: five marks. Each wipes its own footage into the bar along the bar's axis.
-      The monumental word stays "Collection".
+      The slogan stays.
    3. Scroll: the bar slides out along its axis; the monolith columns waiting
       beneath it rise, flatten their 34° cut and become the second screen.      */
 
@@ -19,9 +19,13 @@
   const mqMobile = window.matchMedia('(max-width: 900px)');
   const mobile = mqMobile.matches;
   const bar = $('.bar');
-  const plates = $('.bar__plates');
+  const plates = $('.bar__plates'), glassEdge = $('.hero__edge');
   const hairline = $('.hairline');
   const wordEl = $('[data-display]');
+  // ?slogan=2|3|4 shows the other lines that were written; the one in the markup is the one chosen
+  const SLOGANS = { 2: ['Five marques.', 'One house.'], 3: ['Extraordinary,', 'by name.'], 4: ['Driven by', 'excellence.'] };
+  const alt = SLOGANS[new URLSearchParams(location.search).get('slogan')];
+  if (alt) $$('.line', wordEl).forEach((l, i) => { l.textContent = alt[i]; });
   const cols = $$('.col');
   const monolith = $('.monolith');
   const items = $$('.index__item');
@@ -29,8 +33,8 @@
   const HOME = creditEl.textContent;
   const nowMark = $('[data-now-mark]'), nowName = $('[data-now-name]'), stepN = $('[data-step-n]');
   const ORDER = [null, ...items];
-  // ?hero=reel|strokes|type|none switches between the compositions that were explored; reel is the one chosen
-  heroEl.dataset.hero = (new URLSearchParams(location.search).get('hero') || 'reel');
+  // ?hero=reel|strokes|type|none switches between the compositions that were explored; none is the one chosen (Alex, 24 Nov 2026)
+  heroEl.dataset.hero = (new URLSearchParams(location.search).get('hero') || 'none');
   const name = btn => { nowMark.className = 'mark' + (btn ? ' mark--' + btn.dataset.key : ''); nowName.textContent = btn ? btn.getAttribute('aria-label') : 'ZT Automotive Collection'; stepN.textContent = ORDER.indexOf(btn || null) + ' / 5'; };
   const announce = key => document.dispatchEvent(new CustomEvent('zt:marque', { detail: { key } }));
 
@@ -60,6 +64,7 @@
     const x0 = -60, x1 = G.W + 60, h = band.t / 2;
     bar.style.clipPath =
       `polygon(${x0}px ${c(x0) - h}px, ${x1}px ${c(x1) - h}px, ${x1}px ${c(x1) + h}px, ${x0}px ${c(x0) + h}px)`;
+    if (glassEdge) glassEdge.style.clipPath = `polygon(${x0}px ${c(x0) - h - 1.4}px, ${x1}px ${c(x1) - h - 1.4}px, ${x1}px ${c(x1) - h}px, ${x0}px ${c(x0) - h}px)`;
     // the footage moves a little less than the band → depth along the same axis
     plates.style.transform = `translate3d(${dx * 0.55}px, ${dy * 0.55}px, 0)`;
   }
@@ -89,12 +94,17 @@
   }
 
   /* ---------- the monumental word ---------- */
-  function splitWord(text) {
-    wordEl.innerHTML = '';
-    [...text].forEach(ch => {
-      const o = document.createElement('span'); o.className = 'ch';
-      const i = document.createElement('span'); i.textContent = ch;
-      o.appendChild(i); wordEl.appendChild(o);
+  function splitWord() {
+    wordEl.parentElement.setAttribute('aria-label', wordEl.textContent.trim().replace(/\s+/g, ' '));
+    wordEl.setAttribute('aria-hidden', 'true');
+    $$('.line', wordEl).forEach(line => {
+      const text = line.textContent;
+      line.textContent = '';
+      [...text].forEach(ch => {
+        const o = document.createElement('span'); o.className = 'ch';
+        const i = document.createElement('span'); i.textContent = ch === ' ' ? '\u00a0' : ch;
+        o.appendChild(i); line.appendChild(o);
+      });
     });
     return $$('.ch > span', wordEl);
   }
@@ -131,7 +141,7 @@
   window.ztLenis = lenis;                                      // home.js: menu lock, jumps
 
   measure(); placeHairline(); placeReel(); drawBar();
-  const chars = splitWord(wordEl.textContent);
+  const chars = splitWord();
   colState.intro = 1; drawCols();
 
   /* ---------- 1 · entrance ---------- */

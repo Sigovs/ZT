@@ -117,10 +117,10 @@
   if (amb && films.hero && motion && !mobile) {
     const ctx = amb.getContext('2d'); let n = 0;
     gsap.ticker.add(() => {
-      if (n++ % 3) return;
+      if (n++ % 2) return;
       const v = marqueFilms[heroKey] && marqueFilms[heroKey].classList.contains('is-playing') ? marqueFilms[heroKey] : films.hero.el;
       if (v.paused || v.readyState < 2) return;
-      try { ctx.drawImage(v, 0, 0, 64, 36); amb.classList.add('is-on'); } catch (err) { /* frame not ready */ }
+      try { ctx.drawImage(v, 0, 0, amb.width, amb.height); amb.classList.add('is-on'); } catch (err) { /* frame not ready */ }
     });
   }
 
@@ -218,7 +218,7 @@
   });
 
   /* =========================== 4 · inventory ===========================
-     Real stock in profile on one line. The filter swaps which cars stand on it; the finder goes to the live listings. */
+     Real stock in profile on glass cards. The filter swaps which cars are shown; the finder goes to the live listings. */
   const stock = $('.stock');
   const lots = $$('.lot[data-marque]', stock), lotAll = $('[data-lot-all]', stock), stockStatus = $('[data-stock-status]', stock);
   const FACETS = JSON.parse($('[data-facets]', stock).textContent);
@@ -228,11 +228,11 @@
   const sumOf = make => FACETS[make].reduce((n, m) => n + m[2], 0);
   let stockKey = 'all', stockTl;
 
-  // the cars drive onto the line from the right; the line is drawn ahead of them
+  // the cards lift, the cars drive in from the right
   function driveIn(list, stagger = 0.07) {
-    const cars = list.map(l => $('.lot__car', l)), lines = list.map(l => $('.lot__line', l)), text = list.flatMap(l => $$('.lot__id, .lot__facts', l));
+    const cards = list.map(l => $(':scope > a', l)), cars = list.map(l => $('.lot__car', l)), text = list.flatMap(l => $$('.lot__id, .lot__facts', l));
     return gsap.timeline()
-      .fromTo(lines, { '--draw': 0 }, { '--draw': 1, duration: 1.1, stagger, ease: 'expo.inOut' }, 0)
+      .fromTo(cards, { y: 46 }, { y: 0, duration: 1.2, stagger, ease: 'expo.out', clearProps: 'transform' }, 0)
       .fromTo(cars, { x: mobile ? 40 : 90, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 1.25, stagger, ease: 'expo.out', clearProps: 'transform,opacity,visibility' }, 0.1)
       .fromTo(text, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, stagger: stagger / 2, ease: 'power2.out', clearProps: 'opacity,visibility' }, 0.45);
   }
@@ -246,8 +246,7 @@
       $('a', lotAll).href = liveURL(m[0]);
       $('[data-all-label]', lotAll).textContent = n === 1 ? `The only ${m[1]} in stock` : `All ${n} from ${m[1]}`;
     }
-    const on = lots.filter(l => !l.hidden), n = on.length;
-    lots.forEach(l => l.classList.toggle('is-edge', !l.hidden && on.indexOf(l) % 3 === 2));
+    const n = lots.filter(l => !l.hidden).length;
     stock.classList.toggle('is-full', n >= 3);
     stockStatus.textContent = m ? `${n} ${m[1]} shown of ${sumOf(m[0])} in stock` : 'Cars from all five marques shown';
   }
@@ -271,6 +270,27 @@
       });
   }
   $$('.filter__btn', stock).forEach(b => b.addEventListener('click', () => applyFilter(b.dataset.filter)));
+
+  {   // save, share, text. Saved cars are remembered in this browser only; a text carries the car and its link to any number
+    const KEY = 'zt-saved';
+    const read = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } };
+    const write = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* private window */ } };
+    const tell = (el, word, rest) => {
+      $$('.is-told', el.parentElement).forEach(o => { if (o !== el) { clearTimeout(o._t); o.classList.remove('is-told'); o.dataset.tip = o._rest; } });
+      el._rest = rest; el.dataset.tip = word; el.classList.add('is-told'); stockStatus.textContent = word; clearTimeout(el._t); el._t = setTimeout(() => { el.classList.remove('is-told'); el.dataset.tip = rest; }, 1600); };
+    let saved = read();
+    $$('.lot__tools', stock).forEach(box => {
+      const { name, url } = box.dataset, save = $('[data-tool="save"]', box), share = $('[data-tool="share"]', box), text = $('[data-tool="text"]', box);
+      const paint = () => { const on = saved.includes(url); save.setAttribute('aria-pressed', String(on)); if (!save.classList.contains('is-told')) save.dataset.tip = on ? 'Saved' : 'Save'; };
+      paint();
+      save.addEventListener('click', () => { const on = !saved.includes(url); saved = on ? saved.concat(url) : saved.filter(u => u !== url); write(saved); paint(); tell(save, on ? 'Saved' : 'Removed', on ? 'Saved' : 'Save'); });
+      share.addEventListener('click', async () => {
+        if (navigator.share && !fine) { try { await navigator.share({ title: name, url }); } catch (e) { /* closed */ } return; }
+        try { await navigator.clipboard.writeText(url); tell(share, 'Link copied', 'Share'); } catch (e) { tell(share, 'Copy failed', 'Share'); }
+      });
+      text.href = 'sms:?&body=' + encodeURIComponent(name + ' ' + url);
+    });
+  }
 
   {   // the finder: make, then model, then the live listings with both already applied
     const find = $('[data-find]', stock), mk = $('[data-make]', find), md = $('[data-model]', find), label = $('[data-find-label]', find);
@@ -380,7 +400,9 @@
     const photo = $('.house__photo .clipbox'), pimg = $('img', photo);
     gsap.fromTo(photo, { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.6, ease: 'expo.inOut', clearProps: 'clipPath', scrollTrigger: { trigger: photo, start: 'top 86%', once: true } });
     gsap.fromTo(pimg, { yPercent: -3.5 }, { yPercent: 3.5, ease: 'none', scrollTrigger: { trigger: photo, start: 'top bottom', end: 'bottom top', scrub: true } });
-    gsap.from('.sum .ln > span', { yPercent: 104, duration: 1.2, stagger: 0.1, ease: 'expo.out', scrollTrigger: { trigger: '.sum', start: 'top 86%', once: true } });
+    gsap.from('.sum .ln > span', { yPercent: 104, duration: 1.2, stagger: 0.1, ease: 'expo.out', scrollTrigger: { trigger: '.sum', start: 'top 90%', once: true } });
+    // the three lines slide to their common left edge with the scroll, each from further away
+    $$('.sum .ln').forEach((l, i) => gsap.fromTo(l, { x: () => [0.05, 0.2, 0.46][i] * window.innerWidth }, { x: 0, ease: 'power1.out', scrollTrigger: { trigger: '.sum', start: 'top 92%', end: () => `top ${[58, 50, 42][i]}%`, scrub: 0.7, invalidateOnRefresh: true } }));
 
     // ownership: the film opens sideways from a slit
     const slit = $('.slit');
@@ -446,6 +468,19 @@
     };
     window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     update();
+  }
+
+  /* =========================== the atlas: a 3D model of the five states, fetched when its block comes near =========================== */
+  {
+    const atlas = $('[data-atlas]');
+    if (atlas && hasGSAP && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(es => {
+        if (!es.some(e => e.isIntersecting)) return;
+        io.disconnect();
+        import('./map.js?v=23').then(m => m.mountAtlas(atlas, { gsap, ScrollTrigger, motion, fine })).then(a => { if (a && motion) ScrollTrigger.refresh(); }).catch(() => { /* the list stays */ });
+      }, { rootMargin: '1400px 0px' });
+      io.observe(atlas.closest('.group'));
+    }
   }
 
   /* fonts and late images change measurements */

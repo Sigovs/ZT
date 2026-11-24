@@ -11,12 +11,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.11/dist/lenis.css">
-<link rel="stylesheet" href="base.css?v=4">
-<link rel="stylesheet" href="home.css?v=4">
-<link rel="stylesheet" href="v2.css?v=4">
-<link rel="stylesheet" href="v3.css?v=4">
-<link rel="stylesheet" href="v4.css?v=4">
-<link rel="preload" as="image" href="assets/video/hero-poster.jpg">
+<link rel="stylesheet" href="base.css?v=23">
+<link rel="stylesheet" href="home.css?v=23">
+<link rel="stylesheet" href="v2.css?v=23">
+<link rel="stylesheet" href="v3.css?v=23">
+<link rel="stylesheet" href="v4.css?v=24">
+<link rel="stylesheet" href="map.css?v=23">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<link rel="preload" as="image" href="assets/video/hero-poster.jpg?v=2">
 <noscript><style>
   /* without script the page is still complete: a fixed bar on the poster frame, five marques, every section open */
   .nav { position: absolute; }
@@ -144,12 +146,13 @@
 
     <!-- ===== 1 · the bar — now a window onto moving footage ===== -->
     <div class="hero">
-      <canvas class="hero__ambient" width="64" height="36" aria-hidden="true"></canvas>
-      <h1 class="display" aria-live="polite"><span class="display__word" data-display>Collection</span></h1>
+      <canvas class="hero__ambient" width="480" height="270" aria-hidden="true"></canvas>
+      <h1 class="display"><span class="display__word" data-display><span class="line">The rare ones</span> <span class="line">live here.</span></span></h1>
 
+      <span class="hero__edge" aria-hidden="true"></span>
       <div class="bar" aria-hidden="true">
         <div class="bar__plates">
-          <figure class="plate is-active" data-plate="collection"><video class="film" data-film="hero" muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg" style="--pos:50% 58%"><source src="assets/video/hero.mp4" type="video/mp4"></video></figure>
+          <figure class="plate is-active" data-plate="collection"><video class="film" data-film="hero" muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg?v=2" style="--pos:50% 58%"><source src="assets/video/hero.mp4?v=2" type="video/mp4"></video></figure>
           <figure class="plate" data-plate="czinger"><img src="assets/img/czinger-21c-vmax-night.jpg" alt="" loading="lazy" style="--pos:58% 64%"><video class="film plate__film" data-marque-film="czinger" muted loop playsinline preload="none" data-src="assets/video/marque-czinger.mp4" style="--pos:58% 64%"></video></figure>
           <figure class="plate" data-plate="ferrari"><img src="assets/img/ferrari-12cilindri.jpg" alt="" loading="lazy" style="--pos:50% 62%"></figure>
           <figure class="plate" data-plate="koenigsegg"><img src="assets/img/koenigsegg-jesko-absolut.jpg" alt="" loading="lazy" style="--pos:40% 60%"></figure>
@@ -189,10 +192,8 @@
         <span class="col__body">
           <span class="mark mark--czinger col__mark" aria-hidden="true"></span>
           <span class="col__name">Czinger</span>
-          <span class="col__models">21C · 21C V Max · Hyper GT</span>
-          <span class="col__count">Czinger Charlotte</span>
         </span>
-        <span class="col__spine" aria-hidden="true"><span class="mark mark--czinger"></span></span>
+        <span class="col__spine" aria-hidden="true"><span class="col__spine-t">Czinger</span></span>
         <div class="col__open" id="open-czinger">
           <h3><span>Czinger Charlotte</span></h3>
           <p class="col__place"><span>1316 South Tryon St · Charlotte, NC 28203</span></p>
@@ -206,10 +207,8 @@
         <span class="col__body">
           <span class="mark mark--ferrari col__mark" aria-hidden="true"></span>
           <span class="col__name">Ferrari</span>
-          <span class="col__models">12Cilindri · Purosangue · F80 · 296 GTB</span>
-          <span class="col__count">Showroom to be confirmed</span>
         </span>
-        <span class="col__spine" aria-hidden="true"><span class="mark mark--ferrari"></span></span>
+        <span class="col__spine" aria-hidden="true"><span class="col__spine-t">Ferrari</span></span>
         <div class="col__open" id="open-ferrari">
           <h3><span>Ferrari</span></h3>
           <p class="col__place"><span>No ZT showroom is published for Ferrari yet. To be confirmed.</span></p>
@@ -223,10 +222,8 @@
         <span class="col__body">
           <span class="mark mark--koenigsegg col__mark" aria-hidden="true"></span>
           <span class="col__name">Koenigsegg</span>
-          <span class="col__models">Gemera · Jesko · Regera</span>
-          <span class="col__count">Koenigsegg Charlotte</span>
         </span>
-        <span class="col__spine" aria-hidden="true"><span class="mark mark--koenigsegg"></span></span>
+        <span class="col__spine" aria-hidden="true"><span class="col__spine-t">Koenigsegg</span></span>
         <div class="col__open" id="open-koenigsegg">
           <h3><span>Koenigsegg Charlotte</span></h3>
           <p class="col__place"><span>6010 Kenley Ln · Charlotte, NC 28217</span></p>
@@ -240,10 +237,8 @@
         <span class="col__body">
           <span class="mark mark--mclaren col__mark" aria-hidden="true"></span>
           <span class="col__name">McLaren</span>
-          <span class="col__models">W1 · 750S · Artura · GTS</span>
-          <span class="col__count">McLaren Charlotte</span>
         </span>
-        <span class="col__spine" aria-hidden="true"><span class="mark mark--mclaren"></span></span>
+        <span class="col__spine" aria-hidden="true"><span class="col__spine-t">McLaren</span></span>
         <div class="col__open" id="open-mclaren">
           <h3><span>McLaren Charlotte</span></h3>
           <p class="col__place"><span>6010 Kenley Ln, Suite C · Charlotte, NC 28217</span></p>
@@ -257,10 +252,8 @@
         <span class="col__body">
           <span class="mark mark--rolls-royce col__mark" aria-hidden="true"></span>
           <span class="col__name">Rolls-Royce</span>
-          <span class="col__models">Spectre · Phantom · Cullinan · Ghost</span>
-          <span class="col__count">Rolls-Royce Motor Cars Charlotte</span>
         </span>
-        <span class="col__spine" aria-hidden="true"><span class="mark mark--rolls-royce"></span></span>
+        <span class="col__spine" aria-hidden="true"><span class="col__spine-t">Rolls-Royce</span></span>
         <div class="col__open" id="open-rolls-royce">
           <h3><span>Rolls-Royce Motor Cars Charlotte</span></h3>
           <p class="col__place"><span>1316 South Tryon St · Charlotte, NC 28203</span></p>
@@ -319,7 +312,7 @@
 
   </section>
 
-  <!-- ===== 4 · inventory — real cars in ZT's stock, in profile, at one scale, on one line. No film ===== -->
+  <!-- ===== 4 · inventory — real cars in ZT's stock, in profile, on glass cards. No film ===== -->
   <section class="stock is-full" id="collection" data-ground="light" aria-labelledby="stock-title">
     <header class="stock__head">
       <div class="filter" role="group" aria-label="Filter by marque">
@@ -336,70 +329,92 @@
     <ol class="lots" role="list" data-lots>
         <li class="lot" data-marque="czinger"><a href="https://www.charlottemclaren.com/2026-czinger-21c-c-4609.htm" rel="noopener" aria-label="New 2026 Czinger 21C, 15 miles, Price on request. View at McLaren Charlotte">
           <span class="lot__car"><img src="assets/stock/czinger-21c.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--czinger" aria-hidden="true"></span><b>21C</b></span>
-          <span class="lot__facts"><span>New 2026</span><span>15 mi</span><span class="lot__price">Price on request</span></span>
-        </a></li>
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--czinger" aria-hidden="true"></span><b>21C</b></span>
+          <span class="lot__facts"><span>New 2026</span><span>15 mi</span><span class="lot__price">Price on request</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2026 Czinger 21C" data-url="https://www.charlottemclaren.com/2026-czinger-21c-c-4609.htm">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2026 Czinger 21C" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2026 Czinger 21C" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2026 Czinger 21C to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
         <li class="lot" data-marque="koenigsegg"><a href="https://www.charlottemclaren.com/2020-koenigsegg-regera-c-4608.htm" rel="noopener" aria-label="Pre-owned 2020 Koenigsegg Regera, 4,188 miles, $3,399,996. View at McLaren Charlotte">
           <span class="lot__car"><img src="assets/stock/koenigsegg-regera.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--koenigsegg" aria-hidden="true"></span><b>Regera</b></span>
-          <span class="lot__facts"><span>Pre-owned 2020</span><span>4,188 mi</span><span class="lot__price">$3,399,996</span></span>
-        </a></li>
-        <li class="lot is-edge" data-marque="ferrari"><a href="https://www.charlottemclaren.com/2020-ferrari-488-pista-spider-c-4775.htm" rel="noopener" aria-label="Pre-owned 2020 Ferrari 488 Pista Spider, 4,750 miles, $1,487,996. View at McLaren Charlotte">
-          <span class="lot__car"><img src="assets/stock/ferrari-488-pista-spider.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--ferrari" aria-hidden="true"></span><b>488 Pista Spider</b></span>
-          <span class="lot__facts"><span>Pre-owned 2020</span><span>4,750 mi</span><span class="lot__price">$1,487,996</span></span>
-        </a></li>
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--koenigsegg" aria-hidden="true"></span><b>Regera</b></span>
+          <span class="lot__facts"><span>Pre-owned 2020</span><span>4,188 mi</span><span class="lot__price">$3,399,996</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2020 Koenigsegg Regera" data-url="https://www.charlottemclaren.com/2020-koenigsegg-regera-c-4608.htm">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2020 Koenigsegg Regera" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2020 Koenigsegg Regera" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2020 Koenigsegg Regera to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
         <li class="lot" data-marque="mclaren"><a href="https://www.charlottemclaren.com/2019-mclaren-senna-c-4003.htm" rel="noopener" aria-label="Pre-owned 2019 McLaren Senna, 6,809 miles, Price on request. View at McLaren Charlotte">
           <span class="lot__car"><img src="assets/stock/mclaren-senna.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--mclaren" aria-hidden="true"></span><b>Senna</b></span>
-          <span class="lot__facts"><span>Pre-owned 2019</span><span>6,809 mi</span><span class="lot__price">Price on request</span></span>
-        </a></li>
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--mclaren" aria-hidden="true"></span><b>Senna</b></span>
+          <span class="lot__facts"><span>Pre-owned 2019</span><span>6,809 mi</span><span class="lot__price">Price on request</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2019 McLaren Senna" data-url="https://www.charlottemclaren.com/2019-mclaren-senna-c-4003.htm">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2019 McLaren Senna" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2019 McLaren Senna" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2019 McLaren Senna to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
+        <li class="lot" data-marque="ferrari"><a href="https://www.charlottemclaren.com/2020-ferrari-488-pista-spider-c-4775.htm" rel="noopener" aria-label="Pre-owned 2020 Ferrari 488 Pista Spider, 4,750 miles, $1,487,996. View at McLaren Charlotte">
+          <span class="lot__car"><img src="assets/stock/ferrari-488-pista-spider.webp" width="1340" height="540" alt="" loading="lazy"></span>
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--ferrari" aria-hidden="true"></span><b>488 Pista Spider</b></span>
+          <span class="lot__facts"><span>Pre-owned 2020</span><span>4,750 mi</span><span class="lot__price">$1,487,996</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2020 Ferrari 488 Pista Spider" data-url="https://www.charlottemclaren.com/2020-ferrari-488-pista-spider-c-4775.htm">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2020 Ferrari 488 Pista Spider" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2020 Ferrari 488 Pista Spider" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2020 Ferrari 488 Pista Spider to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
         <li class="lot" data-marque="rolls-royce"><a href="https://www.rollsroycemotorcarscharlotte.com/new-vehicle-2027-rolls-royce-phantom-c-5252/" rel="noopener" aria-label="New 2027 Rolls-Royce Phantom, 55 miles, $678,750. View at Rolls-Royce Motor Cars Charlotte">
           <span class="lot__car"><img src="assets/stock/rollsroyce-phantom.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--rolls-royce" aria-hidden="true"></span><b>Phantom</b></span>
-          <span class="lot__facts"><span>New 2027</span><span>55 mi</span><span class="lot__price">$678,750</span></span>
-        </a></li>
-        <li class="lot is-edge" data-marque="mclaren"><a href="https://www.charlottemclaren.com/2021-mclaren-elva-c-2193.htm" rel="noopener" aria-label="Pre-owned 2021 McLaren Elva, 292 miles, $1,599,996. View at McLaren Charlotte">
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--rolls-royce" aria-hidden="true"></span><b>Phantom</b></span>
+          <span class="lot__facts"><span>New 2027</span><span>55 mi</span><span class="lot__price">$678,750</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2027 Rolls-Royce Phantom" data-url="https://www.rollsroycemotorcarscharlotte.com/new-vehicle-2027-rolls-royce-phantom-c-5252/">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2027 Rolls-Royce Phantom" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2027 Rolls-Royce Phantom" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2027 Rolls-Royce Phantom to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
+        <li class="lot" data-marque="mclaren"><a href="https://www.charlottemclaren.com/2021-mclaren-elva-c-2193.htm" rel="noopener" aria-label="Pre-owned 2021 McLaren Elva, 292 miles, $1,599,996. View at McLaren Charlotte">
           <span class="lot__car"><img src="assets/stock/mclaren-elva.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--mclaren" aria-hidden="true"></span><b>Elva</b></span>
-          <span class="lot__facts"><span>Pre-owned 2021</span><span>292 mi</span><span class="lot__price">$1,599,996</span></span>
-        </a></li>
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--mclaren" aria-hidden="true"></span><b>Elva</b></span>
+          <span class="lot__facts"><span>Pre-owned 2021</span><span>292 mi</span><span class="lot__price">$1,599,996</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2021 McLaren Elva" data-url="https://www.charlottemclaren.com/2021-mclaren-elva-c-2193.htm">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2021 McLaren Elva" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2021 McLaren Elva" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2021 McLaren Elva to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
         <li class="lot" data-marque="ferrari"><a href="https://www.charlottemclaren.com/2024-ferrari-sf90-spider-c-5283.htm" rel="noopener" aria-label="Pre-owned 2024 Ferrari SF90 Spider, 2,141 miles, $799,996. View at McLaren Charlotte">
           <span class="lot__car"><img src="assets/stock/ferrari-sf90-spider.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--ferrari" aria-hidden="true"></span><b>SF90 Spider</b></span>
-          <span class="lot__facts"><span>Pre-owned 2024</span><span>2,141 mi</span><span class="lot__price">$799,996</span></span>
-        </a></li>
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--ferrari" aria-hidden="true"></span><b>SF90 Spider</b></span>
+          <span class="lot__facts"><span>Pre-owned 2024</span><span>2,141 mi</span><span class="lot__price">$799,996</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2024 Ferrari SF90 Spider" data-url="https://www.charlottemclaren.com/2024-ferrari-sf90-spider-c-5283.htm">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2024 Ferrari SF90 Spider" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2024 Ferrari SF90 Spider" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2024 Ferrari SF90 Spider to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
         <li class="lot" data-marque="rolls-royce"><a href="https://www.rollsroycemotorcarscharlotte.com/new-vehicle-2027-rolls-royce-black-badge-cullinan-c-5121/" rel="noopener" aria-label="New 2027 Rolls-Royce Black Badge Cullinan, 24 miles, $576,850. View at Rolls-Royce Motor Cars Charlotte">
           <span class="lot__car"><img src="assets/stock/rollsroyce-bb-cullinan.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--rolls-royce" aria-hidden="true"></span><b>Black Badge Cullinan</b></span>
-          <span class="lot__facts"><span>New 2027</span><span>24 mi</span><span class="lot__price">$576,850</span></span>
-        </a></li>
-        <li class="lot is-edge" data-marque="mclaren"><a href="https://www.charlottemclaren.com/2027-mclaren-750s-spider-c-5312.htm" rel="noopener" aria-label="New 2027 McLaren 750S Spider, 30 miles, $448,750. View at McLaren Charlotte">
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--rolls-royce" aria-hidden="true"></span><b>Black Badge Cullinan</b></span>
+          <span class="lot__facts"><span>New 2027</span><span>24 mi</span><span class="lot__price">$576,850</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2027 Rolls-Royce Black Badge Cullinan" data-url="https://www.rollsroycemotorcarscharlotte.com/new-vehicle-2027-rolls-royce-black-badge-cullinan-c-5121/">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2027 Rolls-Royce Black Badge Cullinan" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2027 Rolls-Royce Black Badge Cullinan" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2027 Rolls-Royce Black Badge Cullinan to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
+        <li class="lot" data-marque="mclaren"><a href="https://www.charlottemclaren.com/2027-mclaren-750s-spider-c-5312.htm" rel="noopener" aria-label="New 2027 McLaren 750S Spider, 30 miles, $448,750. View at McLaren Charlotte">
           <span class="lot__car"><img src="assets/stock/mclaren-750s-spider.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--mclaren" aria-hidden="true"></span><b>750S Spider</b></span>
-          <span class="lot__facts"><span>New 2027</span><span>30 mi</span><span class="lot__price">$448,750</span></span>
-        </a></li>
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--mclaren" aria-hidden="true"></span><b>750S Spider</b></span>
+          <span class="lot__facts"><span>New 2027</span><span>30 mi</span><span class="lot__price">$448,750</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2027 McLaren 750S Spider" data-url="https://www.charlottemclaren.com/2027-mclaren-750s-spider-c-5312.htm">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2027 McLaren 750S Spider" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2027 McLaren 750S Spider" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2027 McLaren 750S Spider to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
         <li class="lot" data-marque="ferrari" data-more hidden><a href="https://www.charlottemclaren.com/2023-ferrari-812-gts-c-5049.htm" rel="noopener" aria-label="Pre-owned 2023 Ferrari 812 GTS, 2,049 miles, $799,996. View at McLaren Charlotte">
           <span class="lot__car"><img src="assets/stock/ferrari-812-gts.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--ferrari" aria-hidden="true"></span><b>812 GTS</b></span>
-          <span class="lot__facts"><span>Pre-owned 2023</span><span>2,049 mi</span><span class="lot__price">$799,996</span></span>
-        </a></li>
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--ferrari" aria-hidden="true"></span><b>812 GTS</b></span>
+          <span class="lot__facts"><span>Pre-owned 2023</span><span>2,049 mi</span><span class="lot__price">$799,996</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2023 Ferrari 812 GTS" data-url="https://www.charlottemclaren.com/2023-ferrari-812-gts-c-5049.htm">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2023 Ferrari 812 GTS" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2023 Ferrari 812 GTS" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2023 Ferrari 812 GTS to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
         <li class="lot" data-marque="rolls-royce" data-more hidden><a href="https://www.rollsroycemotorcarscharlotte.com/used-vehicle-2025-rolls-royce-black-badge-ghost-c-4623/" rel="noopener" aria-label="Pre-owned 2025 Rolls-Royce Black Badge Ghost, 10,654 miles, $419,996. View at Rolls-Royce Motor Cars Charlotte">
           <span class="lot__car"><img src="assets/stock/rollsroyce-bb-ghost.webp" width="1340" height="540" alt="" loading="lazy"></span>
-          <span class="lot__line" aria-hidden="true"></span>
-          <span class="lot__id"><span class="mark mark--rolls-royce" aria-hidden="true"></span><b>Black Badge Ghost</b></span>
-          <span class="lot__facts"><span>Pre-owned 2025</span><span>10,654 mi</span><span class="lot__price">$419,996</span></span>
-        </a></li>
+          <span class="lot__body"><span class="lot__id"><span class="mark mark--rolls-royce" aria-hidden="true"></span><b>Black Badge Ghost</b></span>
+          <span class="lot__facts"><span>Pre-owned 2025</span><span>10,654 mi</span><span class="lot__price">$419,996</span></span></span>
+          <span class="lot__go" aria-hidden="true"><b>View Details</b><svg viewBox="0 0 20 20"><path d="M5.8 5.8h8.3v8.3M14.1 5.8 5.8 14.1"/></svg></span>
+        </a><div class="lot__tools" data-name="2025 Rolls-Royce Black Badge Ghost" data-url="https://www.rollsroycemotorcarscharlotte.com/used-vehicle-2025-rolls-royce-black-badge-ghost-c-4623/">
+          <button type="button" data-tool="save" aria-pressed="false" aria-label="Save 2025 Rolls-Royce Black Badge Ghost" data-tip="Save"><svg viewBox="0 0 24 24"><path d="M7 4.5h10V20l-5-4-5 4z"/></svg></button><button type="button" data-tool="share" aria-label="Share 2025 Rolls-Royce Black Badge Ghost" data-tip="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6.5h14V13"/></svg></button><a data-tool="text" href="sms:?&amp;body=" aria-label="Text 2025 Rolls-Royce Black Badge Ghost to a phone" data-tip="Text"><svg viewBox="0 0 24 24"><path d="M4 5h16v11.5h-9L7 20v-3.5H4zM8 9.3h8M8 12.5h5"/></svg></a>
+        </div></li>
         <li class="lot lot--all" data-lot-all hidden><a href="https://www.charlottemclaren.com/all-inventory/" rel="noopener"><span data-all-label>All cars</span> <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></a></li>
     </ol>
     <p class="sr-only" aria-live="polite" data-stock-status></p>
@@ -491,14 +506,14 @@
         <span class="cbar__face"><b>Driven</b></span>
       </div></div>
       <div class="cbar cbar--2"><div class="cbar__strip">
-        <span class="cbar__media"><video class="film" data-film="creed" muted loop playsinline preload="none" poster="assets/video/hero-poster.jpg" data-src="assets/video/hero.mp4"></video><b>by</b></span>
+        <span class="cbar__media"><video class="film" data-film="creed" muted loop playsinline preload="none" poster="assets/video/hero-poster.jpg?v=2" data-src="assets/video/hero.mp4?v=2"></video><b>by</b></span>
       </div></div>
       <div class="cbar cbar--3"><div class="cbar__strip">
         <span class="cbar__media"><img src="assets/img/koenigsegg-jesko-absolut.jpg" alt="" loading="lazy" style="--pos:44% 58%"><b>Excellence</b></span>
         <span class="cbar__face"><b>Excellence</b></span>
       </div></div>
     </div>
-    <p class="creed__foot"><button class="vbtn" type="button" data-film-toggle="creed" aria-pressed="false"><svg class="ico ico--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><svg class="ico ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg><span>Pause film</span></button><span>Film: Czinger Vehicles · Images: Rolls-Royce Motor Cars, Koenigsegg</span></p>
+    <p class="creed__foot"><button class="vbtn" type="button" data-film-toggle="creed" aria-pressed="false"><svg class="ico ico--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><svg class="ico ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg><span>Pause film</span></button></p>
   </section>
 
   <!-- ===== 7 · showrooms — two addresses in Charlotte, as two doors ===== -->
@@ -547,6 +562,11 @@
     </figure>
 
     <div class="group" id="network" aria-labelledby="group-title">
+      <div class="atlas" data-atlas>
+        <canvas aria-hidden="true"></canvas>
+        <div class="atlas__tags" aria-hidden="true"></div>
+        <div class="atlas__side"><p class="atlas__title" aria-hidden="true">ZT Automotive across the Southeast</p></div>
+      </div>
       <h3 id="group-title">ZT Automotive across the Southeast</h3>
       <div class="group__cols">
         <dl>
@@ -680,7 +700,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
-<script src="main.js?v=4"></script>
-<script src="home.js?v=4"></script>
+<script src="main.js?v=23"></script>
+<script src="home.js?v=24"></script>
 </body>
 </html>
