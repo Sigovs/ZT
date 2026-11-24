@@ -4,7 +4,7 @@
 **Source of truth:** Figma file `NkR9bvaMl2D0hUMfB6mOLv` (ZT AUTO GROUP), page **"Foundations · v1.1"**, frame `8:3`. The archived Figma draft (page "Archive · Foundations draft (Figma)") is reference only and is superseded.
 **Companion files (this folder):** `design-tokens.json` · `tokens.css` · `DESIGN_DECISIONS.md` · `QA_REPORT.md`.
 
-> Read this before any design or build work on ZT. It is the project layer only. Alex's global Design DNA (`/Users/alex/Desktop/WORK/design_dna/TASTE.md`, its `skills/` and `.claude/rules/design-dna.md`) still governs and outranks this file on every invariant. Never edit the global files from this project.
+> Read this before any design or build work on ZT. It is the project layer only. Alex's global Design DNA (`TASTE.md`, its `skills/` and `.claude/rules/design-dna.md`, in the `design_dna` folder — its location differs per machine, see `.claude/skills/SOURCES.md` § Machine setup) still governs and outranks this file on every invariant. Never edit the global files from this project.
 
 ---
 
