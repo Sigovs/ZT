@@ -1,0 +1,274 @@
+/* ZT Automotive Collection — homepage v3. Three refinements on top of v2, nothing else:
+   1. the hero's marque selector is five marks and nothing more;
+   2. a marque column opens in place until it is the scene (no overlay);
+   3. The House is one building, one statement and one sentence of numbers. */
+
+/* ---------- skip link: out of sight until the keyboard reaches it ---------- */
+.skip { transform: none; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip:focus, .skip:focus-visible { width: auto; height: auto; padding: 12px 16px; overflow: visible; clip-path: none; }
+
+/* =====================================================================
+   1 · Hero selector
+   ===================================================================== */
+.plate { position: absolute; }
+.plate__film { position: absolute; inset: 0; opacity: 0; transition: opacity .9s var(--ease); }
+.plate__film.is-playing { opacity: 1; }
+.plate__film[data-marque-film="rolls-royce"] { filter: brightness(1.7) contrast(1.04); }
+.hero__film { position: absolute; z-index: 4; right: var(--pad); bottom: calc(28 * var(--u)); display: flex; align-items: center; gap: var(--s5); font-size: 14px; color: var(--ivory-3); }
+.index__item { -webkit-tap-highlight-color: transparent; }
+
+/* The control has one job: it chooses the film in the frame. It is drawn as a broken line laid along the
+   bar's own edge, one stroke per marque. Only the chosen marque is named, by its mark, in the open field
+   under the word. Nothing is listed. */
+.pick { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.pick > * { pointer-events: auto; }
+.pick__now { position: absolute; left: var(--pad); top: calc(448 * var(--u)); height: calc(84 * var(--u)); min-height: 44px; overflow: hidden; display: flex; align-items: center; pointer-events: none; }
+.pick__now .mark { width: calc(var(--w) * 2.5 * var(--u)); max-width: 60vw; color: var(--ivory); }
+.pick__now .mark--ferrari { width: calc(60 * var(--u)); }
+.pick__now .mark:not([class*="mark--"]) { display: none; }
+.hero .index { position: absolute; left: var(--rx, 8vw); top: calc(var(--ry, 70vh) - 22px); display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; gap: calc(14 * var(--u)); margin: 0; border: 0; list-style: none; transform-origin: 0 50%; transform: rotate(-34deg); }
+.hero .index__item { position: relative; display: block; width: max(44px, calc(74 * var(--u))); height: 44px; min-height: 0; padding: 0; border: 0; color: var(--ivory); transition: width .8s cubic-bezier(.65, 0, .2, 1); }
+.hero .index__item::before { display: none; }
+.hero .index__item i { position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: currentColor; opacity: .5; transition: opacity .4s var(--ease), height .4s var(--ease), margin .4s var(--ease); }
+.hero .index__item:hover i, .hero .index__item:focus-visible i { opacity: 1; }
+.hero .index__item.is-active { width: max(88px, calc(168 * var(--u))); }
+.hero .index__item.is-active i { opacity: 1; height: 4px; margin-top: -2px; }
+.hero .index__item:focus-visible { outline-offset: 0; }
+.pick__step { display: none; }
+
+/* alternative 2 · strokes: the five marques as the stacked, stepped strokes of the monogram */
+.hero[data-hero="strokes"] .index { left: var(--pad); top: calc(560 * var(--u)); flex-direction: column; align-items: flex-start; gap: 0; transform: none; }
+.hero[data-hero="strokes"] .index li:nth-child(1) { margin-left: 56px; }
+.hero[data-hero="strokes"] .index li:nth-child(2) { margin-left: 42px; }
+.hero[data-hero="strokes"] .index li:nth-child(3) { margin-left: 28px; }
+.hero[data-hero="strokes"] .index li:nth-child(4) { margin-left: 14px; }
+.hero[data-hero="strokes"] .index__item { width: calc(150 * var(--u)); height: 22px; }
+.hero[data-hero="strokes"] .index__item.is-active { width: calc(260 * var(--u)); }
+.hero[data-hero="strokes"] .index__item i { height: 10px; margin-top: -5px; transform: skewX(-34deg); }
+.hero[data-hero="strokes"] .index__item.is-active i { height: 10px; margin-top: -5px; }
+
+/* alternative 3 · type only: the chosen marque and a two-arrow controller */
+.hero[data-hero="type"] .index { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.hero[data-hero="type"] .pick__step { position: absolute; left: var(--pad); top: calc(560 * var(--u)); display: flex; align-items: center; gap: var(--s3); color: var(--ivory-2); font-size: 14px; font-variant-numeric: tabular-nums; }
+.hero[data-hero="type"] .pick__step button { display: grid; place-items: center; width: 44px; height: 44px; color: var(--ivory); }
+/* alternative 4 · nothing */
+.hero[data-hero="none"] .pick { display: none; }
+
+/* =====================================================================
+   2 · Marque columns open in place
+   ===================================================================== */
+.col__hit { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; cursor: pointer; }
+.col__hit:focus-visible { outline-offset: -6px; }
+.col__body { z-index: 2; pointer-events: none; }
+.col__spine { display: none; }
+.col__open { position: absolute; z-index: 3; visibility: hidden; pointer-events: none; }
+.col__open a { pointer-events: auto; }
+.col.is-open .col__open { visibility: visible; }
+.col__open h3 { overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; font-family: var(--display); font-weight: 700; line-height: .98; letter-spacing: -.05em; text-wrap: balance; }
+.col__open h3 > span, .col__place > span { display: inline-block; }
+.col__place { margin-top: var(--s3); overflow: hidden; color: var(--ivory-2); }
+.col__acts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s5); margin-top: var(--s5); }
+.col__acts a { display: inline-flex; align-items: center; gap: var(--s2); min-height: 48px; font-weight: 500; }
+.col__acts a.is-primary { padding: 0 var(--s5); background: var(--ivory); color: var(--ink); transition: background .35s var(--ease), color .35s var(--ease); }
+.col__acts a.is-primary:hover, .col__acts a.is-primary:focus-visible { background: var(--rosso); color: var(--ivory); }
+.col__acts a:not(.is-primary) { box-shadow: inset 0 -1px 0 var(--rule); transition: box-shadow .3s var(--ease); }
+.col__acts a:not(.is-primary):hover, .col__acts a:not(.is-primary):focus-visible { box-shadow: inset 0 -1px 0 var(--ivory); }
+.col__acts .ico { width: 18px; height: 18px; }
+.col.is-open .col__models, .col.is-open .col__count { opacity: 0 !important; }
+.monolith__close { position: absolute; z-index: 6; right: var(--pad); top: calc(112 * var(--u) + 12px); display: inline-flex; align-items: center; gap: var(--s2); min-height: 44px; font-weight: 500; font-size: max(14px, calc(15 * var(--u))); pointer-events: auto; }
+.monolith__close[hidden] { display: none; }
+
+@media (min-width: 901px) {
+  .monolith { --spine: clamp(56px, 4.6vw, 88px); }
+  .monolith.is-live .col:has(.col__hit:focus-visible) > img { filter: grayscale(0) contrast(1.04) brightness(.86); transform: scale(1); }
+  .monolith.is-live .col:has(.col__hit:focus-visible) .col__models, .monolith.is-live .col:has(.col__hit:focus-visible) .col__count { opacity: 1; transform: none; }
+  .monolith.is-open .col, .monolith.is-busy .col { transition: none; min-width: var(--spine); }
+  .monolith.is-open .col > img, .monolith.is-busy .col > img { transform: none; }
+  .monolith.is-open .col.is-spine > img { filter: grayscale(1) contrast(1.12) brightness(.4); }
+  .monolith.is-open .col.is-spine:hover > img, .monolith.is-open .col.is-spine:focus-within > img { filter: grayscale(1) contrast(1.1) brightness(.72); }
+  .monolith.is-open .col.is-open > img { filter: none; }
+  /* the open column needs a reading zone on its left; it arrives with the width */
+  .col::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,12,13,.84) 0%, rgba(11,12,13,.52) 30%, rgba(11,12,13,0) 58%); opacity: 0; transition: opacity 1s var(--ease); pointer-events: none; }
+  .col.is-open::after { opacity: 1; }
+  .col.is-spine .col__body { opacity: 0 !important; visibility: hidden; }
+  .col.is-spine .col__shade { inset: 55% 0 0 0; }
+  .col__spine { display: block; position: absolute; z-index: 2; left: 50%; bottom: calc(56 * var(--u)); width: 0; height: 0; opacity: 0; transition: opacity .5s var(--ease); pointer-events: none; color: var(--ivory-2); }
+  .col.is-spine .col__spine { opacity: 1; transition-delay: .7s; }
+  .col.is-spine:hover .col__spine, .col.is-spine:focus-within .col__spine { color: var(--ivory); }
+  .col__spine .mark { position: absolute; left: 0; bottom: 0; width: max(74px, calc(var(--w) * 1.05 * var(--u))); transform-origin: 0 100%; transform: rotate(-90deg) translateY(50%); }
+  .col__spine .mark--ferrari { width: max(18px, calc(26 * var(--u))); transform: translateX(-50%); }
+  .col__open { left: calc(32 * var(--u)); bottom: calc(56 * var(--u)); width: min(600px, 42vw); }
+  .col__open h3 { font-size: clamp(38px, calc(88 * var(--u)), 106px); }
+  .col.is-open .col__mark { transition: none; }
+}
+
+/* =====================================================================
+   3 · The House — a calm architectural page on paper
+   ===================================================================== */
+.house { padding: calc(var(--sec) * .74) 0 calc(var(--sec) * .82); overflow: hidden; }
+.house > * { max-width: var(--wide); margin-inline: auto; padding-inline: var(--pad); }
+.house__head .eyebrow { margin-bottom: var(--s5); }
+.house__head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(42px, calc(150 * var(--u)), 180px); line-height: .94; letter-spacing: -.06em; }
+.ln { display: block; overflow: hidden; padding-bottom: .12em; margin-bottom: -.12em; }
+.ln > span { display: inline-block; }
+.house__head .ln--b { font-weight: 200; letter-spacing: -.052em; }
+
+/* the photograph runs off the right edge of the page; the text stands in the margin it leaves */
+.house__stage { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: calc(72 * var(--u)); align-items: stretch; max-width: none; margin-top: calc(56 * var(--u)); padding-right: 0; padding-left: max(var(--pad), calc((100vw - var(--wide)) / 2 + var(--pad))); }
+.house__intro { display: flex; flex-direction: column; justify-content: space-between; gap: var(--s7); padding-bottom: calc(14px * 1.4 + var(--s3)); }
+.house__intro p { max-width: 32ch; font-size: max(16px, calc(20 * var(--u))); line-height: 1.45; }
+.house__intro .more { margin-top: var(--s3); }
+.house__photo .clipbox { aspect-ratio: 2 / 1; }
+.house__photo img { transform: scale(1.08); }
+.house__photo figcaption { padding-right: var(--pad); text-align: right; }
+
+/* numbers as a sentence: the figures carry the weight, the words stay light */
+.sum { margin-top: calc(84 * var(--u)); font-family: var(--display); font-weight: 200; font-size: clamp(32px, calc(100 * var(--u)), 120px); line-height: 1.02; letter-spacing: -.05em; color: var(--ink-soft); }
+.sum b { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -.06em; }
+.sum .ln:nth-child(2) { margin-left: 16.666%; }
+.sum .ln:nth-child(3) { margin-left: 41.666%; }
+
+/* history: seven years in one line, one event at a time */
+.past h3 { font-family: var(--text); font-weight: 400; font-size: 14px; color: var(--ink-soft); }
+.past__nav { display: flex; flex-wrap: wrap; margin-top: var(--s2); border-top: 1px solid var(--ink); }
+.past__nav button { min-width: 44px; min-height: 44px; margin-right: var(--s3); font-family: var(--display); font-weight: 500; font-size: max(15px, calc(17 * var(--u))); letter-spacing: -.01em; font-variant-numeric: tabular-nums; color: var(--ink-soft); box-shadow: inset 0 0 0 var(--ink); transition: color .3s var(--ease), box-shadow .3s var(--ease); }
+.past__nav button:hover, .past__nav button:focus-visible { color: var(--ink); }
+.past__nav button.is-active { color: var(--ink); box-shadow: inset 0 2px 0 var(--ink); }
+.past__list { list-style: none; margin-top: var(--s2); }
+.past__event { font-size: max(14px, calc(15 * var(--u))); line-height: 1.45; max-width: 36ch; padding: var(--s1) 0; }
+.past__event b { font-weight: 500; margin-right: var(--s2); font-variant-numeric: tabular-nums; }
+.past.is-enhanced .past__list { min-height: calc(max(14px, 15 * var(--u)) * 1.45 * 3 + var(--s2)); }
+.past.is-enhanced .past__event { display: none; }
+.past.is-enhanced .past__event.is-active { display: block; }
+.past.is-enhanced .past__event b { display: none; }
+.rm .house__photo img { transform: none; }
+
+/* =====================================================================
+   Tablet
+   ===================================================================== */
+@media (min-width: 901px) and (max-width: 1100px) {
+  .house__stage { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s6); }
+  .house__photo .clipbox { aspect-ratio: 3 / 2; }
+  .sum .ln:nth-child(3) { margin-left: 33.333%; }
+}
+
+/* =====================================================================
+   Phone and portrait tablet
+   ===================================================================== */
+@media (max-width: 900px) {
+  .hero__film { display: none; }
+  /* the broken line runs below the bar, inside the dark field between it and the first band */
+  .pick__now { left: auto; right: var(--pad); top: 63svh; height: 44px; justify-content: flex-end; }
+  .pick__now .mark { width: calc(var(--w) * 1.2px); -webkit-mask-position: right center; mask-position: right center; }
+  .pick__now .mark--ferrari { width: 30px; }
+  .hero .index { gap: 8px; }
+  .hero .index__item { width: 44px; }
+  .hero .index__item.is-active { width: 78px; }
+  .hero[data-hero="strokes"] .index, .hero[data-hero="type"] .pick__step { top: 66svh; }
+
+  /* marques: a band keeps its two 34° cuts and grows taller */
+  .col__open { left: var(--pad); width: 76vw; bottom: calc((76vw + var(--pad)) * var(--m) + 14px); }
+  .col__open h3 { font-size: 9.4vw; }
+  .col__place { font-size: 14px; line-height: 1.35; }
+  .col__acts { flex-direction: column; align-items: flex-start; gap: 0; margin-top: var(--s3); }
+  .col__acts a.is-primary { margin-bottom: var(--s1); }
+  .col.is-open .col__shade { background: linear-gradient(236deg, rgba(11,12,13,0) 30%, rgba(11,12,13,.9) 68%); }
+  .col.is-open .col__models { display: none; }
+  .col.is-open > img { filter: brightness(.9) contrast(1.04); }
+
+  /* the house */
+  .house { padding: var(--sec) 0; }
+  .house__head h2 { font-size: 12.6vw; line-height: .96; }
+  .house__stage { display: flex; flex-direction: column-reverse; gap: var(--s6); margin-top: var(--s6); padding: 0; }
+  .house__intro { padding: 0 var(--pad); gap: var(--s6); }
+  .house__intro p { font-size: 17px; max-width: 34ch; }
+  .house__photo .clipbox { aspect-ratio: 4 / 3; }
+  .house__photo figcaption { padding: 0 var(--pad); text-align: left; }
+  .sum { margin-top: var(--s8); font-size: 11.2vw; }
+  .sum .ln:nth-child(2), .sum .ln:nth-child(3) { margin-left: 0; }
+  .past__nav button { margin-right: var(--s1); font-size: 15px; }
+}
+
+/* =====================================================================
+   Interlude · the monogram's three bars (restored from the first homepage).
+   Each bar is a strip of footage; an ivory face with the word in ink lies over the outer two
+   and is drawn off along the bar as the page scrolls, so the word turns from ink to light.
+   ===================================================================== */
+.creed { position: relative; height: 100vh; height: 100svh; min-height: 640px; overflow: hidden; background: var(--ink); --h: 19vh; }
+.creed__bars { position: absolute; inset: 0; pointer-events: none; }
+.cbar { position: absolute; left: 50%; top: 47%; width: 260vmax; height: var(--h); transform: translate(-50%, -50%) rotate(-34deg) translateY(var(--off, 0)); }
+.cbar--1 { --off: calc(var(--h) * -1.16); }
+.cbar--2 { --off: 0px; }
+.cbar--3 { --off: calc(var(--h) * 1.16); }
+.cbar__strip { position: absolute; top: 0; bottom: 0; left: var(--start); width: var(--len); overflow: hidden; background: #000; clip-path: polygon(calc(var(--h) * var(--m)) 0, 100% 0, calc(100% - var(--h) * var(--m)) 100%, 0 100%); will-change: transform; }
+.cbar--1 .cbar__strip { --start: 33.5%; --len: 27%; }
+.cbar--2 .cbar__strip { --start: 38%; --len: 21%; }
+.cbar--3 .cbar__strip { --start: 37.5%; --len: 36%; }
+.cbar__media, .cbar__face { position: absolute; inset: 0; display: flex; align-items: center; }
+.cbar__media { color: var(--ivory); z-index: 0; isolation: isolate; }
+.cbar__media > img, .cbar__media > video { position: absolute; left: 50%; top: 50%; width: 130%; height: auto; min-height: 560%; object-fit: cover; object-position: var(--pos, 50% 50%); transform: translate(-50%, -50%) rotate(34deg); filter: brightness(.62) contrast(1.06); }
+.cbar__face { z-index: 1; background: var(--ivory); color: var(--ink); clip-path: inset(0 0 0 var(--wipe, 0%)); }
+.cbar--3 .cbar__face { clip-path: inset(0 var(--wipe, 0%) 0 0); }
+.cbar__strip b { position: relative; z-index: 1; padding-left: calc(var(--h) * 1.05); font-family: var(--display); font-weight: 700; font-size: calc(var(--h) * .74); line-height: 1; letter-spacing: -.055em; white-space: nowrap; translate: 0 -.04em; }
+.creed__foot { position: absolute; left: var(--pad); bottom: calc(40 * var(--u)); display: flex; align-items: center; gap: var(--s5); font-size: 14px; color: var(--ivory-3); }
+.rm .creed { height: auto; min-height: 100vh; }
+
+@media (max-width: 900px) {
+  .creed { height: auto; min-height: 0; --h: 68px; padding-bottom: var(--s7); }
+  .creed__bars { position: relative; inset: auto; height: calc(100vw * var(--m) + var(--h) * 3.6); overflow: hidden; }
+  .cbar { top: 50%; }
+  .cbar--1 .cbar__strip { --start: calc(50% - 215px); --len: 330px; }
+  .cbar--2 .cbar__strip { --start: calc(50% - 150px); --len: 250px; }
+  .cbar--3 .cbar__strip { --start: calc(50% - 250px); --len: 430px; }
+  .cbar__strip b { padding-left: calc(var(--h) * .95); }
+  .creed__foot { position: static; flex-direction: column; align-items: flex-start; gap: 0; margin: var(--s4) var(--pad) 0; }
+}
+
+/* =====================================================================
+   Beyond the showroom — a filmstrip of uneven frames standing on three baselines.
+   Curated previews; the markup is what a feed endpoint would later fill.
+   ===================================================================== */
+.beyond { background: var(--ink); padding: var(--sec) 0 calc(var(--sec) * .8); overflow: hidden; }
+.beyond__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s7); align-items: end; padding: 0 var(--pad); max-width: var(--wide); margin-inline: auto; }
+.beyond__head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(42px, calc(150 * var(--u)), 180px); line-height: .94; letter-spacing: -.06em; }
+.beyond__head .ln--b { font-weight: 200; letter-spacing: -.052em; }
+.beyond__accounts { list-style: none; display: grid; justify-items: end; padding-bottom: .5em; }
+.beyond__accounts a { display: inline-flex; align-items: center; gap: var(--s2); min-height: 36px; font-weight: 500; font-size: max(14px, calc(15 * var(--u))); color: var(--ivory-2); transition: color .3s var(--ease); }
+.beyond__accounts a:hover, .beyond__accounts a:focus-visible { color: var(--ivory); }
+.beyond__accounts .ico { width: 16px; height: 16px; transition: transform .5s var(--ease); }
+.beyond__accounts a:hover .ico, .beyond__accounts a:focus-visible .ico { transform: translate(3px, -3px); }
+.reelstrip { margin-top: calc(72 * var(--u)); overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; cursor: grab; -webkit-overflow-scrolling: touch; }
+.reelstrip::-webkit-scrollbar { display: none; }
+.reelstrip.is-dragging { cursor: grabbing; }
+.reelstrip.is-dragging a { pointer-events: none; }
+.reelstrip:focus-visible { outline-offset: -4px; }
+.reelstrip__track { list-style: none; display: flex; align-items: flex-end; gap: clamp(12px, 1.4vw, 28px); width: max-content; padding: 0 var(--pad) calc(var(--step) * 2 + 4px); --unit: clamp(300px, 52vh, 560px); --step: clamp(20px, 4vh, 44px); }
+.post { flex: none; transform: translateY(calc(var(--step) * var(--y, 0))); }
+.post[data-y="1"] { --y: 1; }
+.post[data-y="2"] { --y: 2; }
+.post__link { display: block; color: var(--ivory); }
+.post__media { position: relative; display: block; height: var(--h); aspect-ratio: var(--ar); overflow: hidden; background: var(--ink-2); }
+.post--land { --h: calc(var(--unit) * .78); --ar: 3 / 2; }
+.post--tall { --h: var(--unit); --ar: 4 / 5; }
+.post--reel { --h: calc(var(--unit) * 1.16); --ar: 9 / 16; }
+.post--sq { --h: calc(var(--unit) * .7); --ar: 1; }
+.post__media img, .post__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease), opacity .6s var(--ease); -webkit-user-drag: none; user-select: none; }
+.post__media video { opacity: 0; }
+.post__media video.is-playing { opacity: 1; }
+a.post__link:hover .post__media img, a.post__link:focus-visible .post__media img { transform: scale(1.035); }
+.post__kind { position: absolute; left: var(--s3); top: var(--s3); display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; text-shadow: 0 1px 10px rgba(0, 0, 0, .6); }
+.post__kind .ico { width: 14px; height: 14px; fill: currentColor; stroke: none; }
+.post__cap { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s4); margin-top: var(--s3); font-size: 14px; line-height: 1.35; }
+.post__cap b { font-weight: 500; white-space: nowrap; }
+.post__cap span { color: var(--ivory-3); text-align: right; }
+.beyond__note { margin: var(--s5) auto 0; padding: 0 var(--pad); max-width: var(--wide); font-size: 14px; color: var(--ivory-3); }
+
+@media (max-width: 900px) {
+  .beyond__head { grid-template-columns: 1fr; gap: var(--s4); }
+  .beyond__head h2 { font-size: 14.6vw; }
+  .beyond__accounts { justify-items: start; grid-template-columns: 1fr 1fr; gap: 0 var(--s4); padding-bottom: 0; }
+  .beyond__accounts a { min-height: 44px; }
+  .reelstrip { margin-top: var(--s6); scroll-snap-type: x proximity; scroll-padding-left: var(--pad); }
+  .reelstrip__track { --unit: 300px; --step: 18px; gap: 12px; }
+  .post { scroll-snap-align: start; }
+}

@@ -61,3 +61,9 @@ Homepage v3 (`prototype/thirty-four-home-v3/`, 24 Nov 2026): v2 plus six refinem
 - Files: `v3.css` holds everything v3 adds; `main.js` and `home.js` are v3's own copies.
 - Still open: no official film for Koenigsegg or Ferrari; no verified Instagram account for Koenigsegg Charlotte, Czinger Charlotte or Ferrari; the designer's overall verdict is positive but the homepage is not approved.
 
+Homepage v4 (`prototype/thirty-four-home-v4/`, 24 Nov 2026): v3 with section 4 replaced by Inventory; v3 is untouched. Live: https://sigovs.github.io/ZT/prototype/thirty-four-home-v4/
+- Read the top of `prototype/thirty-four-home-v4/CREATIVE_MEDIA_PLAN.md`.
+- Real stock from the Charlotte showrooms, snapshot of 24 Nov 2026. `assets/stock/` holds the profiles.
+- Files: `v4.css` holds everything v4 adds; `home.js` is v4's own copy (the inventory block is new).
+- Figma, page "09 — Homepage v3 · Layers": the working desktop frame "index adjustments" (136:464) has the new section in place of 04; "Homepage v4 · Phone 390" (142:1066) is the phone. The v3 frames are kept.
+- Open: Alex's verdict on the section; clean masters of the stock photographs.

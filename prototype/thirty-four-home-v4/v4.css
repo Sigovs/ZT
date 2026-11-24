@@ -1,0 +1,120 @@
+/* ZT Automotive Collection — homepage v4.
+   Everything v4 adds to v3: the inventory section, and a quieter hero foot. */
+
+/* ---------- hero: the film credit and the prototype note are gone (Alex, Figma "index adjustments").
+   The pause control stays for the keyboard: it shows itself when it is reached, as the skip link does. ---------- */
+.hero__film { opacity: 0 !important; transition: opacity .3s var(--ease); }
+.hero__film [data-readout-credit] { display: none; }
+.hero__film:focus-within { opacity: 1 !important; }
+
+/* =====================================================================
+   4 · Inventory — ZT's own stock in profile, at one scale, on one line.
+   The word stands behind the first row, as "Collection" stands behind
+   the hero's bar.
+   ===================================================================== */
+.stock { position: relative; background: var(--paper); color: var(--ink); padding: 0 var(--pad) var(--sec); overflow: hidden; }
+.stock > * { max-width: calc(var(--wide) - 2 * var(--pad)); margin-inline: auto; }
+
+.stock .filter { margin-top: 0; padding: var(--s3) 0; gap: var(--s1) var(--s6); border-top: 1px solid var(--ink); border-bottom: 0; }
+.stock .filter__btn { display: inline-flex; align-items: baseline; gap: 7px; color: var(--ink-soft); }
+.stock .filter__btn::after { background: var(--ink); bottom: 8px; }
+.stock .filter__btn sup { font-size: 14px; line-height: 1; vertical-align: baseline; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+.stock .filter__btn:hover, .stock .filter__btn:focus-visible, .stock .filter__btn.is-active { color: var(--ink); }
+
+.stock h2 {
+  margin-top: calc(44 * var(--u)); margin-left: -.06em;
+  font-family: var(--display); font-weight: 700; font-size: min(calc(446 * var(--u)), 535px); line-height: .84; letter-spacing: -.06em; white-space: nowrap;
+}
+/* the tail of the y would show under the third car as a second shadow: it ends behind the body instead */
+.stock.is-full h2 { clip-path: inset(-20% -10% .012em -10%); }
+.stock h2 .ch { padding: .04em .1em .26em; margin: -.04em -.1em -.26em; }
+
+.lots { position: relative; z-index: 1; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: calc(70 * var(--u)); margin-top: calc(-142 * var(--u)) !important; }
+.lot[hidden] { display: none; }
+.lot a { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--s5); align-items: end; height: 100%; align-content: start; }
+.lot__car { grid-column: 1 / -1; position: relative; z-index: 1; display: block; will-change: transform; }
+.lot__car img { width: 100%; height: auto; aspect-ratio: 1340 / 540; transition: transform .9s var(--ease); }
+/* the floor: one line through the row, at the tyres */
+.lot__line { position: absolute; left: 0; right: 0; top: 0; aspect-ratio: 1340 / 481; --draw: 1; pointer-events: none; }
+.lot__line::before, .lot__line::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--ink); opacity: .34; transform: scaleX(var(--draw)); transform-origin: right; }
+.lot__line::after { height: 3px; bottom: -1px; opacity: 1; transform: scaleX(0); transition: transform .7s var(--ease); }
+.lot__id { display: grid; gap: var(--s3); justify-items: start; padding-top: calc(10 * var(--u)); }
+.lot__id .mark { width: calc(var(--w) * .82px); height: 26px; aspect-ratio: auto; -webkit-mask-position: left bottom; mask-position: left bottom; }
+.lot__id .mark--ferrari { width: 18px; }
+.lot__id b { font-family: var(--display); font-weight: 600; font-size: clamp(22px, calc(32 * var(--u)), 38px); line-height: 1.05; letter-spacing: -.03em; }
+.lot__facts { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0 var(--s5); margin-top: var(--s2); padding-right: var(--s6); font-size: max(14px, calc(16 * var(--u))); color: var(--ink-soft); }
+.lot__price { margin-left: auto; font-weight: 500; color: var(--ink); }
+@media (min-width: 901px) { .lot.is-edge .lot__facts { padding-right: 0; } }
+
+@media (hover: hover) and (pointer: fine) {
+  .lot a:hover .lot__car img { transform: translateX(-3%); }
+  .lot a:hover .lot__line::after { transform: scaleX(1); }
+}
+.lot a:focus-visible .lot__line::after { transform: scaleX(1); }
+.lot a:focus-visible { outline-offset: 8px; }
+
+.lot--all { align-self: end; padding-bottom: 4px; }
+.lot--all a { display: inline-flex; align-items: center; gap: var(--s2); min-height: 44px; height: auto; font-family: var(--display); font-weight: 600; font-size: clamp(22px, calc(32 * var(--u)), 38px); letter-spacing: -.03em; }
+.lot--all .ico, .find__go .ico { transition: transform .5s var(--ease); }
+.lot--all a:hover .ico, .lot--all a:focus-visible .ico, .find__go:hover .ico, .find__go:focus-visible .ico { transform: translate(4px, -4px); }
+
+/* the finder: the whole stock, one line of form */
+.find { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .8fr) minmax(0, .8fr) auto; align-items: stretch; margin-top: calc(110 * var(--u)); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.find__say { align-self: center; font-family: var(--display); font-weight: 500; font-size: clamp(24px, calc(40 * var(--u)), 48px); line-height: 1.05; letter-spacing: -.03em; padding-right: var(--s5); }
+.find label { position: relative; display: grid; align-content: center; gap: 2px; min-height: calc(112 * var(--u)); padding: var(--s3) var(--s5); border-left: 1px solid var(--rule-ink); transition: background .35s var(--ease); }
+.find label > span { font-size: 14px; color: var(--ink-soft); }
+.find select {
+  width: 100%; min-height: 44px; margin: 0; padding: 0 28px 0 0; border: 0; border-radius: 0; background: none; color: var(--ink); cursor: pointer;
+  font: 500 max(16px, calc(18 * var(--u))) / 1.2 var(--text); -webkit-appearance: none; appearance: none; text-overflow: ellipsis;
+}
+.find select option { color: #0b0c0d; background: #fff; }
+.find label::after { content: ""; position: absolute; right: var(--s5); bottom: calc(50% - 15px); width: 8px; height: 8px; border: solid var(--ink); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); pointer-events: none; }
+.find label:hover { background: rgba(11, 12, 13, .05); }
+.find label:has(select:disabled) { opacity: 1; }
+.find label:has(select:disabled) select { color: var(--ink-soft); cursor: default; opacity: 1; }
+.find label:has(select:disabled):hover { background: none; }
+.find label:has(select:disabled)::after { opacity: .4; }
+.find label:focus-within { background: rgba(11, 12, 13, .05); }
+.find__go { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--s4); min-width: max(200px, calc(270 * var(--u))); padding: 0 var(--s5); background: var(--ink); color: var(--ivory); font-weight: 500; transition: background .35s var(--ease); font-variant-numeric: tabular-nums; }
+.find__go:hover, .find__go:focus-visible { background: var(--rosso); }
+.stock__note { margin-top: var(--s4); font-size: 14px; line-height: 1.5; color: var(--ink-soft); }
+
+/* ---------- small desktop and landscape tablet ---------- */
+@media (max-width: 1180px) {
+  .lot__id b { font-size: 22px; }
+  .lot__facts { gap: 0 var(--s3); padding-right: var(--s4); }
+  .lot__price { margin-left: 0; width: 100%; }
+  .find { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; }
+  .find__say { grid-column: 1 / -1; padding: var(--s4) 0; border-bottom: 1px solid var(--rule-ink); }
+  .find label { min-height: 88px; }
+  .find__say + label { border-left: 0; padding-left: 0; }
+}
+
+/* ---------- phone and portrait tablet ---------- */
+@media (max-width: 900px) {
+  .stock .filter { gap: 0 var(--s5); margin-inline: 0; }
+  .stock h2 { margin-top: var(--s4); font-size: 22vw; }
+  .stock.is-full h2 { clip-path: none; }
+  .lots { grid-template-columns: 1fr; row-gap: 28px; margin-top: -7.6vw !important; }
+  .stock:not(.is-filtered) .lot:nth-child(n+7) { display: none; }
+  .lot__car, .lot__line { margin-inline: calc(var(--pad) * -.5); }
+  .lot__id { padding-top: 0; }
+  .lot__id b { font-size: 26px; }
+  .lot__facts, .stock.is-filtered .lot .lot__facts { padding-right: 0; gap: 0 var(--s4); font-size: 15px; }
+  .lot__price { margin-left: auto; width: auto; }
+  .find { grid-template-columns: 1fr; margin-top: var(--s8); border-bottom: 0; }
+  .find label, .find__say + label { min-height: 80px; padding: var(--s3) 0; border-left: 0; border-bottom: 1px solid var(--rule-ink); }
+  .find label::after { right: 4px; }
+  .find__say { padding: var(--s5) 0; }
+  .find__go { min-height: 64px; margin-top: var(--s5); }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  .lots { grid-template-columns: 1fr 1fr; }
+  .lot__car, .lot__line { margin-inline: 0; }
+  .lot__facts, .stock.is-filtered .lot .lot__facts { padding-right: var(--s5); }
+  .lot__price { margin-left: 0; width: 100%; }
+}
+
+/* ---------- reduced motion ---------- */
+.rm .lot__car img, .rm .lot__line::after { transition: none; }
+.rm .lot a:hover .lot__car img { transform: none; }

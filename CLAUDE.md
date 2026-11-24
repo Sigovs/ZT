@@ -1,6 +1,6 @@
 # ZT Automotive Collection — project notes for Claude
 
-Read `HANDOFF.md` for where things stand and `DESIGN_DNA.md` for the rules. The newest homepage is `prototype/thirty-four-home-v3/`; its `CREATIVE_MEDIA_PLAN.md` explains every section and every asset.
+Read `HANDOFF.md` for where things stand and `DESIGN_DNA.md` for the rules. The newest homepage is `prototype/thirty-four-home-v4/`; its `CREATIVE_MEDIA_PLAN.md` explains every section and every asset.
 
 The project is connected to Jarvis (project #7). Use the `jarvis-feedback` skill at milestones; only Alex's exact words go in `designer_feedback`.
 
@@ -25,6 +25,7 @@ Rejected, do not repeat
 - A marque expansion that opens as a separate overlay interface. The expanded state must be a transformation of the panel itself.
 - About ZT as a corporate report: long headline, several unrelated photographs, stat columns, a static timeline, value columns, visible source notes.
 - A generic Instagram widget or a six-square grid.
+- In the hero, the film credit, the visible pause control and the prototype note (Alex removed them in Figma, 24 Nov 2026).
 
 Standing rules
 
