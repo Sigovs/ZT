@@ -80,3 +80,5 @@ Map experiment "Arrive in Charlotte" (`prototype/thirty-four-home-v4-charlotte/`
 - Relief from real elevation, clouds that part in a zoom, a border that takes fire and cools, city names on a straight line with one bend. No dealership counts, no arcs, no pins, no logos in the panel (Alex). Ferrari has no confirmed showroom, so it is not on the map.
 - Sources are in the header of its `map.js`. Not tested: Safari, Firefox, a real phone, a slow laptop.
 - Figma is behind the code: the library still has no #DFDFDF / #CACACA variables.
+
+Homepage v5 (`prototype/thirty-four-home-v5/`, 24 Nov 2026): v4 with the "Arrive in Charlotte" map, made from the experiment at Alex's request. v4 and the experiment folder are untouched. Work on the new map continues in v5. Compare with v4: `prototype/thirty-four-home-v5/compare.html`. Not approved.

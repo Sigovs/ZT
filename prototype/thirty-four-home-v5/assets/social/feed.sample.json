@@ -1,0 +1,85 @@
+{
+ "note": "Sample of the shape the strip reads. Curated static previews for the prototype. A live feed would be an endpoint on a server ZT controls that returns this same shape; no Instagram token belongs in the page.",
+ "posts": [
+  {
+   "kind": "photo",
+   "shape": "land",
+   "y": 0,
+   "img": "assets/social/mclaren-rooftop.jpg",
+   "alt": "A blue McLaren with its doors raised on a rooftop above Charlotte",
+   "url": "https://www.instagram.com/mclarenclt/",
+   "handle": "@mclarenclt",
+   "cap": "Uptown, from the roof"
+  },
+  {
+   "kind": "reel",
+   "shape": "reel",
+   "y": 1,
+   "img": "assets/social/rollsroyce-spectre-reel.jpg",
+   "alt": "Light moving across the shoulder of a gold Rolls-Royce Spectre",
+   "url": "https://www.instagram.com/rollsroycecharlotte/",
+   "handle": "@rollsroycecharlotte",
+   "cap": "Spectre, in gold"
+  },
+  {
+   "kind": "photo",
+   "shape": "tall",
+   "y": 0,
+   "img": "assets/social/kenley-lane-aerial.jpg",
+   "alt": "The Kenley Lane building from the air with rows of supercars in front",
+   "url": "https://www.instagram.com/mclarenclt/",
+   "handle": "@mclarenclt",
+   "cap": "6010 Kenley Lane"
+  },
+  {
+   "kind": "photo",
+   "shape": "land",
+   "y": 2,
+   "img": "assets/social/zt-service-team.jpg",
+   "alt": "A ZT Automotive service team in front of the service drive",
+   "url": "https://www.instagram.com/ztautogroup/",
+   "handle": "@ztautogroup",
+   "cap": "The people in service"
+  },
+  {
+   "kind": "reel",
+   "shape": "reel",
+   "y": 0,
+   "img": "assets/social/czinger-concours-reel.jpg",
+   "alt": "A Czinger 21C on a concours lawn seen from above",
+   "url": "https://www.czingerclt.com/",
+   "handle": "Czinger Charlotte",
+   "cap": "21C on the lawn"
+  },
+  {
+   "kind": "photo",
+   "shape": "sq",
+   "y": 1,
+   "img": "assets/social/mclaren-reception.jpg",
+   "alt": "Three McLarens under the McLaren sign at the service reception",
+   "url": "https://www.instagram.com/mclarenclt/",
+   "handle": "@mclarenclt",
+   "cap": "Service reception"
+  },
+  {
+   "kind": "photo",
+   "shape": "tall",
+   "y": 0,
+   "img": "assets/social/ferrari-12cilindri.jpg",
+   "alt": "A red Ferrari 12Cilindri in a red studio",
+   "url": "",
+   "handle": "Ferrari",
+   "cap": "12Cilindri · manufacturer image"
+  },
+  {
+   "kind": "photo",
+   "shape": "tall",
+   "y": 2,
+   "img": "assets/social/zt-aggie-100.jpg",
+   "alt": "The Aggie 100 award engraved with ZT Automotive, 2026",
+   "url": "https://www.instagram.com/ztautogroup/",
+   "handle": "@ztautogroup",
+   "cap": "Aggie 100, 2026"
+  }
+ ]
+}

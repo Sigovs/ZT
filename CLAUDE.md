@@ -1,6 +1,6 @@
 # ZT Automotive Collection — project notes for Claude
 
-Read `HANDOFF.md` for where things stand and `DESIGN_DNA.md` for the rules. The newest homepage is `prototype/thirty-four-home-v4/`; its `CREATIVE_MEDIA_PLAN.md` explains every section and every asset.
+Read `HANDOFF.md` for where things stand and `DESIGN_DNA.md` for the rules. The newest homepage is `prototype/thirty-four-home-v5/`; its `CREATIVE_MEDIA_PLAN.md` explains every section and every asset.
 
 The project is connected to Jarvis (project #7). Use the `jarvis-feedback` skill at milestones; only Alex's exact words go in `designer_feedback`.
 
@@ -13,7 +13,7 @@ Approved
 - Overall direction of homepage v2 liked (Alex, 24 Nov 2026): "I like the overall direction of the latest homepage." Refining, not redesigning. The homepage is still not finally approved.
 - The three monumental 34° bars with oversized type and photographic reveals (first homepage). Alex asked for them back as a brand interlude, not as navigation.
 - The concept of the diagonal marque panels below the hero.
-- The interactive ZT map in v4, its visual direction (Alex, 24 Nov 2026): "Its visual direction is excellent, especially the dark cartographic presentation, geographic depth, contour lines, highlighted regions and cinematic connections." Never change it in place; the experiment is `prototype/thirty-four-home-v4-charlotte/`, not approved. No aggregate dealership counts there until ZT confirms them.
+- The interactive ZT map in v4, its visual direction (Alex, 24 Nov 2026): "Its visual direction is excellent, especially the dark cartographic presentation, geographic depth, contour lines, highlighted regions and cinematic connections." Never change it in place; the new map is in `prototype/thirty-four-home-v5/` (first tried in `thirty-four-home-v4-charlotte/`), not approved. No aggregate dealership counts on it until ZT confirms them.
 
 Rejected, do not repeat
 

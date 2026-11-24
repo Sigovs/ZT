@@ -1,0 +1,125 @@
+/* ZT homepage v5 · "Arrive in Charlotte". Until the model is ready (or without WebGL) the list of dealerships stands as before. */
+.atlas { display: none; }
+.has-atlas.group { display: block; max-width: none; padding: 0; margin: 0; }
+.has-atlas .group__cols, .has-atlas > h3 { display: none; }
+.has-atlas .atlas { display: block; position: relative; }
+.atlas.is-journey { height: 330vh; }
+.atlas__stage { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 620px; overflow: hidden; }
+.atlas__view { position: absolute; inset: 0; }
+.atlas canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: manipulation; -webkit-mask-image: linear-gradient(90deg, transparent 3%, rgba(0, 0, 0, .08) 24%, #000 37%, #000 93%, rgba(0, 0, 0, .2)), linear-gradient(transparent 0, #000 14%, #000 86%, transparent); mask-image: linear-gradient(90deg, transparent 3%, rgba(0, 0, 0, .08) 24%, #000 37%, #000 93%, rgba(0, 0, 0, .2)), linear-gradient(transparent 0, #000 14%, #000 86%, transparent); -webkit-mask-composite: source-in; mask-composite: intersect; }
+.atlas .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------- names on the model: type on the dark, no plates ---------- */
+.atlas__tags { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.atlas__tag { position: absolute; left: 0; top: 0; width: 0; height: 0; font-size: 15px; line-height: 1.2; white-space: nowrap; opacity: 0; transition: opacity .35s var(--ease); }
+.atlas__tag.is-on { opacity: 1; }
+.atlas__tag b { position: absolute; padding: 5px 0; font-weight: 500; letter-spacing: -.005em; color: var(--ivory); text-shadow: 0 0 3px #0b0c0d, 0 0 8px #0b0c0d, 0 0 16px rgba(11, 12, 13, .9); transition: color .3s var(--ease); cursor: pointer; }
+.atlas__tag.is-on b { pointer-events: auto; }
+.atlas__tag[data-side="right"] b { left: 22px; top: 0; transform: translateY(-50%); }
+.atlas__tag[data-side="left"] b { right: 22px; top: 0; transform: translateY(-50%); }
+.atlas__tag[data-side="up"] b { left: 0; bottom: 16px; transform: translateX(-50%); }
+.atlas__tag[data-side="down"] b { left: 0; top: 16px; transform: translateX(-50%); }
+.atlas__tag.is-hot b { color: #ff5c7a; }
+/* a city: a pill on a line with one bend (Alex, 24 Nov 2026; "sderzhanij": graphite, red only for Charlotte and the choice) */
+.atlas { --pill-1: #30353a; --pill-2: #1b1f22; --lead: #b9b8b4; --home-1: #dd1740; --home-2: #8a0c2b; }
+.atlas__leads { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.atlas__leads stop { stop-color: var(--lead); }
+.atlas__leads .is-home stop { stop-color: #ff2d55; }
+.atlas__leads path { fill: none; stroke-width: 1.1; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; opacity: 0; transition: opacity .25s var(--ease), stroke-dashoffset 0s .3s; }
+.atlas__leads .is-drop { stroke: var(--lead); }
+.atlas__leads .is-drop.is-home { stroke: #ff2d55; }
+.atlas__leads path.is-on { opacity: 1; stroke-dashoffset: 0; transition: opacity .2s var(--ease), stroke-dashoffset .45s cubic-bezier(.5, 0, .8, .6); }
+.atlas__leads .is-drop.is-on { transition: opacity .1s .42s, stroke-dashoffset .2s linear .42s; }
+.atlas__leads path.is-hot { stroke-width: 1.8; }
+.atlas__leads .is-drop.is-hot { stroke: #ff2d55; }
+.atlas__pill b { left: 0; top: 0; padding: 6px 15px 7px; border-radius: 999px; font-family: var(--text); font-size: 16px; font-weight: 500; line-height: 1.15; letter-spacing: -.01em; color: #fff; text-shadow: none; background: linear-gradient(var(--pill-1), var(--pill-2)); box-shadow: inset 0 0 0 1px rgba(239, 237, 232, .2); transition: background .3s var(--ease), box-shadow .3s var(--ease); }
+.atlas__pill.is-home b { background: linear-gradient(var(--home-1), var(--home-2)); }
+.atlas__pill.is-on { transition-delay: .62s; }
+.atlas__tag.atlas__pill.is-hot b, .atlas__pill b:hover { color: #fff; background: linear-gradient(var(--home-1), var(--home-2)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28); }
+.atlas__addr b { font-family: var(--display); font-size: max(19px, calc(24 * var(--u))); letter-spacing: -.02em; }
+.atlas__addr strong { font-weight: 200; font-size: 1.8em; letter-spacing: -.05em; line-height: 1; vertical-align: -1px; margin-right: 3px; }
+.atlas__addr b > span { display: flex; align-items: center; gap: 18px; margin-top: 10px; padding-top: 11px; border-top: 1px solid rgba(239, 237, 232, .34); transition: border-color .3s var(--ease); }
+.atlas__addr .mark { width: calc(var(--w) * .82px); }
+.atlas__addr.is-hot b { color: var(--ivory); }
+.atlas__addr.is-hot b > span { border-color: #ff2d55; }
+.atlas__addr b { color: var(--ivory); padding: 8px 0; }
+
+/* ---------- what can be done here: a line under the map, and a tag at the pointer ---------- */
+.atlas__help { position: absolute; left: max(calc(var(--pad) + 352px), 31vw); right: var(--pad); bottom: 30px; display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 15px; line-height: 1.2; color: var(--ivory-2); pointer-events: none; }
+.atlas__help span { display: inline-flex; align-items: center; gap: 10px; }
+.atlas__help span::before { content: ""; width: 12px; height: 6px; background: #ff2d55; transform: skewX(-34deg); }
+.atlas__tip { position: absolute; left: 0; top: 0; padding: 7px 12px 8px; font-size: 14px; line-height: 1.2; white-space: nowrap; color: var(--ink); background: var(--ivory); opacity: 0; pointer-events: none; transition: opacity .2s var(--ease); }
+.atlas__tip b { font-weight: 600; margin-right: 6px; }
+.atlas__tip.is-on { opacity: 1; }
+
+/* ---------- the panel: a path, and one list that opens in place ---------- */
+.atlas__side { position: absolute; z-index: 2; left: var(--pad); top: 92px; bottom: 28px; width: max(312px, calc(430 * var(--u))); display: flex; flex-direction: column; justify-content: center; pointer-events: none; }
+.atlas__side > * { pointer-events: auto; }
+.atlas__title { max-width: 12ch; font-family: var(--display); font-weight: 500; font-size: clamp(32px, calc(58 * var(--u)), 68px); line-height: 1; letter-spacing: -.04em; text-wrap: balance; }
+.atlas__hint { margin-top: 16px; font-size: 16px; color: var(--ivory-2); }
+.atlas.is-focused .atlas__title { display: none; }
+.atlas__back { align-self: flex-start; display: inline-flex; align-items: center; gap: 9px; min-height: 44px; font-size: 15px; color: var(--ivory-2); transition: color .3s var(--ease); }
+.atlas__back .ico { width: 18px; height: 18px; transition: transform .45s var(--ease); }
+.atlas__back:hover, .atlas__back:focus-visible { color: var(--ivory); }
+.atlas__back:hover .ico { transform: translateX(-4px); }
+.atlas__back[hidden], .atlas__hint[hidden], .atlas__detail[hidden] { display: none; }
+.atlas__list { margin: 20px 0 0 -10px; padding: 0 10px; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(239, 237, 232, .3) transparent; position: relative; }
+.atlas.is-focused .atlas__list { margin-top: 6px; }
+.atlas ul { list-style: none; }
+.atlas__list :focus-visible { outline-offset: -2px; }
+.atlas__states > li { border-bottom: 1px solid var(--rule); }
+.atlas__states > li:first-child { border-top: 1px solid var(--rule); }
+.atlas__state { position: relative; width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 20px; align-items: center; gap: 3px 14px; min-height: 48px; padding: 11px 0 12px; color: var(--ivory); transition: color .3s var(--ease); }
+.atlas__state b { font-family: var(--display); font-weight: 500; font-size: clamp(20px, calc(25 * var(--u)), 30px); line-height: 1.15; letter-spacing: -.015em; }
+.atlas__state span { grid-column: 1; font-size: 15px; line-height: 1.4; color: var(--ivory-2); }
+.atlas__chev { width: 20px; height: 20px; color: var(--ivory-2); transition: transform .45s var(--ease), color .3s var(--ease); }
+.atlas__state:hover .atlas__chev, .atlas__state:focus-visible .atlas__chev { color: #ff2d55; }
+.is-focused .atlas__state { padding-block: 8px; min-height: 46px; }
+.is-focused .atlas__state span { display: none; }
+.is-focused li:not(.is-open) > .atlas__state { color: var(--ivory-2); }
+.is-focused li:not(.is-open) > .atlas__state:hover, .is-focused li:not(.is-open) > .atlas__state:focus-visible { color: var(--ivory); }
+.is-open .atlas__state b { font-weight: 600; font-size: clamp(30px, calc(44 * var(--u)), 52px); line-height: 1.02; letter-spacing: -.035em; }
+.is-open .atlas__chev { transform: rotate(180deg); color: #ff2d55; }
+
+/* an open state: the place, then its dealerships in full-strength type. No rules between the rows: space does the grouping */
+.atlas__detail { padding: 6px 0 22px; }
+.atlas__group + .atlas__group { margin-top: 18px; }
+.atlas__place { font-size: 15px; line-height: 1.3; color: var(--ivory-2); padding-bottom: 2px; }
+.atlas__detail[data-detail="NC"] .atlas__place { font-family: var(--display); font-weight: 600; font-size: 22px; line-height: 1.2; letter-spacing: -.015em; color: var(--ivory); padding: 0; }
+.atlas__detail[data-detail="NC"] .atlas__group + .atlas__group { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--rule); }
+.atlas__zip { font-size: 15px; line-height: 1.4; color: var(--ivory-2); margin-bottom: 6px; }
+.atlas__group .ico { flex: none; }
+.atlas__group li a { display: flex; align-items: center; gap: 12px; min-height: 36px; padding: 5px 0; line-height: 1.3; color: var(--ivory); transition: color .3s var(--ease); }
+.atlas__group li em { font-style: normal; font-weight: 500; font-size: 17px; letter-spacing: -.005em; flex: 1; text-wrap: balance; }
+.atlas__group li .ico { width: 17px; height: 17px; color: var(--ivory-2); transition: transform .45s var(--ease), color .3s var(--ease); }
+.atlas__group li a:hover, .atlas__group li a:focus-visible { color: #ff7a93; }
+.atlas__group li a:hover .ico, .atlas__group li a:focus-visible .ico { color: #ff2d55; transform: translate(3px, -3px); }
+.atlas__acts { display: flex; flex-wrap: wrap; gap: 0 26px; margin-top: 4px; }
+.atlas__acts > * { position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 15px; color: var(--ivory-2); transition: color .3s var(--ease); }
+.atlas__acts .ico { width: 17px; height: 17px; }
+.atlas__acts > *:hover, .atlas__acts > *:focus-visible { color: var(--ivory); }
+.atlas__acts [aria-pressed="true"] { color: #ff7a93; }
+/* the map never runs behind the words */
+.atlas__side::before { content: ""; position: absolute; z-index: -1; inset: -92px -90px -28px calc(var(--pad) * -1); background: linear-gradient(90deg, var(--ink) 72%, rgba(11, 12, 13, 0)); pointer-events: none; }
+.rooms .has-atlas.group, .has-atlas.group { margin-top: calc(110 * var(--u)); }
+
+@media (max-width: 900px) {
+  .atlas.is-journey { height: auto; }
+  .atlas__stage { position: relative; height: auto; min-height: 0; overflow: visible; }
+  .atlas__view { position: sticky; inset: auto; top: 0; z-index: 3; height: min(112vw, 58svh); background: var(--ink); overflow: hidden; }
+  .atlas canvas { -webkit-mask-image: linear-gradient(transparent 0, #000 16%, #000 88%, transparent); mask-image: linear-gradient(transparent 0, #000 16%, #000 88%, transparent); }
+  .atlas.is-focused .atlas__view { height: 46svh; }
+  .atlas__side { position: relative; left: auto; top: auto; bottom: auto; width: auto; padding: 0 var(--pad); display: block; }
+  .atlas__back { position: sticky; top: 46svh; z-index: 2; width: calc(100% + var(--pad) * 2); margin-inline: calc(var(--pad) * -1); padding: 0 var(--pad); background: var(--ink); }
+  .atlas__help { left: 0; right: 0; bottom: 10px; justify-content: center; }
+  .atlas__help span + span { display: none; }
+  .atlas__tip { display: none; }
+  .atlas__title { font-size: 36px; }
+  .atlas__list { margin: var(--s4) 0 0; padding: 0; overflow: visible; }
+  .atlas__pill b { font-size: 14px; padding: 5px 11px 6px; }
+  .atlas__addr b { font-size: 16px; }
+  .atlas__addr b > span { gap: 14px; margin-top: 7px; padding-top: 8px; }
+  .atlas__addr .mark { width: calc(var(--w) * .58px); }
+  .atlas__group li a { min-height: 46px; }
+  .atlas__side::before { display: none; }
+  }
