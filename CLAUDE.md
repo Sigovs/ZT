@@ -13,6 +13,7 @@ Approved
 - Overall direction of homepage v2 liked (Alex, 24 Nov 2026): "I like the overall direction of the latest homepage." Refining, not redesigning. The homepage is still not finally approved.
 - The three monumental 34° bars with oversized type and photographic reveals (first homepage). Alex asked for them back as a brand interlude, not as navigation.
 - The concept of the diagonal marque panels below the hero.
+- The interactive ZT map in v4, its visual direction (Alex, 24 Nov 2026): "Its visual direction is excellent, especially the dark cartographic presentation, geographic depth, contour lines, highlighted regions and cinematic connections." Never change it in place; the experiment is `prototype/thirty-four-home-v4-charlotte/`, not approved. No aggregate dealership counts there until ZT confirms them.
 
 Rejected, do not repeat
 

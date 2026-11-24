@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/zt-monogram-white.png">
+<title>ZT map comparison</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box;margin:0}body{background:#0b0c0d;color:#efede8;font:500 15px/1.3 Inter,Arial,sans-serif;height:100vh;height:100dvh;display:flex;flex-direction:column}
+nav{display:flex;align-items:center;gap:8px;padding:8px 16px;border-bottom:1px solid rgba(239,237,232,.16)}
+button{font:inherit;color:rgba(239,237,232,.7);background:none;border:0;min-height:44px;padding:0 14px;cursor:pointer;border-bottom:2px solid transparent}
+button[aria-pressed=true]{color:#efede8;border-color:#ff2d55}button:hover{color:#efede8}:focus-visible{outline:2px solid #efede8;outline-offset:-2px}
+main{flex:1;position:relative;min-height:0}iframe{position:absolute;inset:0;width:100%;height:100%;border:0;visibility:hidden}iframe.on{visibility:visible}
+</style></head><body>
+<nav aria-label="Version"><button data-v="a" aria-pressed="false">Current map</button><button data-v="b" aria-pressed="true">Arrive in Charlotte</button></nav>
+<main><iframe id="a" title="Current map" src="../thirty-four-home-v4/"></iframe><iframe id="b" class="on" title="Arrive in Charlotte" src="./"></iframe></main>
+<script>
+const $=s=>document.querySelector(s),all=s=>[...document.querySelectorAll(s)];
+// both pages are brought to the map; the map itself loads when its block comes near
+all('iframe').forEach(f=>f.addEventListener('load',()=>{let n=0;const t=setInterval(()=>{const w=f.contentWindow,g=w.document.querySelector('#network');if(!g)return clearInterval(t);const a=w.document.querySelector('.has-atlas .atlas')||g,y=a.getBoundingClientRect().top+w.scrollY;w.ztLenis?w.ztLenis.scrollTo(y,{immediate:true,force:true}):w.scrollTo(0,y);if(++n>5)clearInterval(t)},600)}));
+all('button').forEach(b=>b.addEventListener('click',()=>{all('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));all('iframe').forEach(f=>f.classList.toggle('on',f.id===b.dataset.v))}));
+</script></body></html>

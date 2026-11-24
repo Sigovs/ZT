@@ -67,3 +67,16 @@ Homepage v4 (`prototype/thirty-four-home-v4/`, 24 Nov 2026): v3 with section 4 r
 - Files: `v4.css` holds everything v4 adds; `home.js` is v4's own copy (the inventory block is new).
 - Figma, page "09 — Homepage v3 · Layers": the working desktop frame "index adjustments" (136:464) has the new section in place of 04; "Homepage v4 · Phone 390" (142:1066) is the phone. The v3 frames are kept.
 - Open: Alex's verdict on the section; clean masters of the stock photographs.
+
+Homepage v4, later the same day (24 Nov 2026), edited in place in `prototype/thirty-four-home-v4/`:
+- Hero: a two-line slogan, a sheet of glass round the bar, a better Czinger film; the pagination, film credit and pause control are gone from view.
+- Inventory on #CACACA, the House and the other light grounds on #DFDFDF (tokens `--paper-2`, `--paper` in `v4.css`); car cards with a "View Details" plate and save / share / text.
+- "Since 2014. 18 dealerships, 20 brands, 5 states." stands on one left edge and slides in with the scroll. Alex keeps the figures; ZT will confirm them.
+- Showrooms: the interactive 3D map of the five states (`map.js`, `map.css`, `assets/map/`). Alex likes its visual direction: do not change it in place. Known: phone labels overlap, and Escape does not work after a click on the model.
+- The fullscreen menu was rejected and reverted; its pictures are in `review/menu-scenes-2026-11-24/`.
+
+Map experiment "Arrive in Charlotte" (`prototype/thirty-four-home-v4-charlotte/`, 24 Nov 2026): a full copy of v4 with a new map. NOT approved. Compare: `prototype/thirty-four-home-v4-charlotte/compare.html`.
+- Scroll carries the camera along the 34th parallel, through cloud, to the two Charlotte addresses. A click on a state zooms in, a click outside or Escape zooms out; the list opens in place.
+- Relief from real elevation, clouds that part in a zoom, a border that takes fire and cools, city names on a straight line with one bend. No dealership counts, no arcs, no pins, no logos in the panel (Alex). Ferrari has no confirmed showroom, so it is not on the map.
+- Sources are in the header of its `map.js`. Not tested: Safari, Firefox, a real phone, a slow laptop.
+- Figma is behind the code: the library still has no #DFDFDF / #CACACA variables.

@@ -1,0 +1,196 @@
+/* ZT Automotive Collection — homepage v4.
+   Everything v4 adds to v3: the inventory section, and a quieter hero foot. */
+
+/* ---------- the house: the summary stands on one left edge (Alex, 24 Nov 2026) ---------- */
+.sum .ln:nth-child(n) { margin-left: 0; }
+.sum .ln { width: max-content; max-width: 100%; will-change: transform; }
+
+/* ---------- the light grounds (Alex, 24 Nov 2026): neutral greys instead of ivory. Ivory stays the colour of type on dark ---------- */
+:root { --paper: #dfdfdf; --paper-2: #cacaca; }
+.door__ground, .cbar__face { background: var(--paper); }
+
+/* ---------- hero: the film credit and the prototype note are gone (Alex, Figma "index adjustments").
+   The pause control stays for the keyboard: it shows itself when it is reached, as the skip link does. ---------- */
+.hero__film { opacity: 0 !important; transition: opacity .3s var(--ease); }
+.hero__film [data-readout-credit] { display: none; }
+.hero__film:focus-within { opacity: 1 !important; }
+
+/* ---------- hero: one sheet of glass. The film fills the whole screen; the bar is the clear cut in it, everything else
+   is frosted. The canvas carries the same frame at the same crop as the bar's film, so the picture continues across
+   the edge. It is blurred at a quarter of its size and enlarged: no steps, little cost. ---------- */
+.hero__ambient { inset: auto; left: -6%; top: -6%; width: 28%; height: 28%; object-fit: cover; object-position: 50% 58%; transform: scale(4); transform-origin: 0 0; filter: blur(5.5px) saturate(1.1); }
+.hero__ambient.is-on { opacity: 1; }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background:
+  linear-gradient(146deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, .07) 38%, rgba(255, 255, 255, .015) 46%, rgba(255, 255, 255, 0) 52%),
+  linear-gradient(146deg, rgba(11, 12, 13, .68) 0%, rgba(11, 12, 13, .56) 34%, rgba(11, 12, 13, .38) 72%); }
+/* the cut edge of the glass catches the light */
+.hero__edge { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .75) 58%, rgba(255, 255, 255, .25)); }
+
+/* ---------- hero: a slogan in two lines. The second is shorter, so the pair steps back along the bar's own edge ---------- */
+.display { left: calc(66 * var(--u)); top: calc(118 * var(--u)); font-size: calc(206 * var(--u)); line-height: .94; letter-spacing: -.048em; }
+.display .line { display: block; }
+/* room for the round sides and the descenders inside each letter's mask */
+.display .ch { padding: .06em .09em .2em; margin: -.06em -.09em -.2em; }
+
+/* =====================================================================
+   4 · Inventory — ZT's own stock in profile, on glass cards. The word
+   stands behind the first row and blurs under its top edge.
+   ===================================================================== */
+.stock { position: relative; background: var(--paper-2); color: var(--ink); padding: 0 var(--pad) var(--sec); overflow: hidden; }
+.stock > * { max-width: calc(var(--wide) - 2 * var(--pad)); margin-inline: auto; }
+
+.stock .filter { margin-top: 0; padding: var(--s3) 0; gap: var(--s1) var(--s6); border-top: 1px solid var(--ink); border-bottom: 0; }
+.stock .filter__btn { display: inline-flex; align-items: baseline; gap: 7px; color: var(--ink-soft); }
+.stock .filter__btn::after { background: var(--ink); bottom: 8px; }
+.stock .filter__btn sup { font-size: 14px; line-height: 1; vertical-align: baseline; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+.stock .filter__btn:hover, .stock .filter__btn:focus-visible, .stock .filter__btn.is-active { color: var(--ink); }
+
+.stock h2 {
+  margin-top: calc(44 * var(--u)); margin-left: -.046em;
+  font-family: var(--display); font-weight: 700; font-size: min(calc(446 * var(--u)), 535px); line-height: .84; letter-spacing: -.06em; white-space: nowrap;
+}
+/* the tail of the y ends behind the third card's top edge, as drawn in Figma */
+.stock.is-full h2 { clip-path: inset(-20% -10% .012em -10%); }
+.stock h2 .ch { padding: .04em .1em .26em; margin: -.04em -.1em -.26em; }
+
+/* Cards as drawn in Figma ("index adjustments", 24 Nov 2026): 10px corners, a soft shadow from
+   below. The blur is softer than drawn (Alex: "more elegant"): wide, frosted toward the paper, with a light edge. */
+.lots { position: relative; z-index: 1; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(44.5 * var(--u)); margin-top: calc(-100 * var(--u)) !important; }
+.lot { position: relative; }
+.lot[hidden] { display: none; }
+.lot > a {
+  position: relative; display: grid; grid-template-rows: auto 1fr; height: 100%; border-radius: 10px; overflow: hidden;
+  background: linear-gradient(rgba(232, 232, 232, .62), rgba(232, 232, 232, .78) 22%, rgba(232, 232, 232, .92) 52%);
+  -webkit-backdrop-filter: blur(34px); backdrop-filter: blur(34px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), 0 16px 32.2px -14px rgba(0, 0, 0, .1);
+  transition: background .5s var(--ease), box-shadow .5s var(--ease);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .lot > a { background: rgba(232, 232, 232, .94); } }
+.lot__car { position: relative; display: block; aspect-ratio: 557 / 295; will-change: transform; }
+/* the floor of every car is the same height in its card; the long Rolls-Royces are set a little smaller to keep a margin */
+.lot__car img { position: absolute; left: 50%; top: 5.4%; width: 105.3%; max-width: none; height: auto; aspect-ratio: 1340 / 540; margin-left: -52.65%; transform: scale(var(--s, 1)); transform-origin: 50% 88.9%; transition: transform .9s var(--ease); }
+.lot[data-marque="rolls-royce"] { --s: .87; }
+.lot__id { display: grid; gap: var(--s3); justify-items: start; align-content: start; padding: 10px 20px 0; }
+.lot__id .mark { width: calc(var(--w) * .82px); height: 26px; aspect-ratio: auto; -webkit-mask-position: left bottom; mask-position: left bottom; }
+.lot__id .mark--ferrari { width: 18px; }
+.lot__id b { font-family: var(--display); font-weight: 600; font-size: clamp(22px, calc(32 * var(--u)), 38px); line-height: 1.05; letter-spacing: -.03em; }
+.lot__facts { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--s5); margin-top: 20px; padding: 0 20px; font-size: max(14px, calc(16 * var(--u))); line-height: 1.5; color: var(--ink-soft); }
+.lot__price { margin-left: auto; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* hover, as drawn in Figma: a black plate with "View Details" over the foot of the card. It is drawn across behind a
+   34° edge; the card's own text leaves first, then the label rises and the arrow arrives along its own direction. */
+.lot__body { display: grid; grid-template-rows: 1fr auto; padding-bottom: 20px; transition: opacity .22s var(--ease), transform .45s var(--ease); }
+.lot__go {
+  position: absolute; left: 0; right: 0; bottom: 0; height: max(112px, calc(146 * var(--u))); display: flex; align-items: center; justify-content: space-between; gap: var(--s5); padding: 0 30px 0 24px;
+  background: var(--ink); color: var(--ivory); pointer-events: none;
+  --edge: max(166px, calc(216 * var(--u)));
+  clip-path: polygon(0 0, 0 0, calc(var(--edge) * -1) 100%, calc(var(--edge) * -1) 100%);
+  transition: clip-path .55s cubic-bezier(.65, 0, .35, 1);
+}
+.lot__go b { font-family: var(--text); font-weight: 600; font-size: clamp(18px, calc(24 * var(--u)), 28px); line-height: 1.2; letter-spacing: -.01em; transform: translateY(22px); opacity: 0; transition: transform .3s var(--ease), opacity .2s var(--ease); }
+.lot__go svg { width: 22px; height: 22px; overflow: visible; fill: none; stroke: #ff2d55; stroke-width: 1.4; transform: translate(-18px, 18px); opacity: 0; transition: transform .3s var(--ease), opacity .2s var(--ease); }
+.lot > a:focus-visible .lot__body { opacity: 0; transform: translateY(-8px); }
+.lot > a:focus-visible .lot__go { clip-path: polygon(0 0, calc(100% + var(--edge)) 0, 100% 100%, calc(var(--edge) * -1) 100%); }
+.lot > a:focus-visible .lot__go b, .lot > a:focus-visible .lot__go svg { transform: none; opacity: 1; }
+
+@media (hover: hover) and (pointer: fine) {
+  .lot:hover > a .lot__body { opacity: 0; transform: translateY(-8px); }
+  .lot:hover > a .lot__go { clip-path: polygon(0 0, calc(100% + var(--edge)) 0, 100% 100%, calc(var(--edge) * -1) 100%); }
+  .lot:hover > a .lot__go b { transform: none; opacity: 1; transition: transform .7s cubic-bezier(.16, 1, .3, 1) .2s, opacity .3s var(--ease) .2s; }
+  .lot:hover > a .lot__go svg { transform: none; opacity: 1; transition: transform .8s cubic-bezier(.16, 1, .3, 1) .34s, opacity .3s var(--ease) .34s; }
+  .lot:not(.lot--all):hover > a { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .7), 0 24px 44px -16px rgba(0, 0, 0, .22); }
+  .lot:hover > a .lot__car img { transform: translateX(-2.4%) scale(var(--s, 1)); }
+}
+.lot > a:focus-visible { outline-offset: 4px; box-shadow: 0 24px 44px -16px rgba(0, 0, 0, .22); }
+
+/* save, share, text: three white discs in the card's corner, as drawn in Figma (28px, 4 apart, 11 from the top, 16 from the
+   right). They arrive one after another with the hover; a saved car keeps its first disc. */
+.lot__tools { position: absolute; z-index: 3; top: 11px; right: 16px; display: flex; gap: 4px; }
+.lot__tools > * { position: relative; display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border-radius: 50%; background: #fff; color: var(--ink); opacity: 0; transform: translateY(-8px) scale(.7); pointer-events: none; transition: opacity .25s var(--ease), transform .45s cubic-bezier(.16, 1, .3, 1), background .3s var(--ease), color .3s var(--ease); }
+.lot__tools > *::before { content: ""; position: absolute; inset: -8px -2px; }                       /* the reach is larger than the disc */
+.lot__tools svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.lot__tools > *:hover, .lot__tools > *:focus-visible { background: var(--ink); color: #fff; }
+.lot__tools [aria-pressed="true"] { color: #ff2d55; }
+.lot__tools [aria-pressed="true"] svg { fill: currentColor; }
+.lot__tools > *::after { content: attr(data-tip); position: absolute; top: calc(100% + 8px); left: 50%; padding: 5px 9px; border-radius: 4px; background: var(--ink); color: var(--ivory); font: 500 14px/1.2 var(--text); white-space: nowrap; opacity: 0; transform: translate(-50%, -4px); pointer-events: none; transition: opacity .2s var(--ease), transform .3s var(--ease); }
+.lot__tools > *:hover::after, .lot__tools > *:focus-visible::after, .lot__tools > .is-told::after { opacity: 1; transform: translate(-50%, 0); }
+.lot:hover .lot__tools > *, .lot:focus-within .lot__tools > *, .lot__tools > [aria-pressed="true"] { opacity: 1; transform: none; pointer-events: auto; }
+.lot:hover .lot__tools > :nth-child(1) { transition-delay: .06s, .06s, 0s, 0s; }
+.lot:hover .lot__tools > :nth-child(2) { transition-delay: .12s, .12s, 0s, 0s; }
+.lot:hover .lot__tools > :nth-child(3) { transition-delay: .18s, .18s, 0s, 0s; }
+@media (hover: none) { .lot__tools { gap: 8px; } .lot__tools > * { width: 36px; height: 36px; opacity: 1; transform: none; pointer-events: auto; } .lot__tools > *:hover { background: #fff; color: var(--ink); } .lot__tools > [aria-pressed="true"]:hover { color: #ff2d55; } .lot__tools > *:hover:not(.is-told)::after { opacity: 0; } }
+
+.lot--all { align-self: center; justify-self: start; }
+.lot--all > a { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none !important; padding: 0; border-radius: 0; display: inline-flex; align-items: center; gap: var(--s2); min-height: 44px; height: auto; font-family: var(--display); font-weight: 600; font-size: clamp(22px, calc(32 * var(--u)), 38px); letter-spacing: -.03em; }
+.lot--all .ico, .find__go .ico { transition: transform .5s var(--ease); }
+.lot--all > a:hover .ico, .lot--all > a:focus-visible .ico, .find__go:hover .ico, .find__go:focus-visible .ico { transform: translate(4px, -4px); }
+
+/* the finder: the whole stock, one line of form */
+.find { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .8fr) minmax(0, .8fr) auto; align-items: stretch; margin-top: calc(110 * var(--u)); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.find__say { align-self: center; font-family: var(--display); font-weight: 500; font-size: clamp(24px, calc(40 * var(--u)), 48px); line-height: 1.05; letter-spacing: -.03em; padding-right: var(--s5); }
+.find label { position: relative; display: grid; align-content: center; gap: 2px; min-height: calc(112 * var(--u)); padding: var(--s3) var(--s5); border-left: 1px solid var(--rule-ink); transition: background .35s var(--ease); }
+.find label > span { font-size: 14px; color: var(--ink-soft); }
+.find select {
+  width: 100%; min-height: 44px; margin: 0; padding: 0 28px 0 0; border: 0; border-radius: 0; background: none; color: var(--ink); cursor: pointer;
+  font: 500 max(16px, calc(18 * var(--u))) / 1.2 var(--text); -webkit-appearance: none; appearance: none; text-overflow: ellipsis;
+}
+.find select option { color: #0b0c0d; background: #fff; }
+.find label::after { content: ""; position: absolute; right: var(--s5); bottom: calc(50% - 15px); width: 8px; height: 8px; border: solid var(--ink); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); pointer-events: none; }
+.find label:hover { background: rgba(11, 12, 13, .05); }
+.find label:has(select:disabled) { opacity: 1; }
+.find label:has(select:disabled) select { color: var(--ink-soft); cursor: default; opacity: 1; }
+.find label:has(select:disabled):hover { background: none; }
+.find label:has(select:disabled)::after { opacity: .4; }
+.find label:focus-within { background: rgba(11, 12, 13, .05); }
+.find__go { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--s4); min-width: max(200px, calc(270 * var(--u))); padding: 0 var(--s5); background: var(--ink); color: var(--ivory); font-weight: 500; transition: background .35s var(--ease); font-variant-numeric: tabular-nums; }
+.find__go:hover, .find__go:focus-visible { background: var(--rosso); }
+.stock__note { margin-top: var(--s4); font-size: 14px; line-height: 1.5; color: var(--ink-soft); }
+
+/* ---------- small desktop and landscape tablet ---------- */
+@media (max-width: 1180px) {
+  .lot__id b { font-size: 22px; }
+  .lot__facts { gap: 0 var(--s3); }
+  .lot__price { margin-left: 0; width: 100%; }
+  .find { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; }
+  .find__say { grid-column: 1 / -1; padding: var(--s4) 0; border-bottom: 1px solid var(--rule-ink); }
+  .find label { min-height: 88px; }
+  .find__say + label { border-left: 0; padding-left: 0; }
+}
+
+/* ---------- phone and portrait tablet ---------- */
+@media (max-width: 900px) {
+  .hero__edge { display: none; }
+  .display { left: var(--pad); top: 88px; font-size: calc((50vw + 34.8svh - 152px) / 7.8); letter-spacing: -.045em; } /* the bar crosses lower on a taller screen, so the size follows it */
+  .stock .filter { gap: 0 var(--s5); margin-inline: 0; }
+  .stock h2 { margin-top: var(--s4); font-size: 22vw; }
+  .stock.is-full h2 { clip-path: none; }
+  .lots { grid-template-columns: 1fr; gap: 16px; margin-top: -4.9vw !important; }
+  .lot > a { -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+  .stock:not(.is-filtered) .lot:nth-child(n+7) { display: none; }
+  .lot__id b { font-size: 26px; }
+  .lot__facts { gap: 0 var(--s3); font-size: 14px; }
+  .lot__price { margin-left: auto; width: auto; }
+  .find { grid-template-columns: 1fr; margin-top: var(--s8); border-bottom: 0; }
+  .find label, .find__say + label { min-height: 80px; padding: var(--s3) 0; border-left: 0; border-bottom: 1px solid var(--rule-ink); }
+  .find label::after { right: 4px; }
+  .find__say { padding: var(--s5) 0; }
+  .find__go { min-height: 64px; margin-top: var(--s5); }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  .lots { grid-template-columns: 1fr 1fr; }
+  .lot__price { margin-left: 0; width: 100%; }
+}
+
+/* ---------- reduced motion ---------- */
+.rm .lot__car img, .rm .lot__body, .rm .lot__go, .rm .lot__go b, .rm .lot__go svg, .rm .lot__tools > * { transition: none !important; }
+.rm .lot:hover > a .lot__car img { transform: scale(var(--s, 1)); }
+
+/* ---------- marques: a folded column carries its name as text, set along the spine ---------- */
+.col__spine-t { position: absolute; left: 0; bottom: 0; writing-mode: vertical-rl; transform: translateX(-50%) rotate(180deg); font-family: var(--display); font-weight: 500; font-size: clamp(20px, calc(30 * var(--u)), 36px); line-height: 1; letter-spacing: -.02em; white-space: nowrap; }
+
+/* ---------- marques: the mark stands alone; models and showroom names are gone (Alex) ---------- */
+.col__mark { margin-bottom: 0; }
+
+/* ---------- the three bars: no visible pause control (Alex); the keyboard can still reach it ---------- */
+.creed__foot { opacity: 0 !important; pointer-events: none; transition: opacity .3s var(--ease); }
+.creed__foot:focus-within { opacity: 1 !important; pointer-events: auto; }
