@@ -36,3 +36,5 @@ Figma file: https://www.figma.com/design/NkR9bvaMl2D0hUMfB6mOLv/ZT-AUTO-GROUP
 
 ## Next
 Interactive prototype "Thirty-Four Degrees" (hero + second screen, GSAP + ScrollTrigger + Lenis): `prototype/thirty-four/index.html`. Earlier Figma studies are preserved.
+
+v2 (experimental, `prototype/thirty-four-v2/`): baseline hero + monolith, then 3 · In the collection (monumental listing index + chamfered window), 4 · Driven by excellence (monogram bars), 5 · Enquire + footer. Baseline `prototype/thirty-four/` is frozen. Live index: https://sigovs.github.io/ZT/
