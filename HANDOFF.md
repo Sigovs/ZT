@@ -67,4 +67,3 @@ Homepage v4 (`prototype/thirty-four-home-v4/`, 24 Nov 2026): v3 with section 4 r
 - Files: `v4.css` holds everything v4 adds; `home.js` is v4's own copy (the inventory block is new).
 - Figma, page "09 — Homepage v3 · Layers": the working desktop frame "index adjustments" (136:464) has the new section in place of 04; "Homepage v4 · Phone 390" (142:1066) is the phone. The v3 frames are kept.
 - Open: Alex's verdict on the section; clean masters of the stock photographs.
-- Menu redesign (24 Nov 2026, local commit on the Mac): see "Menu" in the v4 plan. Jarvis: not reported yet, because the Mac has no Jarvis connector. Report it from the home PC; the designer's brief is "ZT — Mega Menu Information Architecture & UX Redesign".
