@@ -38,3 +38,8 @@ Figma file: https://www.figma.com/design/NkR9bvaMl2D0hUMfB6mOLv/ZT-AUTO-GROUP
 Interactive prototype "Thirty-Four Degrees" (hero + second screen, GSAP + ScrollTrigger + Lenis): `prototype/thirty-four/index.html`. Earlier Figma studies are preserved.
 
 v2 (experimental, `prototype/thirty-four-v2/`): baseline hero + monolith, then 3 · In the collection (monumental listing index + chamfered window), 4 · Driven by excellence (monogram bars), 5 · Enquire + footer. Baseline `prototype/thirty-four/` is frozen. Live index: https://sigovs.github.io/ZT/
+
+Homepage (`prototype/thirty-four-home/`, 24 Nov 2026): the full homepage built on the frozen baseline — hero and monolith unchanged, then inventory discovery (filter + chamfered window), the model line-up (a filmstrip travelling along the 34° line), ownership (the monogram's three bars: Service, Finance, Sell or trade), the network and enquiry on an ivory ground, mega menu and footer. Responsive: phones and portrait tablets (≤ 900px) have their own composition. Live: https://sigovs.github.io/ZT/prototype/thirty-four-home/
+- `base.css` is the baseline stylesheet, byte-identical to `prototype/thirty-four/styles.css`; `main.js` is the baseline script plus the phone branch; everything new is in `home.css` and `home.js`.
+- Facts on the page come from ztautogroup.com (read 23 Nov 2026): the three Charlotte showrooms and their addresses, the group dealership list, the group telephone line, and the service / finance / sell-or-trade offer. Listings, prices, counts, hours and email are placeholders or "to be confirmed".
+- Open: Ferrari and Czinger have no confirmed location; ZT's own pages disagree on the dealership count (16 / 18 / 20 listed), so the page states no count.
