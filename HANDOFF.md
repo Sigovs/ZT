@@ -2,6 +2,17 @@
 
 Figma file: https://www.figma.com/design/NkR9bvaMl2D0hUMfB6mOLv/ZT-AUTO-GROUP
 
+## Start here (24 Nov 2026, end of day, Mac)
+
+- `git pull --ff-only`, then read `CLAUDE.md` (feedback log) and this file. Newest homepage: `prototype/thirty-four-home-v5/`. Work there; v4 and older stay as they are.
+- Live: https://sigovs.github.io/ZT/ (all versions), https://sigovs.github.io/ZT/prototype/thirty-four-home-v5/. Local: `python3 -m http.server 4173` in the project root.
+- When css or js changes, raise the `?v=` number in `index.html`, and for the map also the one in `home.js`.
+- Map files in v5: `map.js`, `map.css`, `assets/map/`. How the data was made: `tools/map/`.
+- Next, if Alex wants it: small screens (at 1024 px and on phones some city names lie on land), Safari, Firefox and a real phone, the Figma copy of the new colours and map.
+- Open questions for Alex: his verdict on v5; "Pause film" in Ownership and Showrooms, keep or remove; one red (#FF2D55) or the Rosso of the Foundations; a design-hook pass over v4 (tight type, layout transitions) or not.
+- Jarvis: the connector is on both computers. Report #3 is the v4 map; commits and pushes are recorded by its hooks. A correction to #3: pin height in the v4 map is not only the number of dealerships, two pins are taller to part their labels.
+- Alex decides every push and every Figma write.
+
 ## Pages
 | Page | What it is | Status |
 |---|---|---|

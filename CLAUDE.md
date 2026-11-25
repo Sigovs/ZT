@@ -27,6 +27,8 @@ Rejected, do not repeat
 - About ZT as a corporate report: long headline, several unrelated photographs, stat columns, a static timeline, value columns, visible source notes.
 - A generic Instagram widget or a six-square grid.
 - In the hero, the film credit, the visible pause control and the prototype note (Alex removed them in Figma, 24 Nov 2026).
+- On the new map (v5): arcs to Charlotte, vertical pins, violet pills, curved label lines, logos in the dealership panel, zoom by city, dragging, red threads, breadcrumbs. Navigation must be plain: cut what can be cut, and say what a click does.
+- A dealership panel in small grey type with a rule under every row: "eto ochenj tjazhelo chitaetsja" (Alex, 24 Nov 2026).
 
 Standing rules
 
