@@ -2,7 +2,7 @@
    The same five states, now seen from the air. Scrolling carries the camera east along the 34th parallel, down through
    thin cloud, over North Carolina and into Charlotte, where the two showrooms stand. A choice takes the camera instead.
    Role: MAIN of its block; the list of dealerships on the page is complete without it.
-   Budget: 60 fps on a laptop, under 60k triangles, two small textures (relief 70 KB, cloud noise made at start), no lights,
+   Budget: 60 fps on a laptop, under 60k triangles, two small textures (relief 120 KB, cloud noise made at start), no lights,
    no post-processing, DPR capped at 2 (1.5 on phones). It is loaded when the block comes near and draws only when on screen.
    Sources: US Census boundaries, roads and address points (us-atlas 3.0.1, TIGERweb, Census Geocoder); Natural Earth coasts
    (world-atlas 2.0.2); elevation from Terrain Tiles (SRTM, GMTED2010, ETOPO1). Relief is exaggerated. */
@@ -65,10 +65,10 @@ float cloudAt(vec2 p, float sc) {
 }`;
 
 export async function mountAtlas(root, { gsap, ScrollTrigger, motion, fine }) {
-  const get = f => fetch('assets/map/' + f + '?v=35').then(r => { if (!r.ok) throw new Error(f); return r.json(); });
-  const tex = f => new THREE.TextureLoader().loadAsync('assets/map/' + f + '?v=35');
+  const get = f => fetch('assets/map/' + f + '?v=53').then(r => { if (!r.ok) throw new Error(f); return r.json(); });
+  const tex = f => new THREE.TextureLoader().loadAsync('assets/map/' + f + '?v=53');
   const [data, clt, relief, mask] = await Promise.all([get('southeast.json'), get('charlotte.json'), tex('relief.webp'), tex('mask.webp')]);
-  const view = root.querySelector('.atlas__view'), canvas = root.querySelector('canvas'), tagsBox = root.querySelector('.atlas__tags'), side = root.querySelector('.atlas__side');
+  const view = root.querySelector('.atlas__view'), canvas = root.querySelector('canvas'), tagsBox = root.querySelector('.atlas__tags'), side = root.querySelector('.atlas__side'), card = root.querySelector('.atlas__card');
   const phone = window.matchMedia('(max-width: 900px)');
   let renderer;
   try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'low-power' }); } catch (e) { return null; }
@@ -281,7 +281,7 @@ export async function mountAtlas(root, { gsap, ScrollTrigger, motion, fine }) {
   list.innerHTML = '<ul class="atlas__states" role="list">' + Object.keys(NAMES).map(k => `<li data-li="${k}"><button type="button" class="atlas__state" data-state="${k}" aria-expanded="false" aria-controls="atlas-${k}"><b>${NAMES[k]}</b>${DOWN}<span>${placesOf(k).join(', ')}</span></button><div class="atlas__detail" id="atlas-${k}" data-detail="${k}" hidden>` + (k === 'NC'
     ? doors.map(d => group(`<p class="atlas__place">${d.no} ${d.st}</p><p class="atlas__zip">${d.zip}</p>`, d.items.map(i => row(i.u, i.n, d.id)).join(''), `<p class="atlas__acts"><button type="button" class="atlas__city" data-room="${d.id}" aria-pressed="false">${PIN}<span class="sr">${d.no} ${d.st}: </span><span>Show on map</span></button><a href="${d.dir}" rel="noopener">${UP}<span>Directions<span class="sr"> to ${d.no} ${d.st}</span></span></a></p>`)).join('')
     : placesOf(k).map(p => group(`<p class="atlas__place">${p}</p>`, dealers[k].filter(d => d.c === p).map(d => row(d.u, d.n, p)).join(''))).join('')) + '</div></li>').join('') + '</ul>';
-  side.append(hint, backBtn, list);
+  card.append(hint, backBtn, list);
   const items = [...list.querySelectorAll('[data-li]')], details = [...list.querySelectorAll('[data-detail]')], stateBtn = k => list.querySelector(`[data-state="${k}"]`);
   doors.forEach(d => {
     const el = document.createElement('span'); el.className = 'atlas__tag atlas__addr'; el.dataset.room = d.id; el.dataset.side = d.id === 'kenley' ? 'left' : 'right';
@@ -293,11 +293,11 @@ export async function mountAtlas(root, { gsap, ScrollTrigger, motion, fine }) {
   const intro = { t: motion ? 0 : 1 }, mix = { t: 1 }, cloud = { veil: motion ? 0 : 1 }, air = { rush: 0 };
   let rig = null, from = null, slot = 0;
   const part = [{ v: 0 }, { v: 0 }];
-  const fit = (w, h, e, pad) => { const tv = Math.tan(camera.fov / 2 * RAD), th = tv * camera.aspect; return Math.max(w * pad / (2 * th * usable), h * Math.sin(e * RAD) * pad * 1.16 / (2 * tv)); };
+  const fit = (w, h, e, pad) => { const tv = Math.tan(camera.fov / 2 * RAD), th = tv * camera.aspect; return Math.max(w * pad / (2 * th * usable), h * Math.sin(e * RAD) * pad * 1.16 / (2 * tv * (phone.matches ? .5 : 1))); };
   function frame(s) {
     if (s && s.k === 'NC' && s.city) { const a = rooms.kenley.p, b = rooms.tryon.p; return { x: (a[0] + b[0]) / 2, z: (a[1] + b[1]) / 2 - .5, d: phone.matches ? 23 : 15, e: 42, yaw: -17 }; }
     if (s && s.k !== 'ALL') { const b = states[s.k].box, w = b.max.x - b.min.x, h = b.max.y - b.min.y; return { x: (b.min.x + b.max.x) / 2, z: (b.min.y + b.max.y) / 2 + 2, d: Math.max(fit(w, h, 36, phone.matches ? 1.12 : 1.36), 300), e: phone.matches ? 42 : 36, yaw: -9 }; }
-    return phone.matches ? { x: 36, z: 24, d: fit(470, 300, 54, 1.04), e: 54, yaw: -10 } : { x: 6, z: 32, d: fit(584, 307, 40, .96), e: 40, yaw: -14 };
+    return phone.matches ? { x: 36, z: 24, d: fit(470, 300, 54, 1.04), e: 54, yaw: -10 } : { x: 0, z: 34, d: fit(584, 307, 40, 1.1), e: 42, yaw: -11 };
   }
   // zooming keeps the target's way across the screen straight: the ground moves with the distance, not with the clock
   function between(a, b, t) {
@@ -346,7 +346,7 @@ export async function mountAtlas(root, { gsap, ScrollTrigger, motion, fine }) {
         const w = c.b.offsetWidth, h = c.b.offsetHeight; c.spot = null;
         // first a place whose line crosses no other; only if there is none, one that does
         search: for (const clean of [true, false]) for (const s of [...DIRS[c.n], [1, 1], [-1, 1], [1, -1], [-1, -1]]) for (const k of regional ? [1, .74, 1.32, 1.7, 2.1] : c.n === 'Fort Walton Beach' ? [.6, .8, 1, 1.4, 2] : [1.5, 2, 1.2, 1, .74, 2.6, .5]) {
-          const r = pillAt(x, y, w, h, s, base * k); if (r[0] < x0 + 6 || r[0] + w > W - 12 || r[1] < (phone.matches ? 66 : 64) || r[1] + h > HH - (phone.matches ? 40 : 66)) continue;
+          const r = pillAt(x, y, w, h, s, base * k); if (r[0] < x0 + 6 || r[0] + w > W - 12 || r[1] < (phone.matches ? 66 : 64) || r[1] + h > HH * (phone.matches ? .54 : 1) - (phone.matches ? 8 : 66)) continue;
           if (taken.some(t => r[0] < t[2] + 8 && r[0] + w > t[0] - 8 && r[1] < t[3] + 6 && r[1] + h > t[1] - 6)) continue;
           if (pins.some(q => MAIN.has(q.n) && q.xy[0] > r[0] - 6 && q.xy[0] < r[0] + w + 6 && q.xy[1] > r[1] - 6 && q.xy[1] < r[1] + h + 6)) continue;
           const way = along(x, y, s, base * k), seg = [[x, y], bend(x, y, s, base * k)];
@@ -467,7 +467,7 @@ export async function mountAtlas(root, { gsap, ScrollTrigger, motion, fine }) {
       if (li && motion) gsap.fromTo(li.lastChild.children, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .5, stagger: .05, delay: .15, ease: 'power2.out', clearProps: 'transform,opacity' });
       if (li && !phone.matches) list.scrollTop = Math.max(0, li.offsetTop - list.offsetTop - 8); else if (!li) list.scrollTop = 0;
       if (focusTo && lastKey) stateBtn(key === 'ALL' ? was : key).focus({ preventScroll: true });
-      if (phone.matches && focusTo) { const y = (li ? li.getBoundingClientRect().top - view.offsetHeight - backBtn.offsetHeight : root.getBoundingClientRect().top) + window.scrollY; window.ztLenis ? window.ztLenis.scrollTo(y, { immediate: true, force: true }) : window.scrollTo(0, y); }
+      if (phone.matches && focusTo) { const y = (li ? li.getBoundingClientRect().top - window.innerHeight * .56 - backBtn.offsetHeight : root.getBoundingClientRect().top) + window.scrollY; window.ztLenis ? window.ztLenis.scrollTo(y, { immediate: true, force: true }) : window.scrollTo(0, y); }
     }
     const say = key === 'ALL' ? [`${CLICK} a state to zoom in`, ...(motion && !phone.matches && prog < .1 ? ['Scroll to travel to Charlotte'] : [])] : near ? [`${CLICK} the map to zoom out`] : key === 'NC' ? [`${CLICK} again to enter Charlotte`, `${CLICK} outside to zoom out`] : [`${CLICK} outside to zoom out`], sig = say.join('|');
     if (help.dataset.sig !== sig) { help.dataset.sig = sig; help.innerHTML = say.map(t => `<span>${t}</span>`).join(''); }
@@ -489,7 +489,7 @@ export async function mountAtlas(root, { gsap, ScrollTrigger, motion, fine }) {
   list.addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
     if (b.dataset.state) { if (b.dataset.state === active) select(home0(), true); else select({ k: b.dataset.state }, true); }
-    else if (b.dataset.room) select(sel && sel.room === b.dataset.room ? { k: 'NC', city: 'Charlotte' } : { k: 'NC', city: 'Charlotte', room: b.dataset.room });
+    else if (b.dataset.room) { if (phone.matches) { const y = root.getBoundingClientRect().top + window.scrollY; window.ztLenis ? window.ztLenis.scrollTo(y, { immediate: true, force: true }) : window.scrollTo(0, y); } select(sel && sel.room === b.dataset.room ? { k: 'NC', city: 'Charlotte' } : { k: 'NC', city: 'Charlotte', room: b.dataset.room }); }
   });
   // Escape works wherever the focus is, as long as the map is on screen and nothing lies over the page
   document.addEventListener('keydown', e => {
@@ -535,7 +535,7 @@ export async function mountAtlas(root, { gsap, ScrollTrigger, motion, fine }) {
     wake(); if (!fine || e.pointerType === 'touch' || !rig) return;
     const k = pick(e), d = deed(k), r = view.getBoundingClientRect(), x = e.clientX - r.left, near = rig.d < 110;
     canvas.style.cursor = d ? d[1] : 'default';
-    if (d && x > W * .29 && mix.t >= 1) { if (tip.dataset.t !== d[0]) { tip.dataset.t = d[0]; tip.innerHTML = d[0]; } tip.style.transform = `translate3d(${Math.min(x + 18, W - tip.offsetWidth - 10).toFixed(0)}px, ${Math.min(e.clientY - r.top + 22, HH - 44).toFixed(0)}px, 0)`; if (!tipOn) { tipOn = true; tip.classList.add('is-on'); } } else hush();
+    if (d && x > edge && mix.t >= 1) { if (tip.dataset.t !== d[0]) { tip.dataset.t = d[0]; tip.innerHTML = d[0]; } tip.style.transform = `translate3d(${Math.min(x + 18, W - tip.offsetWidth - 10).toFixed(0)}px, ${Math.min(e.clientY - r.top + 22, HH - 44).toFixed(0)}px, 0)`; if (!tipOn) { tipOn = true; tip.classList.add('is-on'); } } else hush();
     const over = near || k === active ? null : k; if (over !== hover) { hover = over; paint(); }
   });
   canvas.addEventListener('pointerup', e => { const d = down; down = null; if (!d || Math.hypot(e.clientX - d.x, e.clientY - d.y) > 8) return; const a = deed(pick(e)); hush(); if (a) a[2](); });
@@ -546,7 +546,7 @@ export async function mountAtlas(root, { gsap, ScrollTrigger, motion, fine }) {
   function size() {
     const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
     W = w; HH = h; renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, phone.matches ? 1.5 : 2)); renderer.setSize(w, h, false);
-    camera.aspect = w / h; edge = phone.matches ? 8 : side.offsetLeft + side.offsetWidth + 18; usable = phone.matches ? .96 : Math.min(.68, 1 - edge / w); shift = phone.matches ? 0 : Math.max(.15, edge / w / 2); camera.setViewOffset(w, h, -w * shift, 0, w, h); camera.updateProjectionMatrix();
+    camera.aspect = w / h; edge = phone.matches ? 8 : side.offsetLeft + side.offsetWidth + 18; usable = phone.matches ? .96 : Math.min(.7, 1 - (edge + 44) / w); shift = phone.matches ? 0 : (edge + 44) / w / 2; camera.setViewOffset(w, h, -w * shift, phone.matches ? h * .2 : 0, w, h); camera.updateProjectionMatrix();
     wide.forEach(m => m.resolution.set(w, h)); moved();
   }
   new ResizeObserver(size).observe(canvas);

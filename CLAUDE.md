@@ -28,6 +28,8 @@ Rejected, do not repeat
 - A generic Instagram widget or a six-square grid.
 - In the hero, the film credit, the visible pause control and the prototype note (Alex removed them in Figma, 24 Nov 2026).
 - On the new map (v5): arcs to Charlotte, vertical pins, violet pills, curved label lines, logos in the dealership panel, zoom by city, dragging, red threads, breadcrumbs. Navigation must be plain: cut what can be cut, and say what a click does.
+- The landing that hides the first screen and builds it up: "ochenj dolgo nado zhdatj i ne jasno chto voobshe proishodit" (Alex, 25 Nov 2026). The first paint must be readable.
+- A mega menu on hover. It opens with a click on "Brands" only; the word is Brands, not Marques (Alex, 25 Nov 2026).
 - A dealership panel in small grey type with a rule under every row: "eto ochenj tjazhelo chitaetsja" (Alex, 24 Nov 2026).
 
 Standing rules

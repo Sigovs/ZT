@@ -20,6 +20,7 @@
   /* =========================== mega menu =========================== */
   const nav = $('#nav'), mega = $('#mega'), veil = $('.mega-veil'), toggle = $('.nav__toggle');
   const navLinks = $$('.nav__links a'), megaGroups = $$('.mega [data-group]');
+  const brandsBtn = $('[data-mega]');
   let open = false, closeT;
   function setHot(key) {
     navLinks.forEach(a => a.classList.toggle('is-hot', !!key && a === key));
@@ -31,18 +32,18 @@
     if (v === open) return;
     open = v;
     mega.classList.toggle('is-open', v); veil.classList.toggle('is-open', v); nav.classList.toggle('is-open', v);
-    toggle.setAttribute('aria-expanded', String(v));
+    toggle.setAttribute('aria-expanded', String(v)); brandsBtn.setAttribute('aria-expanded', String(v));
     $('.nav__toggle-label').textContent = v ? 'Close' : 'Menu';
     mega.inert = !v;
     if (v) { mega.scrollTop = 0; lenis() && lenis().stop(); } else { setHot(null); if (!worldOpen) lenis() && lenis().start(); }
   }
   mega.inert = true;
   toggle.addEventListener('click', () => { setOpen(!open); if (open) { const f = $('a', mega); f && f.focus({ preventScroll: true }); } });
-  if (fine) {
-    navLinks.forEach(a => a.addEventListener('mouseenter', () => setOpen(true, a)));
-    const leave = () => { closeT = setTimeout(() => setOpen(false), 240); };
-    [nav, mega].forEach(el => { el.addEventListener('mouseleave', leave); el.addEventListener('mouseenter', () => clearTimeout(closeT)); });
-  }
+  // the menu opens with a click on Brands, never with a hover (Alex, 25 Nov 2026). Every other link goes to its section.
+  brandsBtn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); setOpen(!open, brandsBtn); if (open && e.detail === 0) { const f = $('a', mega); f && f.focus({ preventScroll: true }); } });
+  navLinks.forEach(a => { if (a !== brandsBtn) a.addEventListener('click', () => setOpen(false)); });
+  let opener = toggle;
+  [brandsBtn, toggle].forEach(b => b.addEventListener('click', () => { opener = b; }));
   veil.addEventListener('click', () => setOpen(false));
   mega.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
 
@@ -214,7 +215,7 @@
   }, true);
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
-    if (open) { setOpen(false); toggle.focus(); } else if (openKey) travel(null);
+    if (open) { setOpen(false); opener.focus(); } else if (openKey) travel(null);
   });
 
   /* =========================== 4 · inventory ===========================
@@ -248,7 +249,7 @@
     }
     const n = lots.filter(l => !l.hidden).length;
     stock.classList.toggle('is-full', n >= 3);
-    stockStatus.textContent = m ? `${n} ${m[1]} shown of ${sumOf(m[0])} in stock` : 'Cars from all five marques shown';
+    stockStatus.textContent = m ? `${n} ${m[1]} shown of ${sumOf(m[0])} in stock` : 'Cars from all five brands shown';
   }
   function applyFilter(key) {
     $$('.filter__btn', stock).forEach(b => { const on = b.dataset.filter === key; b.classList.toggle('is-active', on); b.setAttribute('aria-pressed', String(on)); });
@@ -477,7 +478,7 @@
       const io = new IntersectionObserver(es => {
         if (!es.some(e => e.isIntersecting)) return;
         io.disconnect();
-        import('./map.js?v=50').then(m => m.mountAtlas(atlas, { gsap, ScrollTrigger, motion, fine })).then(a => { if (a && motion) ScrollTrigger.refresh(); }).catch(() => { /* the list stays */ });
+        import('./map.js?v=53').then(m => m.mountAtlas(atlas, { gsap, ScrollTrigger, motion, fine })).then(a => { if (a && motion) ScrollTrigger.refresh(); }).catch(() => { /* the list stays */ });
       }, { rootMargin: '1400px 0px' });
       io.observe(atlas.closest('.group'));
     }

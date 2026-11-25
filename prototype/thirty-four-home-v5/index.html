@@ -10,15 +10,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.11/dist/lenis.css">
-<link rel="stylesheet" href="base.css?v=50">
-<link rel="stylesheet" href="home.css?v=50">
-<link rel="stylesheet" href="v2.css?v=50">
-<link rel="stylesheet" href="v3.css?v=50">
-<link rel="stylesheet" href="v4.css?v=50">
-<link rel="stylesheet" href="map.css?v=50">
+<style>/* lenis 1.3.11, inline: nothing from another server stands between the visitor and the first frame */
+html.lenis,html.lenis body{height:auto}.lenis:not(.lenis-autoToggle).lenis-stopped{overflow:clip}.lenis [data-lenis-prevent],.lenis [data-lenis-prevent-wheel],.lenis [data-lenis-prevent-touch]{overscroll-behavior:contain}.lenis.lenis-smooth iframe{pointer-events:none}.lenis.lenis-autoToggle{transition-property:overflow;transition-duration:1ms;transition-behavior:allow-discrete}</style>
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
+<link rel="preload" as="script" href="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js">
+<link rel="stylesheet" href="base.css?v=55">
+<link rel="stylesheet" href="home.css?v=55">
+<link rel="stylesheet" href="v2.css?v=55">
+<link rel="stylesheet" href="v3.css?v=55">
+<link rel="stylesheet" href="v4.css?v=55">
+<link rel="stylesheet" href="map.css?v=55">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
-<link rel="preload" as="image" href="assets/video/hero-poster.jpg?v=2">
+<link rel="preload" as="image" href="assets/video/hero-poster.jpg?v=2" fetchpriority="high">
 <noscript><style>
   /* without script the page is still complete: a fixed bar on the poster frame, five marques, every section open */
   .nav { position: absolute; }
@@ -40,13 +44,13 @@
 <!-- deslop-ignore 10: the three section labels (The house, Ownership, Buy, sell, trade) are the names used in the navigation; the headings beside them are statements, not names. deslop-ignore 15: the © sign is a legal mark, not an emoji. deslop-ignore 33: Inter and Inter Tight are the faces set by the project brief (Foundations v1.2). -->
 <a class="skip" href="#house">Skip to content</a>
 
-<header class="nav" id="nav" data-intro="fade">
+<header class="nav" id="nav">
   <a class="nav__brand" href="#top" aria-label="ZT Automotive Collection, home">
     <img src="assets/zt-monogram-white.png" alt="" width="34" height="40">
     <span>ZT Automotive Collection</span>
   </a>
   <nav class="nav__links" aria-label="Primary">
-    <a href="#marques" data-menu="marques">Marques</a>
+    <a href="#marques" data-menu="marques" data-mega aria-haspopup="true" aria-expanded="false" aria-controls="mega">Brands <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a>
     <a href="#house" data-menu="site">The house</a>
     <a href="#collection" data-menu="site">Inventory</a>
     <a href="#ownership" data-menu="site">Ownership</a>
@@ -65,7 +69,7 @@
 <div class="mega" id="mega" aria-label="Site menu" data-lenis-prevent>
   <div class="mega__inner">
     <div class="mega__lead">
-      <ul class="mega__marques" role="list" data-group="marques" aria-label="The five marques">
+      <ul class="mega__marques" role="list" data-group="marques" aria-label="The five brands">
         <li>
           <a class="mega__mark" href="#marques" data-open="czinger"><span class="mega__thumb"><img src="assets/img/col-czinger-21c.jpg" alt="" loading="lazy" style="--pos:50% 60%"></span><span class="mark mark--czinger" aria-hidden="true"></span><span class="sr-only">Czinger</span></a>
           <p>Czinger Charlotte</p>
@@ -145,14 +149,15 @@
   <section class="stage" id="stage" aria-label="ZT Automotive Collection">
 
     <!-- ===== 1 · the bar — now a window onto moving footage ===== -->
-    <div class="hero">
+    <div class="hero" data-hero="none">
       <canvas class="hero__ambient" width="480" height="270" aria-hidden="true"></canvas>
       <h1 class="display"><span class="display__word" data-display><span class="line">The rare ones</span> <span class="line">live here.</span></span></h1>
+      <div class="hero__what"><p>Luxury and exotic cars in Charlotte, North Carolina.</p><a href="#collection">See the inventory <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
 
       <span class="hero__edge" aria-hidden="true"></span>
       <div class="bar" aria-hidden="true">
         <div class="bar__plates">
-          <figure class="plate is-active" data-plate="collection"><video class="film" data-film="hero" muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg?v=2" style="--pos:50% 58%"><source src="assets/video/hero.mp4?v=2" type="video/mp4"></video></figure>
+          <figure class="plate is-active" data-plate="collection" style="background:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD//gAPTGF2YzYwLjMuMTAwAP/bAEMAEgwNEA0LEhAOEBQTEhUbLB0bGBgbNicpICxAOURDPzk+PUdQZldHS2FNPT5ZeVphaW1yc3JFVX2GfG+FZnBybv/bAEMBExQUGxcbNB0dNG5JPklubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubv/AABEIABIAIAMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AMKPWJ0GPLRvcipItZut+cKR/d21m+aOy077RIPuuV+lb8zIsdGmrOLfzXs5FXoGByKi/wCEgQZAt2XJ5IasRbmdYGi85/LY5Kk9TUe/HejmK1IaWiioEPfqPoKYaKKEM//Z) 50% 58% / cover"><video class="film" data-film="hero" muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg?v=2" style="--pos:50% 58%"><source src="assets/video/hero.mp4?v=2" type="video/mp4"></video></figure>
           <figure class="plate" data-plate="czinger"><img src="assets/img/czinger-21c-vmax-night.jpg" alt="" loading="lazy" style="--pos:58% 64%"><video class="film plate__film" data-marque-film="czinger" muted loop playsinline preload="none" data-src="assets/video/marque-czinger.mp4" style="--pos:58% 64%"></video></figure>
           <figure class="plate" data-plate="ferrari"><img src="assets/img/ferrari-12cilindri.jpg" alt="" loading="lazy" style="--pos:50% 62%"></figure>
           <figure class="plate" data-plate="koenigsegg"><img src="assets/img/koenigsegg-jesko-absolut.jpg" alt="" loading="lazy" style="--pos:40% 60%"></figure>
@@ -161,7 +166,6 @@
         </div>
         <div class="bar__scrim"></div>
       </div>
-      <div class="hairline" aria-hidden="true"></div>
 
       <div class="pick" data-intro="fade">
         <p class="pick__now"><span class="mark" data-now-mark aria-hidden="true"></span><span class="sr-only" aria-live="polite" data-now-name>ZT Automotive Collection</span></p>
@@ -172,7 +176,7 @@
           <li><button class="index__item" type="button" data-key="mclaren" data-credit="Film: McLaren Charlotte" aria-label="McLaren" aria-pressed="false"><i></i></button></li>
           <li><button class="index__item" type="button" data-key="rolls-royce" data-credit="Film: Rolls-Royce Motor Cars Charlotte" aria-label="Rolls-Royce" aria-pressed="false"><i></i></button></li>
         </ul>
-        <p class="pick__step"><button type="button" data-step="-1" aria-label="Previous marque"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><span data-step-n aria-hidden="true">0 / 5</span><button type="button" data-step="1" aria-label="Next marque"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></p>
+        <p class="pick__step"><button type="button" data-step="-1" aria-label="Previous brand"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><span data-step-n aria-hidden="true">0 / 5</span><button type="button" data-step="1" aria-label="Next brand"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></p>
       </div>
 
       <div class="hero__film" data-intro="fade">
@@ -183,8 +187,8 @@
     </div>
 
     <!-- ===== 2 · the monolith — five marques; a column widens in place until it is the whole scene ===== -->
-    <div class="monolith" id="marques" aria-label="Five marques">
-      <button class="monolith__close" type="button" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg><span>All marques</span></button>
+    <div class="monolith" id="marques" aria-label="Five brands">
+      <button class="monolith__close" type="button" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg><span>All brands</span></button>
       <article class="col" data-col="czinger" data-pos="50% 60%" data-pos-open="50% 58%">
         <img src="assets/img/col-czinger-21c.jpg" alt="Czinger 21C on track" loading="lazy" style="--pos:50% 60%">
         <span class="col__shade"></span>
@@ -315,8 +319,8 @@
   <!-- ===== 4 · inventory — real cars in ZT's stock, in profile, on glass cards. No film ===== -->
   <section class="stock is-full" id="collection" data-ground="light" aria-labelledby="stock-title">
     <header class="stock__head">
-      <div class="filter" role="group" aria-label="Filter by marque">
-        <button class="filter__btn is-active" type="button" data-filter="all" aria-pressed="true">All five marques<sup>130</sup></button>
+      <div class="filter" role="group" aria-label="Filter by brand">
+        <button class="filter__btn is-active" type="button" data-filter="all" aria-pressed="true">All five brands<sup>130</sup></button>
         <button class="filter__btn" type="button" data-filter="czinger" aria-pressed="false">Czinger<sup>1</sup></button>
         <button class="filter__btn" type="button" data-filter="ferrari" aria-pressed="false">Ferrari<sup>35</sup></button>
         <button class="filter__btn" type="button" data-filter="koenigsegg" aria-pressed="false">Koenigsegg<sup>1</sup></button>
@@ -569,7 +573,7 @@
             <svg class="atlas__leads" aria-hidden="true"><defs></defs></svg>
             <div class="atlas__tags" aria-hidden="true"></div>
           </div>
-          <div class="atlas__side"><p class="atlas__title" aria-hidden="true">ZT Automotive across the Southeast</p></div>
+          <div class="atlas__side"><div class="atlas__card"><p class="atlas__title" aria-hidden="true">ZT Automotive across the Southeast</p></div></div>
         </div>
       </div>
       <h3 id="group-title">ZT Automotive across the Southeast</h3>
@@ -689,7 +693,7 @@
   <div class="foot__top">
     <a class="foot__brand" href="#top" aria-label="ZT Automotive Collection, back to top"><img src="assets/zt-monogram-white.png" alt="" width="64" height="75" loading="lazy"><span>ZT Automotive<br>Collection</span></a>
     <nav class="foot__nav" aria-label="Footer">
-      <div><h2>Marques</h2><a href="#collection" data-filter="czinger">Czinger</a><a href="#collection" data-filter="ferrari">Ferrari</a><a href="#collection" data-filter="koenigsegg">Koenigsegg</a><a href="#collection" data-filter="mclaren">McLaren</a><a href="#collection" data-filter="rolls-royce">Rolls-Royce</a></div>
+      <div><h2>Brands</h2><a href="#collection" data-filter="czinger">Czinger</a><a href="#collection" data-filter="ferrari">Ferrari</a><a href="#collection" data-filter="koenigsegg">Koenigsegg</a><a href="#collection" data-filter="mclaren">McLaren</a><a href="#collection" data-filter="rolls-royce">Rolls-Royce</a></div>
       <div><h2>The Collection</h2><a href="#house">The house</a><a href="#collection" data-filter="all">Inventory</a><a href="#ownership">Ownership</a><a href="#trade">Buy, sell, trade</a><a href="#showrooms">Showrooms</a><a href="#journal">Journal</a></div>
       <div><h2>ZT Automotive</h2><a href="#network">Group dealerships</a><a href="https://www.ztautogroup.com/" rel="noopener">ztautogroup.com</a><a href="https://www.ztautogroup.com/careers/" rel="noopener">Careers</a><a href="https://www.ztautogroup.com/zt-automotive-foundation/" rel="noopener">Foundation</a><a href="https://investor.ztcorporate.com/" rel="noopener">Investors</a></div>
       <div><h2>Follow</h2><a href="https://www.instagram.com/ztautogroup/" rel="noopener">Instagram</a><a href="https://www.facebook.com/ZTAutomotive/" rel="noopener">Facebook</a><a href="https://www.linkedin.com/company/ztautomotive/" rel="noopener">LinkedIn</a><a href="#enquire">Enquire</a></div>
@@ -702,10 +706,10 @@
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
-<script src="main.js?v=50"></script>
-<script src="home.js?v=50"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
+<script defer src="main.js?v=55"></script>
+<script defer src="home.js?v=55"></script>
 </body>
 </html>

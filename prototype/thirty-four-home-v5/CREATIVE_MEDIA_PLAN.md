@@ -2,7 +2,14 @@
 
 24 November 2026 · `prototype/thirty-four-home-v5/` · v4 with a new map in Showrooms. Everything else is v4; its plan follows below. Not approved.
 
+## Landing and menu (25 Nov 2026)
+
+- **Landing.** The first paint is the whole first screen: the film's poster from edge to edge, the slogan, the menu, one line that says what this is, and a link to the inventory. Then the glass closes over the film and leaves the 34° bar, in about a second. Before: black, a line, pieces of letters, and four seconds until the slogan and the menu could be read.
+- **Menu.** It opens with a click on "Brands", never with a hover. Every other link goes to its section. "Marques" is now "Brands" wherever a visitor reads it.
+
 ## Showrooms · the map
+
+- **Frame (25 Nov 2026).** The map is the whole screen; its navigation is a glass card on top. The card never stands on a state, and the Pacific shows at the left. The geometry and the relief were extended west and north for this (`tools/map/`).
 
 - **Purpose.** Find a dealership by state, and arrive at the two Charlotte addresses.
 - **Motion.** Scroll carries the camera along the 34th parallel, through cloud, over North Carolina and into Charlotte. Choosing a state takes the camera instead: the cloud thickens, parts round the state, and its border takes fire and cools to a clean line.

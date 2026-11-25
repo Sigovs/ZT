@@ -1,6 +1,7 @@
-/* ZT — "Thirty-Four Degrees" · motion and interaction (homepage v3)
+/* ZT — "Thirty-Four Degrees" · motion and interaction (homepage v5)
    One geometry drives the hero: a band at 34° (the angle of the ZT monogram's bars).
-   1. Entrance: a hairline is drawn along the band's axis, then opens into the bar.
+   1. Entrance: the film fills the screen from the first paint, with the slogan and the menu in place; then glass closes
+      over it and leaves the bar. Nothing is hidden first, and it takes about a second.
    2. Marque selector: five marks. Each wipes its own footage into the bar along the bar's axis.
       The slogan stays.
    3. Scroll: the bar slides out along its axis; the monolith columns waiting
@@ -20,7 +21,6 @@
   const mobile = mqMobile.matches;
   const bar = $('.bar');
   const plates = $('.bar__plates'), glassEdge = $('.hero__edge');
-  const hairline = $('.hairline');
   const wordEl = $('[data-display]');
   // ?slogan=2|3|4 shows the other lines that were written; the one in the markup is the one chosen
   const SLOGANS = { 2: ['Five marques.', 'One house.'], 3: ['Extraordinary,', 'by name.'], 4: ['Driven by', 'excellence.'] };
@@ -68,11 +68,6 @@
     // the footage moves a little less than the band → depth along the same axis
     plates.style.transform = `translate3d(${dx * 0.55}px, ${dy * 0.55}px, 0)`;
   }
-  function placeHairline() {
-    const xStart = -40, yStart = G.cy - M * (xStart - G.cx);
-    hairline.style.left = `${xStart}px`; hairline.style.top = `${yStart}px`;
-    hairline.style.transform = `rotate(-34deg) scaleX(var(--hx, 0))`;
-  }
 
   /* columns: their tops follow the bar's lower edge, then flatten */
   const colState = { p: 0, intro: 0 };
@@ -93,26 +88,10 @@
     });
   }
 
-  /* ---------- the monumental word ---------- */
-  function splitWord() {
-    wordEl.parentElement.setAttribute('aria-label', wordEl.textContent.trim().replace(/\s+/g, ' '));
-    wordEl.setAttribute('aria-hidden', 'true');
-    $$('.line', wordEl).forEach(line => {
-      const text = line.textContent;
-      line.textContent = '';
-      [...text].forEach(ch => {
-        const o = document.createElement('span'); o.className = 'ch';
-        const i = document.createElement('span'); i.textContent = ch === ' ' ? '\u00a0' : ch;
-        o.appendChild(i); line.appendChild(o);
-      });
-    });
-    return $$('.ch > span', wordEl);
-  }
-
   /* ---------- reduced motion / no GSAP: a designed static page ---------- */
   if (reduce || !hasGSAP) {
     document.documentElement.classList.add('rm');
-    measure(); placeReel(); band.t = G.T; drawBar();
+    heroEl.classList.add('is-set'); measure(); placeReel(); band.t = G.T; drawBar();
     if (!mobile) cols.forEach(c => (c.style.clipPath = 'none'));
     let cur = null;
     items.forEach(btn => btn.addEventListener('click', () => {
@@ -140,27 +119,19 @@
   gsap.ticker.lagSmoothing(0);
   window.ztLenis = lenis;                                      // home.js: menu lock, jumps
 
-  measure(); placeHairline(); placeReel(); drawBar();
-  const chars = splitWord();
+  measure(); placeReel();
+  const FULL = 2 * Math.max(G.cy + M * G.cx, G.H - G.cy + M * (G.W - G.cx)) + 8;        // a band so thick that it covers the screen
+  band.t = FULL; drawBar();
   colState.intro = 1; drawCols();
 
   /* ---------- 1 · entrance ---------- */
-  gsap.set(chars, { yPercent: 108 });
   gsap.set('[data-intro="fade"]', { autoAlpha: 0 });
-  gsap.set(items, { scaleX: 0, transformOrigin: '0 50%' });
-  gsap.set('.plate.is-active > *', { scale: 1.28 });
-
-  const intro = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.25 });
+  const intro = gsap.timeline({ delay: 0.35, onComplete: () => { band.t = G.T; drawBar(); } });
   intro
-    .set(hairline, { opacity: 1 })
-    .to(hairline, { '--hx': 1, duration: 1.1, ease: 'power3.inOut' })
-    .to(band, { t: G.T, duration: 1.5, onUpdate: drawBar }, '-=0.1')
-    .to(hairline, { opacity: 0, duration: 0.4 }, '<0.2')
-    .to('.plate.is-active > *', { scale: 1, duration: 2.2 }, '<-0.2')
-    .to(chars, { yPercent: 0, duration: 1.2, stagger: 0.045 }, '<0.35')
-    .to(colState, { intro: 0, duration: 1.4, ease: 'power4.out', onUpdate: drawCols }, '<0.4')
-    .to(items, { scaleX: 1, duration: 0.9, stagger: 0.07, ease: 'expo.out', clearProps: 'transform' }, '<0.1')
-    .to('[data-intro="fade"]', { autoAlpha: 1, duration: 1.0 }, '<0.1');
+    .add(() => heroEl.classList.add('is-set'), 0.55)
+    .to(band, { t: () => G.T, duration: 1.05, ease: 'expo.inOut', onUpdate: drawBar }, 0)
+    .to(colState, { intro: 0, duration: 0.8, ease: 'power3.out', onUpdate: drawCols }, 0.62)
+    .to('[data-intro="fade"]', { autoAlpha: 1, duration: 0.5, ease: 'power2.out' }, 0.8);
 
   /* ---------- 2 · marque selector ---------- */
   let current = 'collection', busy = false, queued;
@@ -216,7 +187,8 @@
     // no pin on phones: the bar leaves along its axis as the hero scrolls away
     gsap.timeline({ scrollTrigger: { trigger: heroEl, start: 'top top', end: 'bottom top', scrub: 1, invalidateOnRefresh: true } })
       .to(band, { s: () => G.W * 1.7, duration: 1, ease: 'power1.in', onUpdate: drawBar }, 0)
-      .to('.display', { yPercent: -30, autoAlpha: 0, duration: 0.7, ease: 'power1.in' }, 0);
+      .to('.display', { yPercent: -30, autoAlpha: 0, duration: 0.7, ease: 'power1.in' }, 0)
+      .to('.hero__what', { autoAlpha: 0, duration: 0.5, ease: 'power1.in' }, 0);
     monolith.classList.add('is-live');
   } else {
     const scrollTl = gsap.timeline({
@@ -233,6 +205,7 @@
       .to(band, { s: () => G.W * 1.9, duration: 1, ease: 'power2.in', onUpdate: drawBar }, 0)
       .to(bar, { autoAlpha: 0, duration: 0.12 }, 0.88)
       .to('.display', { yPercent: -38, autoAlpha: 0, duration: 0.55, ease: 'power2.in' }, 0)
+      .to('.hero__what', { y: -60, autoAlpha: 0, duration: 0.4, ease: 'power2.in' }, 0)
       .to('.pick, .scrollcue, .hero__film', { autoAlpha: 0, duration: 0.3, ease: 'power2.in' }, 0)
       .to(colState, { p: 1, duration: 1, ease: 'none', onUpdate: drawCols }, 0)
       .to('.col > img', { scale: 1, duration: 1, ease: 'none' }, 0)
@@ -243,7 +216,7 @@
   let rz;
   window.addEventListener('resize', () => {
     clearTimeout(rz);
-    rz = setTimeout(() => { if (mqMobile.matches !== mobile) { location.reload(); return; } measure(); placeHairline(); placeReel(); if (!intro.isActive()) band.t = G.T; drawBar(); drawCols(); ScrollTrigger.refresh(); }, 120);
+    rz = setTimeout(() => { if (mqMobile.matches !== mobile) { location.reload(); return; } measure(); placeReel(); if (!intro.isActive()) band.t = G.T; drawBar(); drawCols(); ScrollTrigger.refresh(); }, 120);
   });
   // column widths change on hover in screen 2 → keep the clip in sync while flex animates
   if (!mobile) {

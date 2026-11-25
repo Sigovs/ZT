@@ -194,3 +194,32 @@
 /* ---------- the three bars: no visible pause control (Alex); the keyboard can still reach it ---------- */
 .creed__foot { opacity: 0 !important; pointer-events: none; transition: opacity .3s var(--ease); }
 .creed__foot:focus-within { opacity: 1 !important; pointer-events: auto; }
+
+/* ---------- landing (v5, Alex 25 Nov 2026): the first paint is the whole first screen. Film from edge to edge, slogan, one line
+   that says what this is; then the glass closes over the film. The poster also lies under the glass, so nothing opens onto black ---------- */
+.bar { clip-path: none; }
+.display { z-index: 4; }
+.bar::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(118deg, rgba(11, 12, 13, .62) 12%, rgba(11, 12, 13, .42) 42%, rgba(11, 12, 13, 0) 66%); transition: opacity .9s var(--ease); }   /* holds the slogan while the film is full */
+.hero.is-set .bar::after { opacity: 0; }
+.hero__ambient { background: url(assets/video/hero-poster.jpg?v=2) 50% 58% / cover; opacity: 1; }
+.plate.is-active .film { background: none; }
+.hero__what { position: absolute; z-index: 4; left: var(--pad); top: calc(118 * var(--u) + 206 * var(--u) * 1.88 + 44 * var(--u)); width: max(230px, calc(400 * var(--u))); }
+.hero__what p { font-size: max(16px, calc(22 * var(--u))); line-height: 1.4; color: var(--ivory); }
+.hero__what a { display: inline-flex; align-items: center; gap: var(--s2); min-height: 44px; margin-top: var(--s2); font-weight: 500; font-size: max(15px, calc(18 * var(--u))); color: var(--ivory); }
+.hero__what .ico { width: 18px; height: 18px; color: #ff2d55; transition: transform .5s var(--ease); }
+.hero__what a:hover .ico, .hero__what a:focus-visible .ico { transform: translateX(6px); }
+
+/* the menu: Brands opens it. On wide screens the button at the right only closes it */
+.nav__links [data-mega] { display: inline-flex; align-items: center; gap: 5px; }
+.nav__links [data-mega] .ico { width: 15px; height: 15px; transition: transform .4s var(--ease); }
+.nav__links [data-mega][aria-expanded="true"] .ico { transform: rotate(180deg); }
+@media (min-width: 1101px) {
+  .nav__toggle { position: absolute; right: var(--pad); visibility: hidden; }
+  .nav.is-open .nav__toggle { visibility: visible; }
+  .nav.is-open .nav__cta { visibility: hidden; }        /* Close stands where Enquire was */
+}
+@media (max-width: 900px) {
+  .hero__what { left: 40vw; right: var(--pad); top: 59svh; width: auto; }
+  .hero__what p { font-size: 16px; line-height: 1.35; }
+  .hero__what a { margin-top: 0; }
+}
